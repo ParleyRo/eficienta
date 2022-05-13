@@ -39,8 +39,8 @@ const Display = (props) => {
 						<p>WorkHours: {props.data.time.workHours}</p>
 						<p className="green">WorkedHours: {props.data.time.workedHours}</p>
 						<p className="orange">Everhour: {props.data.time.everhour}</p>
-						<p className="orange">Freedays: {props.data.time.freedays}</p>
-						<p className="orange">Daysoff: {props.data.time.daysoff}</p>
+						<p className="orange">Free days: {props.data.time.freedays}</p>
+						<p className="orange">Days off: {props.data.time.daysoff}</p>
 					</div>
 
 					<div className="col">
