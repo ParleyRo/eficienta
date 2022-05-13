@@ -18,13 +18,10 @@ class Everhour{
 			this.from = `${date.getFullYear()}-${date.getMonth()+1}-1`;
 			this.to = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 		}
+		
 		this.apiKey = Config.apikey;
 	}
 
-	componentDidMount() {
-		this.apiKey = Config.apiKey;
-
-	}
 	async fetchUserTasks() {
 		try {
 			const res = await fetch(`https://api.everhour.com/users/me/time?from=${this.from}&to=${this.to}`, {
