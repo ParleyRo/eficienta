@@ -1,0 +1,66 @@
+.main{
+	font-family: Arial,sans-serif;
+    max-width: 940px;
+    margin: 0 auto;
+    color: #0a0a0a;
+    background: #fafafa;
+    padding: 0 20px;
+}
+.row{
+	display: flex;
+}
+
+.has-vertical-align-center{
+	align-items: center;
+}
+
+.col{
+	padding: 20px 30px;
+	width: 100%;
+    max-width: 100%;
+}
+
+.title{
+	padding: 20px 30px;
+	margin: 0;
+}
+.green{
+	color: #00d1b2;
+}
+
+.blue{
+	color: #209cee;
+}
+
+.email .subject{
+	padding: 0px 30px;
+	margin: 0;
+}
+
+.email .body{
+	padding: 0px 30px;
+	margin: 0;
+}
+
+.efficiency{
+	padding: 0px 20px;
+}
+
+.email{
+	padding: 0px 20px;
+	max-width: 100%;
+    display: inline-block;
+}
+
+.text-center{
+	text-align: center;
+}
+
+a, a:focus, a:hover, a:active {
+    outline: 0;
+}
+a {
+    color: #169ef4;
+	 outline: 0;
+	 text-decoration: none;
+}
