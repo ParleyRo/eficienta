@@ -1,4 +1,5 @@
-export class Everhour{
+import Config from '../Config';
+class Everhour{
 
 	constructor(currentMonth = 1){
 		
@@ -17,12 +18,13 @@ export class Everhour{
 			this.from = `${date.getFullYear()}-${date.getMonth()+1}-1`;
 			this.to = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 		}
-
-		this.apiKey = 'b041-4ed8-05ee0b-9dba24-3c732ffe'
-
+		this.apiKey = Config.apikey;
 	}
 
+	componentDidMount() {
+		this.apiKey = Config.apiKey;
 
+	}
 	async fetchUserTasks() {
 		try {
 			const res = await fetch(`https://api.everhour.com/users/me/time?from=${this.from}&to=${this.to}`, {

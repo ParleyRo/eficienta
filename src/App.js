@@ -1,5 +1,5 @@
 import {Component} from 'react';
-
+import Config from './Config';
 import Everhour from './components/Everhour';
 import Days from './components/Days';
 
@@ -11,7 +11,7 @@ class App extends Component {
   
   state = {
     user:{
-      name: 'Cristian Pirloaga'
+      name: ''
     },
     time: {
       everhour: 0,
@@ -94,6 +94,7 @@ class App extends Component {
     
     let oState = {...this.state};
 
+    oState.name = Config.name;
     oState.user.month = this.monthNames[date.getMonth()];
     oState.user.prevmonth = this.monthNames[(date.getMonth()-1)%12];
     oState.user.nextmonth = this.currentMonth < 1 ? this.monthNames[(date.getMonth()+1)%12] : false;
