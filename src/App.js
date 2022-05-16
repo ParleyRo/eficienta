@@ -8,6 +8,7 @@ import Days from './components/Days';
 import Display from './components/views/Display';
 
 import './assets/css/app.css';
+import './assets/css/animations.css';
 
 const MonthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 class App extends Component {
