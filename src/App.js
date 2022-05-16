@@ -80,6 +80,7 @@ class App extends Component {
     oState.isLoaded = true;
 
     oState.user.name = Config.name;
+    
     oState.user.month = MonthNames[this.currentMonth];
     oState.user.prevmonth = MonthNames[(this.currentMonth-1)%12];
     oState.user.nextmonth = this.monthPosition < 1 ? MonthNames[(this.currentMonth+1)%12] : false;
@@ -89,11 +90,14 @@ class App extends Component {
     
     oState.time.freedays = this.days.freedays*8;
     oState.freedays = [...this.days.freedaysList];
-    oState.weekendDays = this.days.weekendDays;
-    oState.totalDays = this.days.totalDays;
+    
     oState.workDays = this.days.totalDays - this.days.weekendDays;
     oState.workedDays = this.days.workedDays;
 
+
+    oState.weekendDays = this.days.weekendDays;
+    oState.totalDays = this.days.totalDays;
+    
     oState.time.daysoff = this.days.daysoff*8;
     oState.daysoff = [...this.days.daysoffList];
     oState.daysoffView = oState.daysoff.length ? ':'+oState.daysoff.join(',') : '';
