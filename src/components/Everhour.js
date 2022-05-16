@@ -23,9 +23,11 @@ class Everhour{
 	}
 
 	async fetchUserTasks() {
+
 		try {
 			
 			//const img = await fetch(`http://images.skyprivate.local:3000/sdssdfsd/`,{})
+			//await this.sleep(2000)
 			
 			const res = await fetch(`https://api.everhour.com/users/me/time?from=${this.from}&to=${this.to}`, {
 				method: 'GET',
@@ -42,8 +44,12 @@ class Everhour{
 				error
 			}
 		}
+	}
 
-  }
+	async sleep(ms) {
+  		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	
 }
 
 export default Everhour;

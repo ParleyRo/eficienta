@@ -3,7 +3,7 @@ import Config from './Config';
 import Everhour from './components/Everhour';
 import Days from './components/Days';
 
-import Display from './components/Display';
+import Display from './components/views/Display';
 
 import './assets/css/app.css';
 
@@ -28,7 +28,7 @@ class App extends Component {
       freedays: [],
       weekendDays: 0,
       totalDays: 0,
-      isLoaded: null
+      isLoaded: false
     };
 
     const queryParams = new URLSearchParams(window.location.search);
@@ -50,24 +50,38 @@ class App extends Component {
 
     this.days = oDays.getDays();
 
+    this.everhourStats = {
+      call: false,
+      finish: false,
+      value: 0
+    }
+
   }
 
   async setEverhour(){
-  
+
+    if(this.everhourStats.call === true){
+      return true;
+    }
+
+    this.everhourStats.call = true;
+
     const oEverhour = new Everhour(this.monthPosition);
     
     const tasks = await oEverhour.fetchUserTasks();
-
+    
     if(tasks.error){
       
+      this.everhourStats.finish = true;
       return false;
 
     }
 
-    this.everhour = 0;
     tasks.forEach((task)=>{
-      this.everhour += task.time
+      this.everhourStats.value += task.time
     });
+
+    this.everhourStats.finish = true;
 
     return true;
 
@@ -86,7 +100,7 @@ class App extends Component {
     oState.user.nextmonth = this.monthPosition < 1 ? MonthNames[(this.currentMonth+1)%12] : false;
     oState.user.day = this.currentDay;
 
-    oState.time.everhour = Math.round(this.everhour / 3600);
+    oState.time.everhour = Math.round(this.everhourStats.value / 3600);
     
     oState.time.freedays = this.days.freedays*8;
     oState.freedays = [...this.days.freedaysList];
@@ -136,8 +150,6 @@ class App extends Component {
 
   async componentDidMount() {
 
-    console.log('componentDidMount');
-
     const bEverhour = await this.setEverhour();
 
     if(bEverhour === false){
@@ -161,15 +173,18 @@ class App extends Component {
 
     return (
 
-        <div>
+        <>
 
-          {this.state.isLoaded === null && <h1>Loading....</h1>}
+          {/* {!this.everhourStats.finish && 
+            <h1 className="loading text-center green">Getting data from Everhour api</h1>
+            
+          } */}
 
-          {this.state.isLoaded === true && <Display data={this.state}/>}
+          {this.state.isLoaded && <Display data={this.state}/>}
           
-          {this.state.isLoaded === false && <h2>Error on Everhour</h2>}
+          {!this.state.isLoaded && <h1 className="loading text-center red">Error on Everhour</h1>}
 
-        </div>
+        </>
       
 
     )
