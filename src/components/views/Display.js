@@ -8,7 +8,7 @@ const Display = (props) => {
 			
 			<div className="efficiency">
 				
-				<div className="row is-flex va-center">
+				<div className="row is-flex">
 					<div className="col text-center">
 						<a href={'?month='+(props.data.currentMonth-1)}><b><span className="icons">&lt;</span>&nbsp;{props.data.user.prevmonth}</b></a>
 					</div>
@@ -25,10 +25,10 @@ const Display = (props) => {
 
 				<h3 className="title">{props.data.user.name} - {props.data.user.month} {props.data.user.day}</h3>
 
-				<div className="row is-flex va-center">
+				<div className="row is-flex">
 					
 					<div className="col">
-						<p>TotalDays: {props.data.totalDays}</p>
+						<p>MonthDays: {props.data.monthDays}</p>
 						<p>WeekendDays: {props.data.weekendDays}</p>
 						<p>WorkDays: {props.data.workDays}</p>
 						<p className="green"><b>WorkedDays: {props.data.workedDays}</b></p>

@@ -1,5 +1,7 @@
 import {Component} from 'react';
+
 import Config from './Config';
+
 import Everhour from './components/Everhour';
 import Days from './components/Days';
 
@@ -27,7 +29,7 @@ class App extends Component {
       daysoff: [],
       freedays: [],
       weekendDays: 0,
-      totalDays: 0,
+      monthDays: 0,
       isLoaded: false
     };
 
@@ -105,12 +107,12 @@ class App extends Component {
     oState.time.freedays = this.days.freedays*8;
     oState.freedays = [...this.days.freedaysList];
     
-    oState.workDays = this.days.totalDays - this.days.weekendDays;
+    oState.workDays = this.days.monthDays - this.days.weekendDays;
     oState.workedDays = this.days.workedDays;
 
 
     oState.weekendDays = this.days.weekendDays;
-    oState.totalDays = this.days.totalDays;
+    oState.monthDays = this.days.monthDays;
     
     oState.time.daysoff = this.days.daysoff*8;
     oState.daysoff = [...this.days.daysoffList];

@@ -38,7 +38,7 @@ export class Days{
 		let daysoffList = [];
 		
 		let weekendDays = 0;
-		let totalDays = 0;
+		let monthDays = 0;
 
 		let workedDays = 0;
 
@@ -66,11 +66,11 @@ export class Days{
 				workedDays++;
 			}
 
-			totalDays++;
+			monthDays++;
 		}
 
 		return {
-			freedays,freedaysList,daysoff,daysoffList,weekendDays,totalDays,workedDays
+			freedays,freedaysList,daysoff,daysoffList,weekendDays,monthDays,workedDays
 		};
   	}
 
