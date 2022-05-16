@@ -2,11 +2,9 @@ import React from 'react';
 
 const Display = (props) => {
 	
-	
-    
 	return(
 		<div className="main">
-			{props.data.isLoaded === false && <div className="overlay"></div>}
+			
 			<div className="efficiency">
 				
 				<div className="row has-vertical-align-center">
@@ -24,7 +22,7 @@ const Display = (props) => {
 
 				<h2 className="title">Efficiency</h2>
 
-				<h3 className="title">{props.data.user.name} - {props.data.user.month} on day {props.data.user.day}</h3>
+				<h3 className="title">{props.data.user.name} - {props.data.user.month} {props.data.user.day}</h3>
 
 				<div className="row">
 					

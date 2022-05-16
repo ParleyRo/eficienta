@@ -14,11 +14,11 @@ export class Days{
 		12: [1,2,25,26]
 	}
 
-	constructor(month,day){
+	constructor(monthPosition,day){
 		
 		const date = new Date();
 
-		date.setMonth(date.getMonth()+month);
+		date.setMonth(date.getMonth()+monthPosition);
 		date.setDate(0);
 
 		this.lastDayOfTheMonth = date.getDate();

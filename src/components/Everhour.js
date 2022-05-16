@@ -24,6 +24,9 @@ class Everhour{
 
 	async fetchUserTasks() {
 		try {
+			
+			//const img = await fetch(`http://images.skyprivate.local:3000/sdssdfsd/`,{})
+			
 			const res = await fetch(`https://api.everhour.com/users/me/time?from=${this.from}&to=${this.to}`, {
 				method: 'GET',
 				headers: {
