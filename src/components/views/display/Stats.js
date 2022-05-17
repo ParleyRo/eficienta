@@ -4,19 +4,6 @@ export default function Stats(props) {
   return (
     <div className="efficiency">
 				
-		<div className="row is-flex va-center">
-			<div className="col text-center">
-				<a href={'?month='+(props.data.currentMonth-1)}><b><span className="icons">&lt;</span>&nbsp;{props.data.user.prevmonth}</b></a>
-			</div>
-
-			<div className="col text-center">
-				<h1 className="title blue">{props.data.user.month}</h1>
-			</div>
-			<div className="col text-center">
-				{props.data.user.nextmonth && <a href={'?month='+(props.data.currentMonth+1)}><b>{props.data.user.nextmonth}&nbsp;<span className="icons">&gt;</span></b></a>}
-			</div>
-		</div>
-		
 		<div className="row is-flex">
 			<div className="col">
 				<h2 className="title">Efficiency</h2>
