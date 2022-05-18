@@ -40,6 +40,7 @@ class App extends Component {
     this.monthPosition = Math.min(1,parseInt(month));
 
     const date = new Date();
+    
 		date.setMonth(date.getMonth()+(this.monthPosition>0?0:this.monthPosition));
 
     if(this.monthPosition !== 1){
@@ -97,12 +98,11 @@ class App extends Component {
     oState.isLoaded = true;
 
     oState.user.name = Config.name;
-    
+
     oState.user.month = MonthNames[this.currentMonth];
-    oState.user.prevmonth = MonthNames[(this.currentMonth-1)%12];
+    oState.user.prevmonth = MonthNames[((this.currentMonth-1+12)%12)];
     oState.user.nextmonth = this.monthPosition < 1 ? MonthNames[(this.currentMonth+1)%12] : false;
     oState.user.day = this.currentDay;
-
     oState.time.everhour = Math.round(this.everhourStats.value / 3600);
     
     oState.time.freedays = this.days.freedays*8;

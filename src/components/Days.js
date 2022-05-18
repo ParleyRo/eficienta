@@ -71,7 +71,13 @@ export class Days{
 		}
 
 		return {
-			freedays,freedaysList,daysoff,daysoffList,weekendDays,monthDays,workedDays
+			freedays,
+			freedaysList,
+			daysoff,
+			daysoffList,
+			weekendDays,
+			monthDays,
+			workedDays
 		};
   	}
 
