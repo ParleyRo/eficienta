@@ -1,7 +1,7 @@
 import Config from '../Config';
 class Everhour{
 
-	constructor(currentMonth = 1){
+	constructor(apikey='', currentMonth=1){
 		
 		const date = new Date();
 
@@ -19,14 +19,14 @@ class Everhour{
 			this.to = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 		}
 		
-		this.apiKey = Config.apikey;
+		this.apiKey = apikey
 	}
 
 	async fetchUserTasks() {
 
 		try {
 			
-			//const img = await fetch(`http://images.skyprivate.local:3000/sdssdfsd/`,{})
+			//const img = await fetch(`http://127.0.0.1:5001/`,{})
 			//await this.sleep(2000)
 			
 			const res = await fetch(`https://api.everhour.com/users/me/time?from=${this.from}&to=${this.to}`, {

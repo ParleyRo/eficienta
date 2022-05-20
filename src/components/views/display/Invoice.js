@@ -3,17 +3,33 @@ import ItemLoading from '../ItemLoading';
 
 class Invoice extends Component {
 
+
 	constructor(props) {
 		super(props);
-		
-		this.sendEmail = this.sendEmail.bind(this);
+
+		this.state = {
+			cui: ''
+		};
+
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	sendEmail(){
+	handleChange(event) {
+		this.setState({cui: event.target.value});
+	}
 
-		console.log(this.props)
-		console.log('clicked')
+	async handleSubmit(event) {
+		console.log(this.state)
+		event.preventDefault();
 
+		const res = await fetch(`http://parley.go.ro:5001/`, {
+			'Content-Type': 'application/json'
+		});
+
+		const result = await res.json();
+
+		console.log(result);
 	}
 
 	render(){
@@ -24,7 +40,22 @@ class Invoice extends Component {
 					<div className="col">
 						<h2 className="title">Invoice <ItemLoading /></h2>
 
-						<button onClick={this.sendEmail}>Send email</button>
+					</div>
+				</div>
+
+				<div className="row is flex">
+					<div className="col">
+
+						<form onSubmit={this.handleSubmit}>
+							
+							<label>
+								<span>CUI: </span>
+								<input type="text" value={this.state.cui} onChange={this.handleChange} />
+							</label>
+
+							<input type="submit" value="Submit" />
+						</form>
+
 					</div>
 				</div>
 				

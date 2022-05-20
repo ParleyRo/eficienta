@@ -19,7 +19,8 @@ class App extends Component {
 
     this.state = {
       user:{
-        name: ''
+        name: '',
+        everhourApiKey: ''
       },
       time: {
         everhour: 0,
@@ -55,22 +56,28 @@ class App extends Component {
     this.days = oDays.getDays();
 
     this.everhourStats = {
-      call: false,
+      requestStarted: false,
       finish: false,
       value: 0
     }
 
   }
 
-  async setEverhour(){
+  async setEverhour(apikey){
 
-    if(this.everhourStats.call === true){
+    if(!apikey){
+
+      return false;
+
+    }
+
+    if(this.everhourStats.requestStarted === true){
       return true;
     }
 
-    this.everhourStats.call = true;
+    this.everhourStats.requestStarted = true;
 
-    const oEverhour = new Everhour(this.monthPosition);
+    const oEverhour = new Everhour(apikey,this.monthPosition);
     
     const tasks = await oEverhour.fetchUserTasks();
     
@@ -153,7 +160,7 @@ class App extends Component {
 
   async componentDidMount() {
 
-    const bEverhour = await this.setEverhour();
+    const bEverhour = await this.setEverhour(Config.apikey);
 
     if(bEverhour === false){
       
@@ -178,10 +185,11 @@ class App extends Component {
 
         <>
 
-          {/* {!this.everhourStats.finish && 
+          {/*           
+            {!this.everhourStats.finish && 
             <h1 className="loading text-center green">Getting data from Everhour api</h1>
-            
-          } */}
+            } 
+          */}
 
           {this.state.isLoaded && <Display data={this.state}/>}
           
