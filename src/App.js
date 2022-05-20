@@ -6,6 +6,7 @@ import Everhour from './components/Everhour';
 import Days from './components/Days';
 
 import Display from './components/views/Display';
+import UserData from './components/views/UserData';
 
 import './assets/css/app.css';
 import './assets/css/animations.css';
@@ -57,44 +58,15 @@ class App extends Component {
 
     this.everhourStats = {
       requestStarted: false,
-      finish: false,
+      requestFinish: false,
       value: 0
     }
 
-  }
-
-  async setEverhour(apikey){
-
-    if(!apikey){
-
-      return false;
-
+    this.userStats = {
+      requestStarted: false,
+      requestFinish: false,
+      value: null
     }
-
-    if(this.everhourStats.requestStarted === true){
-      return true;
-    }
-
-    this.everhourStats.requestStarted = true;
-
-    const oEverhour = new Everhour(apikey,this.monthPosition);
-    
-    const tasks = await oEverhour.fetchUserTasks();
-    
-    if(tasks.error){
-      
-      this.everhourStats.finish = true;
-      return false;
-
-    }
-
-    tasks.forEach((task)=>{
-      this.everhourStats.value += task.time
-    });
-
-    this.everhourStats.finish = true;
-
-    return true;
 
   }
 
@@ -158,24 +130,90 @@ class App extends Component {
     return oState;
   }
 
-  async componentDidMount() {
+  async setEverhour(apikey){
 
-    const bEverhour = await this.setEverhour(Config.apikey);
+    if(!apikey){
+
+      return false;
+
+    }
+    if(this.userStats.requestFinish === false){
+      return true;
+    }
+    if(this.everhourStats.requestStarted === true){
+      return true;
+    }
+
+    this.everhourStats.requestStarted = true;
+
+    const oEverhour = new Everhour(apikey,this.monthPosition);
+    
+    const tasks = await oEverhour.fetchUserTasks();
+
+    if(tasks.error){
+      
+      this.everhourStats.requestFinish = true;
+      return false;
+
+    }
+
+    tasks.forEach((task)=>{
+      this.everhourStats.value += task.time
+    });
+
+    this.everhourStats.requestFinish = true;
+
+    return true;
+
+  }
+
+  async setUserData(secret){
+
+    if(this.userStats.requestStarted === true){
+      return true;
+    }
+
+    this.userStats.requestStarted = true;
+
+    const res = await fetch(`http://parley.go.ro:5001/user/${secret}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+    this.userStats.requestFinish = true;
+
+    this.userStats.value = await res.json();
+    
+    return true;
+
+  }
+  async componentDidMount() {
+    
+    const secret = localStorage.getItem("ef_secret");
+
+    if(secret == null){
+
+      this.setState({isLoaded: false});
+
+      return ;
+    }
+    
+    await this.setUserData(secret);
+
+    const bEverhour = await this.setEverhour(this.userStats.value?.everhour?.apikey);
 
     if(bEverhour === false){
-      
-      let oState = {...this.state};
 
-      oState.isLoaded = false;
-
-      this.setState(oState);
+      this.setState({isLoaded: false});
 
       return;
     }
     
     const oState = this.setData();
 
-    this.setState(oState);
+    this.setState({oState});
     
   }
 
@@ -193,7 +231,7 @@ class App extends Component {
 
           {this.state.isLoaded && <Display data={this.state}/>}
           
-          {!this.state.isLoaded && <h1 className="loading text-center red">Error on Everhour</h1>}
+          {!this.state.isLoaded && <UserData data={this.userStats}/>}
 
         </>
       

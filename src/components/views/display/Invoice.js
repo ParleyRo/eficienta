@@ -20,7 +20,7 @@ class Invoice extends Component {
 	}
 
 	async handleSubmit(event) {
-		console.log(this.state)
+
 		event.preventDefault();
 
 		const res = await fetch(`http://parley.go.ro:5001/`, {

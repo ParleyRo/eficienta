@@ -1,4 +1,3 @@
-import Config from '../Config';
 class Everhour{
 
 	constructor(apikey='', currentMonth=1){
@@ -19,7 +18,7 @@ class Everhour{
 			this.to = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 		}
 		
-		this.apiKey = apikey
+		this.apikey = apikey
 	}
 
 	async fetchUserTasks() {
@@ -33,10 +32,20 @@ class Everhour{
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					'X-Api-Key': this.apiKey
+					'X-Api-Key': this.apikey
 				}
-				});
+			});
 
+			console.log('Everhour request: ',res.status)
+
+			if(res.status === 404){
+				return {
+					error: {
+						type: 'bad_api_key',
+						description: 'Not a valid api key'
+					}
+				}
+			}
 			return await res.json();
 
 		} catch (error) {
