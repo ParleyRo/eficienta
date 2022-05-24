@@ -19,9 +19,11 @@ class App extends Component {
     super();
 
     this.state = {
+      key: 0,
       user:{
         name: '',
-        everhourApiKey: ''
+        savedData:{},
+        secret: ''
       },
       time: {
         everhour: 0,
@@ -75,7 +77,7 @@ class App extends Component {
     let oState = {...this.state};
 
     oState.isLoaded = true;
-
+    
     oState.user.name = Config.name;
 
     oState.user.month = MonthNames[this.currentMonth];
@@ -127,19 +129,21 @@ class App extends Component {
 
     oState.currentMonth = this.monthPosition;
 
+    oState.user.savedData = this.userStats
+
     return oState;
   }
 
   async setEverhour(apikey){
 
     if(!apikey){
-
       return false;
-
     }
+
     if(this.userStats.requestFinish === false){
       return true;
     }
+    
     if(this.everhourStats.requestStarted === true){
       return true;
     }
@@ -147,7 +151,6 @@ class App extends Component {
     this.everhourStats.requestStarted = true;
 
     const oEverhour = new Everhour(apikey,this.monthPosition);
-    
     const tasks = await oEverhour.fetchUserTasks();
 
     if(tasks.error){
@@ -175,22 +178,31 @@ class App extends Component {
 
     this.userStats.requestStarted = true;
 
-    const res = await fetch(`http://parley.go.ro:5001/user/${secret}`, {
+    const url = `${window.location.protocol}//${window.location.hostname}:5001/user/${secret}`;
+
+    const res = await fetch(url, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json'
 				}
-			});
+		});
 
-    this.userStats.requestFinish = true;
-
-    this.userStats.value = await res.json();
+    const userData = await res.json();
     
+    this.userStats.requestFinish = true;
+    
+    if(userData.error){
+      return false;
+    }
+
+    this.userStats.value = userData;
+
     return true;
 
   }
+  
   async componentDidMount() {
-    
+
     const secret = localStorage.getItem("ef_secret");
 
     if(secret == null){
@@ -199,23 +211,36 @@ class App extends Component {
 
       return ;
     }
-    
-    await this.setUserData(secret);
 
+    await this.setUserData(secret);
+    
     const bEverhour = await this.setEverhour(this.userStats.value?.everhour?.apikey);
 
-    if(bEverhour === false){
+    if(bEverhour === false && this.userStats.value != null){
 
-      this.setState({isLoaded: false});
+        let oState = {isLoaded: false}
 
-      return;
+        if(this.userStats.value != null){
+          oState['user']= {
+            savedData: this.userStats.value
+          }
+
+           this.setState(oState);
+        }
+
+       
+
+      //return;
+    }else{
+      const oState = this.setData();
+
+      this.setState(oState);
     }
     
-    const oState = this.setData();
-
-    this.setState({oState});
+    
     
   }
+
 
   render() {
 
@@ -229,9 +254,14 @@ class App extends Component {
             } 
           */}
 
-          {this.state.isLoaded && <Display data={this.state}/>}
+
+          { this.state.isLoaded && 
+              <Display data={this.state}/>
+          }
           
-          {!this.state.isLoaded && <UserData data={this.userStats}/>}
+          { !this.state.isLoaded &&
+               <UserData data={this.userStats.value}/>
+          }
 
         </>
       

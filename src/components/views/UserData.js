@@ -4,18 +4,27 @@ class UserData extends Component {
 	
 	constructor(props) {
 		super(props);
-console.log('userData props,',props.data);
+console.log('UserData:',props)
 		this.state = {
-			secret: props.data.value?.secret,
-			apikey: props.data.value?.everhour?.apikey,
+			secret: '',
+			apikey: '',
 			error: false
 		};
+		
+		if(props.data?.everhour?.apikey){
+			this.state.apikey = props.data?.everhour?.apikey;
+		}
+
+		if(props.data?.secret){
+			this.state.secret = props.data?.secret;
+		}
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleChange(event) {
+
 		let fields = {};
 
 		fields[event.target.name] = event.target.value;
@@ -27,16 +36,27 @@ console.log('userData props,',props.data);
 	async handleSubmit(event) {
 
 		event.preventDefault();
+		
+		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
+		
+		let data = {
+			secret: this.state.secret
+		}
 
-		const res = await fetch(`http://parley.go.ro:5001/save`, {
+		if(this.state.apikey){
+
+			data['everhour'] = {
+				apikey: this.state.apikey
+			}
+			
+		}
+
+		const res = await fetch(url, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				secret: this.state.secret,
-				everhour: {
-					apikey: this.state.apikey
-				}
-			})
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
 		});
 
 		const result = await res.json();
@@ -47,6 +67,8 @@ console.log('userData props,',props.data);
 		}
 
 		localStorage.setItem("ef_secret", this.state.secret);
+		
+		window.location.reload()
 
 		return;
 	}
@@ -54,6 +76,7 @@ console.log('userData props,',props.data);
 	render(){
 
 		return(
+			
 			<div className="main">
 				
 				<form onSubmit={this.handleSubmit}>
@@ -71,7 +94,7 @@ console.log('userData props,',props.data);
 						<div className="col">
 							<label>
 								<span>Everhour apikey: </span>
-								<input type="text" name="apikey" value={this.state.apikey} onChange={this.handleChange} required />
+								<input type="text" name="apikey" value={this.state.apikey} onChange={this.handleChange} />
 							</label>
 						</div>
 					</div>

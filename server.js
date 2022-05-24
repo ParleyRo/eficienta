@@ -17,6 +17,10 @@ fastify.get('/user/:secret', async (req, reply) => {
 	
 	console.log('Found documents =>', findResult);
 	
+	if(!findResult.length){
+		return {error: 1}
+	}
+
 	return reply.send(findResult[0]);
 
 });
@@ -25,8 +29,14 @@ fastify.post('/save', async (req, reply) => {
 
 	const params = req.body;
 	
+	//in the first place we're expecting params :secret , :everhour.apikey;
+	
+	// if(params.everhour == null){
+	// 	return {success: true}
+	// }
+
 	const dbCollection = await DB.connect('users');
-	console.log(params);
+	
 	const insertResult = await dbCollection.updateOne({secret: params.secret},{$set: params},{upsert: true});
 
 	console.log('Inserted documents =>', insertResult);
