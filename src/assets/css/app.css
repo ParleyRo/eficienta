@@ -1,13 +1,21 @@
 .main{
-	font-family: Arial,sans-serif;
-    max-width: 940px;
+	font-family: Arial, Helvetica, Sans-serif;
+    max-width: 960px;
+	flex-grow: 1;
     margin: 0 auto;
+    position: relative;
+    width: auto;
     color: #0a0a0a;
     background: #fafafa;
-    padding: 0 20px;
+	padding: 1.5rem;
 }
 .row{
-	
+	margin-left: -.75rem;
+    margin-right: -.75rem;
+    margin-top: -.75rem;
+}
+.row:not(:last-child) {
+    margin-bottom: calc(1.5rem - .75rem);
 }
 .is-flex{
 	display: flex;
@@ -17,12 +25,19 @@
 }
 
 .col{
-	padding: 20px 30px;
-	width: 100%;
-    max-width: 100%;
+	display: block;
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding: .75rem;
 }
 
+.col.auto{
+	flex: none;
+    width: auto;
+}
 .col.full{
+	flex: none;
 	width: 100%;
 }
 .green{
@@ -37,6 +52,9 @@
 }
 .red{
 	color: #c10000;
+}
+.turquoise{
+	color: #358b9d;
 }
 
 .title{
@@ -61,8 +79,6 @@
 	
 }
 
-
-
 .text-center{
 	text-align: center;
 }
@@ -71,9 +87,9 @@ a, a:focus, a:hover, a:active {
     outline: 0;
 }
 a {
-    color: #169ef4;
-	 outline: 0;
-	 text-decoration: none;
+	color: #169ef4;
+	outline: 0;
+	text-decoration: none;
 }
 
 .icons{
@@ -87,4 +103,91 @@ a {
     align-items: center;
     justify-content: center;
     height: 100vh;
+}
+
+.InvoiceContent{
+	width: 19cm;
+  	height: 25.7cm;
+	padding-left: 1cm;
+	padding-right: 1cm;
+	padding-top: 1cm;
+	padding-bottom: 0.5cm;
+  	display: block;
+  	margin: 0 auto;
+  	margin-bottom: 0.5cm;
+	font-size: 12px;
+	position: relative;
+	font-family: sans-serif;
+}
+
+.invoiceHeader{
+	border-bottom: 1px solid #358b9d;
+}
+.invoiceHeader p{
+	margin: 0 0 2px 0;
+}
+.invoiceFooter{
+	position: absolute;
+    bottom: 0;
+    border-top: 1px solid #358b9d;
+    padding-top: 0.75rem;
+    border-bottom: 1px solid #358b9d;
+}
+
+.invoiceFooter p{
+	margin: 0 0 5px 0;
+}
+/* Form style */
+label input,
+label input:focus
+label input:focus-visible{
+	border-color: green;
+    border-style: solid;
+    border-radius: 3px;
+	border-width: 1px;
+    padding: 6px 5px;
+    margin-top: 5px;
+	outline: none;
+}
+label input:not(.error):focus-visible{
+	box-shadow: rgba(0, 128, 0, 0.24) 0px 3px 8px;
+}
+form.error label input{
+	border-color: red;
+	color: red;
+}
+
+input.error{
+	border-color: red;
+	color: red;
+	box-shadow: rgba(255, 0, 0, 0.24) 0px 3px 8px;
+}
+
+form input.large{
+	width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+	width: 100%;
+}
+
+tr{
+	display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+table td, table th {
+    border: 1px solid #358b9d;
+    border-width: 1px;
+    padding: .5em .75em;
+    vertical-align: top;
+
+}
+
+
+.pos1 button,
+.pos2 button{
+	margin-top: 22px;
 }

@@ -19,11 +19,9 @@ class App extends Component {
     super();
 
     this.state = {
-      key: 0,
       user:{
         name: '',
-        savedData:{},
-        secret: ''
+        savedData:{}
       },
       time: {
         everhour: 0,
@@ -53,10 +51,7 @@ class App extends Component {
 
     this.currentDay = date.getDate();
     this.currentMonth = date.getMonth();
-
-    const oDays = new Days(this.monthPosition,this.currentDay);
-
-    this.days = oDays.getDays();
+    this.currentYear = date.getFullYear();
 
     this.everhourStats = {
       requestStarted: false,
@@ -79,6 +74,8 @@ class App extends Component {
     oState.isLoaded = true;
     
     oState.user.name = Config.name;
+
+    oState.user.year = this.currentYear;
 
     oState.user.month = MonthNames[this.currentMonth];
     oState.user.prevmonth = MonthNames[((this.currentMonth-1+12)%12)];
@@ -219,7 +216,7 @@ class App extends Component {
     if(bEverhour === false && this.userStats.value != null){
 
         let oState = {isLoaded: false}
-
+  
         if(this.userStats.value != null){
           oState['user']= {
             savedData: this.userStats.value
@@ -228,16 +225,16 @@ class App extends Component {
            this.setState(oState);
         }
 
-       
-
-      //return;
-    }else{
-      const oState = this.setData();
-
-      this.setState(oState);
+      return;
     }
+
+    const oDays = new Days(this.monthPosition,this.currentDay,this.userStats.value?.daysoff);
+
+    this.days = oDays.getDays();
     
-    
+    const oState = this.setData();
+
+    this.setState(oState);
     
   }
 

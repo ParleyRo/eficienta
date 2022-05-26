@@ -4,10 +4,11 @@ class UserData extends Component {
 	
 	constructor(props) {
 		super(props);
-console.log('UserData:',props)
+
 		this.state = {
 			secret: '',
 			apikey: '',
+			daysoff: [],
 			error: false
 		};
 		
@@ -48,7 +49,7 @@ console.log('UserData:',props)
 			data['everhour'] = {
 				apikey: this.state.apikey
 			}
-			
+
 		}
 
 		const res = await fetch(url, {
@@ -68,7 +69,7 @@ console.log('UserData:',props)
 
 		localStorage.setItem("ef_secret", this.state.secret);
 		
-		window.location.reload()
+		window.location.reload();
 
 		return;
 	}

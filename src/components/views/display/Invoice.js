@@ -2,13 +2,24 @@ import {Component} from 'react';
 import ItemLoading from '../ItemLoading';
 import _ from "lodash";
 
-class Invoice extends Component {
+import InvoiceView from './invoice/View';
+import CurrentData from './invoice/CurrentData';
+import UserForm from './invoice/UserForm';
 
+import ReactToPrint from 'react-to-print';
+
+class Invoice extends Component {
 
 	constructor(props) {
 		super(props);
 		
+		const date = new Date();
+		const dueDate = new Date();
+		dueDate.setDate(dueDate.getDate() +10);
+		
 		this.state = {
+			ajaxLoading: false,
+			formState: true,
 			general: {
 				companyName: null,
 				companyRegistrationNumber: null,
@@ -17,19 +28,105 @@ class Invoice extends Component {
 				companyPhone: null,
 				companyEmail: null,
 				companyBank: null,
-				companySwift: null
-			}
+				companySwift: null,
+				companyIban: null
+			},
+			buyer: {
+				companyName: null,
+				companyId: null,
+				companyAddress: null
+			},
+			current: {
+				pos1: {
+					income: null,
+					description: 'Consulting Services',
+					euroPerHour: 21.25,
+					efficiency: 0
+				},
+				pos2: {
+					active: false,
+					description: null,
+					amount: null
+				},
+				pos3: {
+					active: false,
+					description: null,
+					amount: null
+				},
+				invoiceNumber: null,
+				invoiceDate: `${('0'+date.getDate()).slice(-2)}/${('0'+(date.getMonth()+1)).slice(-2)}/${date.getFullYear()}`,
+				invoiceDueDate: `${('0'+dueDate.getDate()).slice(-2)}/${('0'+(dueDate.getMonth()+1)).slice(-2)}/${dueDate.getFullYear()}`,
+				
+			},
+			fieldsWithError:[]
 		};
 
 		this.secret = localStorage.getItem("ef_secret");
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.addNewPos = this.addNewPos.bind(this);
+	}
+
+	addNewPos(event){
+
+		let oCurrent = this.state.current;
+		oCurrent[`pos${event.target.dataset.pos}`] = {...oCurrent[`pos${event.target.dataset.pos}`],active: !oCurrent[`pos${event.target.dataset.pos}`].active} 
+		
+		this.setState({ 
+			current: oCurrent
+		});
 	}
 
 	handleChange(event) {
 
-		_.set(this.state, event.target.dataset.stateLocation, event.target.value.trim());
+		const value = event.target.value.trim();
+		const stateLocation = event.target.dataset.stateLocation;
+
+		const noEmptyFields = [
+			'current.invoiceNumber',
+			'current.pos1.income','current.pos1.description',
+			'current.pos2.amount','current.pos2.description',
+			'current.pos3.amount','current.pos3.description'
+		]
+		if(noEmptyFields.includes(stateLocation)){
+			
+			if((value === '' || value == null) && !this.state.fieldsWithError.includes(stateLocation)){
+				_.set(this.state, 'fieldsWithError', [...this.state.fieldsWithError, stateLocation]);
+			}else{
+				const fieldsWithError = [...this.state.fieldsWithError];
+				const index = fieldsWithError.indexOf(stateLocation);
+
+				if (index > -1) {
+					fieldsWithError.splice(index, 1); // 2nd parameter means remove one item only
+				}
+
+				_.set(this.state, 'fieldsWithError', fieldsWithError);
+			}
+		}
+
+		if(['current.invoiceDate','current.invoiceDueDate'].includes(stateLocation)){
+			
+			const matched  = value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+
+			if(matched == null && !this.state.fieldsWithError.includes(stateLocation)){
+				
+				_.set(this.state, 'fieldsWithError', [...this.state.fieldsWithError, stateLocation]);
+			
+			}else{
+
+				const fieldsWithError = [...this.state.fieldsWithError];
+				const index = fieldsWithError.indexOf(stateLocation);
+
+				if (index > -1) {
+					fieldsWithError.splice(index, 1); // 2nd parameter means remove one item only
+				}
+
+				_.set(this.state, 'fieldsWithError', fieldsWithError);
+			}
+  			//return (m) ? new Date(m[3], m[2]-1, m[1]) : null;
+		}
+		_.set(this.state, stateLocation, value);
 		
 
 		this.setState(this.state);
@@ -39,153 +136,133 @@ class Invoice extends Component {
 
 		event.preventDefault();
 
-		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
+		let isValid = true;
 
+		for (const [key] of Object.entries(this.state.general)) {
+
+			if(this.state.general[key] == null || this.state.general[key] === ''){
+				isValid = false;
+			}
+		}
+
+		for (const [key] of Object.entries(this.state.buyer)) {
+
+			if(this.state.buyer[key] == null || this.state.buyer[key] === ''){
+				isValid = false;
+			}
+		}
+		
+		if(!isValid){
+			this.setState({formState: false})
+			return;
+		}
+		
+		this.setState({ajaxLoading: true})
+		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
+		
 		const res = await fetch(url, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({secret: this.secret, invoice: this.state})
+			body: JSON.stringify({secret: this.prop.secret, invoice: {general: this.state.general, buyer: this.state.buyer}})
 		});
 
 		const result = await res.json();
+		
+		this.setState({ajaxLoading: false})
 
-		console.log(result);
+		if(result.success){
+			this.setState({formState: true})
+		}
+		//console.log(result);
 	}
+
 
 	componentDidMount(){
-		
-		
+
+		if(this.props?.data?.user?.savedData?.value?.invoice?.general && this.props?.data?.user?.savedData?.value?.invoice?.general !== this.state.general){
+			this.setState({general: this.props.data.user.savedData.value.invoice.general || ''})
+		}
+
+		if(this.props?.data?.user?.savedData?.value?.invoice?.buyer && this.props?.data?.user?.savedData?.value?.invoice?.buyer !== this.state.buyer){
+			this.setState({buyer: this.props.data.user.savedData.value.invoice.buyer || ''})
+		}
 	}
 
-	render(){
+	componentDidUpdate(prevProps, prevState, snapshot){
 
-		const companyName = this.props.data?.user?.savedData?.value?.invoice?.general?.companyName;
-		const companyRegistrationNumber = this.props.data?.user?.savedData?.value?.invoice?.general?.companyRegistrationNumber;
-		const companyVatNumber = this.props.data?.user?.savedData?.value?.invoice?.general?.companyVatNumber;
-		const companyAddress = this.props.data?.user?.savedData?.value?.invoice?.general?.companyAddress;
-		const companyPhone = this.props.data?.user?.savedData?.value?.invoice?.general?.companyPhone;
-		const companyEmail = this.props.data?.user?.savedData?.value?.invoice?.general?.companyEmail;
-		const companyBank = this.props.data?.user?.savedData?.value?.invoice?.general?.companyBank;
-		const companySwift = this.props.data?.user?.savedData?.value?.invoice?.general?.companySwift;
-		const companyIban = this.props.data?.user?.savedData?.value?.invoice?.general?.companyIban;
+		if(prevProps?.data?.user?.savedData?.value?.invoice?.general && prevProps?.data?.user?.savedData?.value?.invoice?.general !== this.state.general){
+			this.setState({general: prevProps.data.user.savedData.value.invoice.general || ''})
+		}
+
+		if(prevProps?.data?.user?.savedData?.value?.invoice?.buyer && prevProps?.data?.user?.savedData?.value?.invoice?.buyer !== this.state.buyer){
+			this.setState({buyer: prevProps.data.user.savedData.value.invoice.buyer || ''})
+		}
+
+		if(prevProps?.data?.efficiency && prevProps?.data?.efficiency !== this.state.current.pos1.efficiency){
+			this.setState({ 
+				current: { 
+					...this.state.current,
+					pos1: {
+						...this.state.current.pos1,
+						efficiency: prevProps.data.efficiency
+					}
+				}
+			});
+		}
+
+	}
+	render(){
 
 		return (
 			<div className="invoice">
 
-				Pîrloagă Cristian-ionuț Persoană Fizică Autorizată
-				Company Registration Number: F40/2909/2021
-				VAT number: 45195026
-				Address: Str. Burdujeni, 16, Bl:n14, Sc:a, Et:4, Ap:10, -, București
-				Bucuresti, jud. Bucharest, România
-				Phone: 0723570494
-				Email: cristian.pirloaga@gmail.com
-				Bank: Revolut
-				SWIFT: REVOLT21
-				IBAN(EUR): LT303250019381864797
-
-				<div className="row is flex">
-					<div className="col">
-						<h2 className="title">Invoice <ItemLoading /></h2>
-
-					</div>
-				</div>
-
-				<div className="row is flex">
+				<div className="row is-flex">
 					<div className="col">
 
-						<form onSubmit={this.handleSubmit}>
-
-							<div className="row is-flex">
-								<div className="col">
-									<label>
-										<span>Company Name: </span>
-										<input type="text" value={this.state.general.companyName == null ? (companyName || '') : this.state.general.companyName} data-state-location="general.companyName" onChange={this.handleChange} required />
-									</label>
-								</div>
-							</div>
-
-							<div className="row is-flex">
-								<div className="col">
-									<label>
-										<span>Company Registration Number: </span>
-										<input type="text" value={this.state.general.companyRegistrationNumber == null ? (companyRegistrationNumber || '') : this.state.general.companyRegistrationNumber} data-state-location="general.companyRegistrationNumber" onChange={this.handleChange} required />
-									</label>
-								</div>
-							</div>
-
-							<div className="row is-flex">
-								<div className="col">
-									<label>
-										<span>VAT number: </span>
-										<input type="text" value={this.state.general.companyVatNumber == null ? (companyVatNumber || '') : this.state.general.companyVatNumber} data-state-location="general.companyVatNumber" onChange={this.handleChange} required />
-									</label>
-								</div>
-							</div>
-
-							<div className="row is-flex">
-								<div className="col">
-									<label>
-										<span>Address: </span>
-										<input type="text" value={this.state.general.companyAddress == null ? (companyAddress || '') : this.state.general.companyAddress} data-state-location="general.companyAddress" onChange={this.handleChange} required />
-									</label>
-								</div>
-							</div>
-
-							<div className="row is-flex">
-								<div className="col">
-									<label>
-										<span>Phone: </span>
-										<input type="text" value={this.state.general.companyPhone == null ? (companyPhone || '') : this.state.general.companyPhone} data-state-location="general.companyPhone" onChange={this.handleChange} required />
-									</label>
-								</div>
-							</div>
-
-							<div className="row is-flex">
-								<div className="col">
-									<label>
-										<span>Email: </span>
-										<input type="text" value={this.state.general.companyEmail == null ? (companyEmail || '') : this.state.general.companyEmail} data-state-location="general.companyEmail" onChange={this.handleChange} required />
-									</label>
-								</div>
-							</div>
-
-							<div className="row is-flex">
-								<div className="col">
-									<label>
-										<span>Bank: </span>
-										<input type="text" value={this.state.general.companyBank == null ? (companyBank || '') : this.state.general.companyBank} data-state-location="general.companyBank" onChange={this.handleChange} required />
-									</label>
-								</div>
-							</div>
-
-							<div className="row is-flex">
-								<div className="col">
-									<label>
-										<span>Swift: </span>
-										<input type="text" value={this.state.general.companySwift == null ? (companySwift || '') : this.state.general.companySwift} data-state-location="general.companySwift" onChange={this.handleChange} required />
-									</label>
-								</div>
-							</div>
-
-							<div className="row is-flex">
-								<div className="col">
-									<label>
-										<span>Iban: </span>
-										<input type="text" value={this.state.general.companyIban == null ? (companyIban || '') : this.state.general.companyIban} data-state-location="general.companyIban" onChange={this.handleChange} required />
-									</label>
-								</div>
-							</div>
-
-
-							<input type="submit" value="Submit" />
-						</form>
+						<h2 className="title">Invoice {this.state.ajaxLoading && <ItemLoading />}</h2>
 
 					</div>
 				</div>
 				
+				<UserForm 
+					handleSubmit={this.handleSubmit}
+					handleChange={this.handleChange}
+					formState={this.state.formState}
+					general={this.state.general}
+					buyer={this.state.buyer}
+				/>
+
+				<hr />
+
+				<CurrentData 
+					current={this.state.current} 
+					fieldsWithError={this.state.fieldsWithError} 
+					handleChange={this.handleChange}
+					addNewPos={this.addNewPos}
+				/>
+
+				<hr />
+				
+
+				<InvoiceView 
+					ref={el => (this.componentRef = el)}
+					date={{month: this.props.data.user.month, year: this.props.data.user.year}} 
+					general={this.state.general} 
+					buyer={this.state.buyer} 
+					current={this.state.current}
+					fieldsWithError={this.state.fieldsWithError}
+				/>
+
+				<ReactToPrint
+					content={() => this.componentRef}
+					trigger={() => <button className="">Print to PDF!</button>}
+				/>
+
+
 			</div>
+				
 		)
 	}
 }

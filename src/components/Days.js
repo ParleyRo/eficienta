@@ -1,10 +1,5 @@
 export class Days{
 
-	daysoff = {
-		2: [15,16],
-		4: [21]
-	}
-
 	freedays = {
 		1: [1,2,24],
 		4: [22,23,24,25],
@@ -15,8 +10,8 @@ export class Days{
 		12: [1,2,25,26]
 	}
 
-	constructor(monthPosition,day){
-		
+	constructor(monthPosition,day,daysoff){
+
 		const date = new Date();
 
 		date.setMonth(date.getMonth()+monthPosition);
@@ -27,6 +22,8 @@ export class Days{
 	
 		this.day = day;
 		this.date = date;
+
+		this.daysoff = daysoff || [];
 	}
 
 
