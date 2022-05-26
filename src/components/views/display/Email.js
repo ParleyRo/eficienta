@@ -18,9 +18,11 @@ class Email extends Component {
 	}
 
 	render(){
+
 		const colStyle = {
 			textAlign: 'right',
 		} 
+
 		return (
 			<div className="email">
 
@@ -41,7 +43,7 @@ class Email extends Component {
 				
 				<div className="row is-flex">
 					<div className="col">
-						<p className="subject">monthly efficiency for {this.props.data.user.name} - {this.props.data.user.month}</p>
+						<p className="subject">monthly efficiency for {this.props.data.user?.savedData?.value?.name || '' } - {this.props.data.user.month}</p>
 					</div>
 				</div>
 

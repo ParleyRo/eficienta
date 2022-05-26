@@ -23,6 +23,9 @@
 .va-center{
 	align-items: center;
 }
+.va-end{
+	align-items: flex-end;
+}
 
 .col{
 	display: block;

@@ -1,7 +1,5 @@
 import {Component} from 'react';
 
-import Config from './Config';
-
 import Everhour from './components/Everhour';
 import Days from './components/Days';
 
@@ -72,8 +70,6 @@ class App extends Component {
     let oState = {...this.state};
 
     oState.isLoaded = true;
-    
-    oState.user.name = Config.name;
 
     oState.user.year = this.currentYear;
 
