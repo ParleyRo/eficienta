@@ -2,6 +2,8 @@ import {Component} from 'react';
 import DatePicker from "react-multi-date-picker";
 import InputIcon from "react-multi-date-picker/components/input_icon";
 
+import _ from "lodash";
+
 class Daysoff extends Component {
 	
 	constructor(props) {
@@ -9,13 +11,12 @@ class Daysoff extends Component {
 		super(props);
 
 		this.state={
-			values:[],
+			values:{},
 			dates: [],
 			daysoff: null
 		}
-		this.values=[];
 
-		this.setValues = this.setValues.bind(this)
+		this.setValues = this.setValues.bind(this);
 	}
 
 	async setValues(values){
@@ -99,11 +100,17 @@ class Daysoff extends Component {
 				<label>Set here you Days off</label>
 				<br />
 				<DatePicker 
+					{...this.state.values} 
 					multiple
 					format="DD-MM-YYYY"
 					value={this.state.dates} 
 					onChange={this.setValues}
-					onClose={() => window.location.reload()}
+					onClose={() => {
+
+						if(!_.isEmpty(this.state.values)){
+							window.location.reload();
+						}
+					}}
 					showOtherDays
 					render={<InputIcon/>}
 					
