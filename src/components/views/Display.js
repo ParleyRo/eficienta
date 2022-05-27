@@ -19,6 +19,10 @@ const Display = (props) => {
 	return(
 		<div className="main">
 			
+			
+
+
+
 			<div className="is-flex va-center">
 				<div className="col auto"> <UserName data={props.data}/> </div>
 				<div className="col auto"> <Daysoff data={props.data}/> </div>
