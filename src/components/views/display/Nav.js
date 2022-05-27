@@ -6,7 +6,8 @@ export default function Nav(props) {
 		window.location.reload()
 	}
 	return (
-
+		
+		
 		<div className="row is-flex va-center">
 			<div className="col text-center">
 				<a href={'?month='+(props.data.currentMonth-1)}><b><span className="icons">&lt;</span>&nbsp;{props.data.user.prevmonth}</b></a>

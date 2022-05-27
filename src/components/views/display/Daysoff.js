@@ -96,7 +96,8 @@ class Daysoff extends Component {
 
 		return (
 			<>
-				
+				<label>Set here you Days off</label>
+				<br />
 				<DatePicker 
 					multiple
 					format="DD-MM-YYYY"
@@ -108,7 +109,7 @@ class Daysoff extends Component {
 					
 				/>
 
-				<label> &nbsp;Set here you Days off</label>
+				
 				
 			</>
 

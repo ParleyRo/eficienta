@@ -12,10 +12,11 @@ const Display = (props) => {
 	return(
 		<div className="main">
 			
-			<UserName data={props.data}/>
-
-			<Daysoff data={props.data}/>
-
+			<div className="is-flex va-center">
+				<div className="col auto"> <UserName data={props.data}/> </div>
+				<div className="col auto"> <Daysoff data={props.data}/> </div>
+			</div>
+			
 			<Nav data={props.data}/>
 
 			<Stats data={props.data}/>
@@ -27,6 +28,7 @@ const Display = (props) => {
 			<hr />
 
 			<Invoice data={props.data} />
+      
 		</div>
     );
 }

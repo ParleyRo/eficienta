@@ -165,7 +165,7 @@ class Invoice extends Component {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({secret: this.prop.secret, invoice: {general: this.state.general, buyer: this.state.buyer}})
+			body: JSON.stringify({secret: this.secret, invoice: {general: this.state.general, buyer: this.state.buyer}})
 		});
 
 		const result = await res.json();

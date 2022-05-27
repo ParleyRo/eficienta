@@ -72,7 +72,7 @@ class UserName extends Component {
 
 							<div className="col auto ">
 								<label>
-									<div>Your Name: </div>
+									<div>Set your name: </div>
 									<input className="large" type="text" value={this.state.name || ''} onChange={this.handleChange} required />
 								</label>
 							</div>
