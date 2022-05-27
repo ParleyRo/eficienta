@@ -64,24 +64,6 @@
 	margin: 0;
 }
 
-.email{
-    display: inline-block;
-}
-
-.email .subject{
-	padding: 0px 0px;
-	margin: 0;
-}
-
-.email .body{
-	padding: 0px 0px;
-	margin: 0;
-}
-
-.efficiency{
-	
-}
-
 .text-center{
 	text-align: center;
 }

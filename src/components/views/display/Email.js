@@ -30,37 +30,19 @@ class Email extends Component {
 					<div className="col">
 						<h2 className="title">Email</h2>
 					</div>
-					<div className="col" style={colStyle}>
-						<button href="#" onClick={this.sendEmail}>Send email</button>
-					</div>
+					
 				</div>
 
 				<div className="row is-flex">
 					<div className="col">
 						<h3 className="title">Subject</h3>
-					</div>
-				</div>
-				
-				<div className="row is-flex">
-					<div className="col">
+						<br />
 						<p className="subject">monthly efficiency for {this.props.data.user?.savedData?.value?.name || '' } - {this.props.data.user.month}</p>
 					</div>
-				</div>
-
-				<div className="row is-flex">
-					<div className="col">
-						<hr />
-					</div>
-				</div>
-
-				<div className="row is-flex">
+				
 					<div className="col">
 						<h3 className="title">Body</h3>
-					</div>
-				</div>
-
-				<div className="row is-flex">
-					<div className="col">
+						<br />
 						<div className="body">
 							<p>Hi</p>
 
@@ -76,8 +58,8 @@ class Email extends Component {
 							<p>bye</p>
 						</div>
 					</div>
+					
 				</div>
-
 			</div>
 		)
 	}
