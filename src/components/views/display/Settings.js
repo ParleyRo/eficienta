@@ -26,13 +26,17 @@ class Settings extends Component {
 		return (
 		
 			<div className="settings container has-boxshadow">
+				
+				<div className="logout has-pointer text-center" onClick={this.logout}>
+					<span className="is-big" title="logout" >🏃‍♂️</span>
+					<br />
+					<small>Logout</small>
+				</div>
 
 				<div className="is-flex va-center responsive">
-					<div className="col"> <UserName data={this.props.data}/> </div>
+					<div className="col auto"> <UserName data={this.props.data}/> </div>
 					<div className="col auto"> <Daysoff data={this.props.data}/> </div>
-					<div className="col text-right">
-						<button onClick={this.logout}>Logout</button>
-					</div>
+					
 				</div>
 
 				<hr />

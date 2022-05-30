@@ -5,12 +5,14 @@ const client = new MongoClient('mongodb://127.0.0.1:27017/');
 const dbName = 'efficiency';
 
 fastify.register(require('fastify-cors'), { 
-	origin: '*'
+	origin: ['http://localhost:5000', 'http://parley.go.ro:5000']
+	//origi: '*'
 })
 
 // Declare a route
 fastify.get('/user/:secret', async (req, reply) => {
 
+	console.log(req.headers.origin)
 	const dbCollection = await DB.connect('users');
 
 	const findResult = await dbCollection.find({secret: req.params.secret}).toArray();

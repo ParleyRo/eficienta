@@ -36,8 +36,6 @@ class Invoice extends Component {
 			this.state.buyer = {...this.state.buyer,...this.props.data.user.savedData.value.invoice.buyer};
 		}
 
-		this.secret = localStorage.getItem("ef_secret");
-
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -76,7 +74,7 @@ class Invoice extends Component {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({secret: this.secret, invoice: {general: this.state.general, buyer: this.state.buyer}})
+			body: JSON.stringify({secret: this.props.data.user.savedData.value.secret, invoice: {general: this.state.general, buyer: this.state.buyer}})
 		});
 
 		const result = await res.json();

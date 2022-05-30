@@ -34,8 +34,16 @@ class Display extends Component {
 			<div className="main">
 				
 				<div className="is-flex va-end">
-					<div className="col text-right">
-						<h2><span className="has-pointer" onClick={this.toggleSettings}>⚙️</span></h2>
+					<div className="col">
+						
+						<div className="text-right" onClick={this.toggleSettings}>
+							<div className="has-pointer toggleSettings text-center">
+								<span className="is-big" title="settings" >⚙️</span>
+								<br />
+								<small>Settings</small>
+							</div>
+						</div>
+					
 					</div>
 				</div>
 

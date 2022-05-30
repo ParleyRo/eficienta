@@ -1,5 +1,4 @@
 import {Component} from 'react';
-import ItemLoading from '../ItemLoading';
 import _ from "lodash";
 
 import InvoiceView from './invoice/InvoiceView';
@@ -48,8 +47,6 @@ class Invoice extends Component {
 				'current.pos3.description','current.pos3.amount'
 			]
 		};
-
-		this.secret = localStorage.getItem("ef_secret");
 
 		this.handleChange = this.handleChange.bind(this);
 		this.addNewPos = this.addNewPos.bind(this);

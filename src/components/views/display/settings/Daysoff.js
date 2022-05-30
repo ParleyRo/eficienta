@@ -97,26 +97,30 @@ class Daysoff extends Component {
 
 		return (
 			<>
-				<label>Set here you Days off</label>
-				<br />
-				<DatePicker 
-					{...this.state.values} 
-					multiple
-					format="DD-MM-YYYY"
-					value={this.state.dates} 
-					onChange={this.setValues}
-					onClose={() => {
+				<div className="row va-end">
+					<div className="col">
 
-						if(!_.isEmpty(this.state.values)){
-							window.location.reload();
-						}
-					}}
-					showOtherDays
-					render={<InputIcon/>}
-					
-				/>
+						<label>Set here you Days off</label>
+						<br />
+						<DatePicker 
+							{...this.state.values} 
+							multiple
+							format="DD-MM-YYYY"
+							value={this.state.dates} 
+							onChange={this.setValues}
+							onClose={() => {
 
-				
+								if(!_.isEmpty(this.state.values)){
+									window.location.reload();
+								}
+							}}
+							showOtherDays
+							render={<InputIcon/>}
+							
+						/>
+
+					</div>
+				</div>
 				
 			</>
 
