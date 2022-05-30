@@ -19,10 +19,6 @@ class Email extends Component {
 
 	render(){
 
-		const colStyle = {
-			textAlign: 'right',
-		} 
-
 		return (
 			<div className="email">
 

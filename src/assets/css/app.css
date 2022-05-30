@@ -177,3 +177,7 @@ table td, table th {
 .pos2 button{
 	margin-top: 22px;
 }
+
+#settings{
+	cursor: pointer;
+}
