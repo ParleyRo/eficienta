@@ -140,7 +140,7 @@ class Invoice extends Component {
 								</div>
 							</div>
 
-							<div className="row is-flex">
+							<div className="row is-flex va-end">
 								<div className="col">
 									<label>
 										<div>Company Name: </div>
@@ -156,7 +156,7 @@ class Invoice extends Component {
 								</div>
 							</div>
 
-							<div className="row is-flex">
+							<div className="row is-flex va-end">
 								<div className="col">
 									<label>
 										<div>VAT number: </div>
@@ -173,7 +173,7 @@ class Invoice extends Component {
 							</div>
 
 
-							<div className="row is-flex">
+							<div className="row is-flex va-end">
 								<div className="col">
 									<label>
 										<div>Phone: </div>
@@ -189,7 +189,7 @@ class Invoice extends Component {
 								</div>
 							</div>
 
-							<div className="row is-flex">
+							<div className="row is-flex va-end">
 								<div className="col">
 									<label>
 										<div>Bank: </div>
@@ -205,7 +205,7 @@ class Invoice extends Component {
 								</div>
 							</div>
 
-							<div className="row is-flex">
+							<div className="row is-flex va-end">
 								<div className="col">
 									<label>
 										<div>Iban: </div>
@@ -225,7 +225,7 @@ class Invoice extends Component {
 								</div>
 							</div>
 
-							<div className="row is-flex">
+							<div className="row is-flex va-end">
 								<div className="col">
 									<label>
 										<div>Company Name: </div>
@@ -249,7 +249,7 @@ class Invoice extends Component {
 							</div>
 
 
-							<div className="row is-flex">
+							<div className="row is-flex va-end">
 								<div className="col text-right">
 
 									<input type="submit" value="Submit" />

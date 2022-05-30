@@ -148,7 +148,7 @@ class Invoice extends Component {
 
 				<hr />
 
-				<div className="text-right error">
+				<div className="text-right ">
 					<ReactToPrint
 						content={() => this.componentRef}
 						trigger={() => <button className="">Print to PDF!</button>}

@@ -20,6 +20,7 @@ class Email extends Component {
 	render(){
 
 		return (
+			
 			<div className="email">
 
 				<div className="row is-flex">
@@ -29,32 +30,36 @@ class Email extends Component {
 					
 				</div>
 
-				<div className="row is-flex">
-					<div className="col">
-						<h3 className="title">Subject</h3>
-						<br />
-						<p className="subject">monthly efficiency for {this.props.data.user?.savedData?.value?.name || '' } - {this.props.data.user.month}</p>
-					</div>
+				<div className="scroll-x">
 				
-					<div className="col">
-						<h3 className="title">Body</h3>
-						<br />
-						<div className="body">
-							<p>Hi</p>
-
-							<p>{this.props.data.user.month} month efficiency total = {this.props.data.efficiency ? <span>{this.props.data.efficiency}%</span> : <ItemLoading /> } of {this.props.data.time.workHours} hours</p>
-
-							<p>
-								{this.props.data.time.everhour ? <span>{this.props.data.time.everhour}h</span> : <ItemLoading />}(EverHour)&nbsp;+&nbsp; 
-								{this.props.data.time.freedays}h(Free days)&nbsp;+&nbsp;
-								{this.props.data.time.daysoff}h{this.props.data.daysoffView}(Days off)&nbsp;=&nbsp;
-								{this.props.data.time.everhour ? <span >{this.props.data.time.everhour+this.props.data.time.freedays+this.props.data.time.daysoff}h({this.props.data.efficiency}%)</span> : <ItemLoading /> }
-							</p>
-
-							<p>bye</p>
+					<div className="row is-flex responsive">
+						<div className="col">
+							<h3 className="title">Subject</h3>
+							<br />
+							<p className="subject">monthly efficiency for {this.props.data.user?.savedData?.value?.name || '' } - {this.props.data.user.month}</p>
 						</div>
-					</div>
 					
+						<div className="col">
+							<h3 className="title">Body</h3>
+							<br />
+							<div className="body">
+								<p>Hi</p>
+
+								<p>{this.props.data.user.month} month efficiency total = {this.props.data.efficiency ? <span>{this.props.data.efficiency}%</span> : <ItemLoading /> } of {this.props.data.time.workHours} hours</p>
+
+								<p>
+									{this.props.data.time.everhour ? <span>{this.props.data.time.everhour}h</span> : <ItemLoading />}(EverHour)&nbsp;+&nbsp; 
+									{this.props.data.time.freedays}h(Free days)&nbsp;+&nbsp;
+									{this.props.data.time.daysoff}h{this.props.data.daysoffView}(Days off)&nbsp;=&nbsp;
+									{this.props.data.time.everhour ? <span >{this.props.data.time.everhour+this.props.data.time.freedays+this.props.data.time.daysoff}h({this.props.data.efficiency}%)</span> : <ItemLoading /> }
+								</p>
+
+								<p>bye</p>
+							</div>
+						</div>
+						
+					</div>
+
 				</div>
 			</div>
 		)

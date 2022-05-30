@@ -3,7 +3,7 @@ import {Component} from 'react';
 import Settings from './display/Settings';
 
 import Nav from './display/Nav';
-import Stats from './display/Stats';
+import Efficiency from './display/Efficiency';
 import Email from './display/Email';
 import Invoice from './display/Invoice';
 
@@ -46,7 +46,7 @@ class Display extends Component {
 					<>
 						<Nav data={this.props.data}/>
 
-						<Stats data={this.props.data}/>
+						<Efficiency data={this.props.data}/>
 
 						<hr />
 						

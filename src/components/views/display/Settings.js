@@ -27,7 +27,7 @@ class Settings extends Component {
 		
 			<div className="settings container has-boxshadow">
 
-				<div className="is-flex va-center">
+				<div className="is-flex va-center responsive">
 					<div className="col"> <UserName data={this.props.data}/> </div>
 					<div className="col auto"> <Daysoff data={this.props.data}/> </div>
 					<div className="col text-right">
