@@ -5,14 +5,14 @@ const client = new MongoClient('mongodb://127.0.0.1:27017/');
 const dbName = 'efficiency';
 
 fastify.register(require('fastify-cors'), { 
-	origin: ['http://localhost:5000', 'http://parley.go.ro:5000']
+	origin: ['http://parley.go.ro:5000', 'http://localhost:5000']
 	//origi: '*'
 })
 
 // Declare a route
 fastify.get('/user/:secret', async (req, reply) => {
 
-	console.log(req.headers.origin)
+	console.log(req.headers)
 	const dbCollection = await DB.connect('users');
 
 	const findResult = await dbCollection.find({secret: req.params.secret}).toArray();
@@ -30,13 +30,10 @@ fastify.get('/user/:secret', async (req, reply) => {
 fastify.post('/save', async (req, reply) => {
 
 	const params = req.body;
-	
-	//in the first place we're expecting params :secret , :everhour.apikey;
-	
-	// if(params.everhour == null){
-	// 	return {success: true}
-	// }
 
+	// if(Object.keys(params).length && params.secret != null){
+	// 	return {success: 1}
+	// }
 	const dbCollection = await DB.connect('users');
 	
 	const insertResult = await dbCollection.updateOne({secret: params.secret},{$set: params},{upsert: true});
