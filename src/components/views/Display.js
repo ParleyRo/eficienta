@@ -19,20 +19,12 @@ class Display extends Component {
 			}
 		}
 
-		this.logout = this.logout.bind(this);
 		this.toggleSettings = this.toggleSettings.bind(this);
 	}
 
 	toggleSettings(){
 
 		this.setState({settings:{isActive: !this.state.settings.isActive}})
-	}
-
-	logout(){
-	
-		localStorage.removeItem('ef_secret');
-
-		window.location.reload()
 	}
 
 	render(){
@@ -49,19 +41,23 @@ class Display extends Component {
 
 				{this.state.settings.isActive && <Settings data={this.props.data} />}
 
+				{!this.state.settings.isActive &&
 				
-				<Nav data={this.props.data}/>
+					<>
+						<Nav data={this.props.data}/>
 
-				<Stats data={this.props.data}/>
+						<Stats data={this.props.data}/>
 
-				<hr />
+						<hr />
+						
+						<Email data={this.props.data} />
+
+						<hr />
+
+						<Invoice data={this.props.data} />
+					</>
+				}
 				
-				<Email data={this.props.data} />
-
-				<hr />
-
-				<Invoice data={this.props.data} />
-		
 			</div>
 		)
 	}

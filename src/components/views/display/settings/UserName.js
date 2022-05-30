@@ -35,7 +35,11 @@ class UserName extends Component {
 
 		const result = await res.json();
 		
-		console.log(result);
+		if(result.success){
+
+			window.location.reload();
+
+		}
 	}
 
 	componentDidMount() {

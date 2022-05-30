@@ -1,3 +1,12 @@
+
+a, a:focus, a:hover, a:active {
+    outline: 0;
+}
+a {
+	color: #169ef4;
+	outline: 0;
+	text-decoration: none;
+}
 .main{
 	font-family: Arial, Helvetica, Sans-serif;
     max-width: 960px;
@@ -9,6 +18,11 @@
     background: #fafafa;
 	padding: 1.5rem;
 }
+
+.container{
+	padding: 1.5rem;
+}
+
 .row{
 	margin-left: -.75rem;
     margin-right: -.75rem;
@@ -71,13 +85,12 @@
 	text-align: right;
 }
 
-a, a:focus, a:hover, a:active {
-    outline: 0;
+.has-pointer{
+	cursor: pointer;
 }
-a {
-	color: #169ef4;
-	outline: 0;
-	text-decoration: none;
+
+.has-boxshadow{
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .icons{
@@ -178,7 +191,5 @@ table td, table th {
 	margin-top: 22px;
 }
 
-.has-pointer{
-	cursor: pointer;
-}
+
 

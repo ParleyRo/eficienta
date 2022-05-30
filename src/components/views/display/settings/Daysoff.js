@@ -48,7 +48,7 @@ class Daysoff extends Component {
 	}
 	componentDidMount() {
 
-		if(this.props.data.user?.savedData?.value?.daysoff && this.props.data.user?.savedData?.value?.daysoff !== this.state.daysoff){
+		if(this.props.data?.user?.savedData?.value?.daysoff && this.props.data?.user?.savedData?.value?.daysoff !== this.state.daysoff){
 
 			let dates = []
 			for (const [month,daysInMonth] of Object.entries(this.props.data.user.savedData.value.daysoff)) {

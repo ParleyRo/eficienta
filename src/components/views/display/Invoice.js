@@ -4,7 +4,6 @@ import _ from "lodash";
 
 import InvoiceView from './invoice/View';
 import CurrentData from './invoice/CurrentData';
-import UserForm from './invoice/UserForm';
 
 import ReactToPrint from 'react-to-print';
 
@@ -64,7 +63,6 @@ class Invoice extends Component {
 		this.secret = localStorage.getItem("ef_secret");
 
 		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
 		this.addNewPos = this.addNewPos.bind(this);
 	}
 
@@ -132,52 +130,6 @@ class Invoice extends Component {
 		this.setState(this.state);
 	}
 
-	async handleSubmit(event) {
-
-		event.preventDefault();
-
-		let isValid = true;
-
-		for (const [key] of Object.entries(this.state.general)) {
-
-			if(this.state.general[key] == null || this.state.general[key] === ''){
-				isValid = false;
-			}
-		}
-
-		for (const [key] of Object.entries(this.state.buyer)) {
-
-			if(this.state.buyer[key] == null || this.state.buyer[key] === ''){
-				isValid = false;
-			}
-		}
-		
-		if(!isValid){
-			this.setState({formState: false})
-			return;
-		}
-		
-		this.setState({ajaxLoading: true})
-		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
-		
-		const res = await fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({secret: this.secret, invoice: {general: this.state.general, buyer: this.state.buyer}})
-		});
-
-		const result = await res.json();
-		
-		this.setState({ajaxLoading: false})
-
-		if(result.success){
-			this.setState({formState: true})
-		}
-		//console.log(result);
-	}
-
 
 	componentDidMount(){
 
@@ -226,16 +178,6 @@ class Invoice extends Component {
 					</div>
 				</div>
 				
-				<UserForm 
-					handleSubmit={this.handleSubmit}
-					handleChange={this.handleChange}
-					formState={this.state.formState}
-					general={this.state.general}
-					buyer={this.state.buyer}
-				/>
-
-				<hr />
-
 				<CurrentData 
 					current={this.state.current} 
 					fieldsWithError={this.state.fieldsWithError} 
