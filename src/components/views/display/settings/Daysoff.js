@@ -17,6 +17,7 @@ class Daysoff extends Component {
 		}
 
 		this.setValues = this.setValues.bind(this);
+		this.dayoffChanges = false;
 	}
 
 	async setValues(values){
@@ -44,6 +45,7 @@ class Daysoff extends Component {
 
 			this.setState({values: oDaysoff});
 
+			this.dayoffChanges = true;
 		}
 	}
 	componentDidMount() {
@@ -109,10 +111,12 @@ class Daysoff extends Component {
 							value={this.state.dates} 
 							onChange={this.setValues}
 							onClose={() => {
-
-								if(!_.isEmpty(this.state.values)){
+								if(this.dayoffChanges){
 									window.location.reload();
 								}
+							}}
+							onOpen={() => {
+								this.dayoffChanges = false;
 							}}
 							showOtherDays
 							render={<InputIcon/>}
