@@ -25,9 +25,7 @@ a {
 }
 
 .row{
-	margin-left: -.75rem;
-    margin-right: -.75rem;
-    margin-top: -.75rem;
+
 }
 .row:not(:last-child) {
     margin-bottom: calc(1.5rem - .75rem);
@@ -117,7 +115,7 @@ a {
 
 .InvoiceContent{
 	width: 19cm;
-  	height: 25.7cm;
+  	height: 24.7cm;
 	padding-left: 1cm;
 	padding-right: 1cm;
 	padding-top: 1cm;
@@ -138,6 +136,7 @@ a {
 }
 .invoiceFooter{
 	position: absolute;
+	width: 19cm;
     bottom: 0;
     border-top: 1px solid #358b9d;
     padding-top: 0.75rem;
