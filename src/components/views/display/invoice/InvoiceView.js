@@ -3,21 +3,21 @@ import {Component} from 'react';
 class ViewInvoice extends Component {
 
 	constructor(props) {
+
 		super(props);
 
-		this.state = {
-			
-		}
 	}
 
-
 	render(){
+
 		return(
 
 			<div className="InvoiceContent">
 
 				<div className="invoiceHeader">
+
 					<div className="row is-flex">
+
 						<div className="col">
 							<h2 className="turquoise">{this.props.invoice?.general?.companyName}</h2>
 
@@ -57,7 +57,7 @@ class ViewInvoice extends Component {
 							
 							<h3 className="turquoise">INVOICE / FACTURĂ</h3>
 							
-							<p className={this.props.fieldsWithError.includes('invoiceNumber') || this.props.current.invoiceNumber == null ? 'red error' : ''}>
+							<p className={this.props.fieldsWithError.includes('current.invoiceNumber') ? 'red error' : ''}>
 								Invoice-Number: <b>{this.props.current.invoiceNumber}</b>
 							</p>
 
@@ -105,8 +105,8 @@ class ViewInvoice extends Component {
 										<td>{this.props.current.pos1.description}</td>
 										<td>1</td>
 										<td>1</td>
-										<td>{(this.props.current.pos1.efficiency * this.props.current.pos1.income) / 100}</td>
-										<td>{(this.props.current.pos1.efficiency * this.props.current.pos1.income) / 100}</td>
+										<td className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{(this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100}</td>
+										<td className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{(this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100}</td>
 									</tr>
 
 									{this.props.current.pos2.active && <tr>
@@ -135,7 +135,7 @@ class ViewInvoice extends Component {
 					<div className="row is-flex">
 						<div className="col">
 							<p>Invoice {this.props.date.month} {this.props.date.year}</p>
-							<p>{this.props.current.pos1.euroPerHour} eur / hour * {(((this.props.current.pos1.efficiency * this.props.current.pos1.income) / 100) / this.props.current.pos1.euroPerHour).toFixed(2)} hours = {(this.props.current.pos1.efficiency * this.props.current.pos1.income) / 100} euro</p>
+							<p className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{this.props.current.pos1.euroPerHour} eur / hour * {(((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100) / this.props.current.pos1.euroPerHour).toFixed(2)} hours = {(this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100} euro</p>
 						</div>
 					</div>
 					

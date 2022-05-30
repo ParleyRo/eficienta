@@ -18,45 +18,35 @@ class Invoice extends Component {
 		
 		this.state = {
 			formState: true,
-			general: {
-				companyName: null,
-				companyRegistrationNumber: null,
-				companyVatNumber: null,
-				companyAddress: null,
-				companyPhone: null,
-				companyEmail: null,
-				companyBank: null,
-				companySwift: null,
-				companyIban: null
-			},
-			buyer: {
-				companyName: null,
-				companyId: null,
-				companyAddress: null
-			},
+			
 			current: {
 				pos1: {
-					income: null,
+					income: '',
 					description: 'Consulting Services',
 					euroPerHour: 21.25,
 					efficiency: 0
 				},
 				pos2: {
 					active: false,
-					description: null,
-					amount: null
+					description: '',
+					amount: ''
 				},
 				pos3: {
 					active: false,
-					description: null,
-					amount: null
+					description: '',
+					amount: ''
 				},
-				invoiceNumber: null,
+				invoiceNumber: '',
 				invoiceDate: `${('0'+date.getDate()).slice(-2)}/${('0'+(date.getMonth()+1)).slice(-2)}/${date.getFullYear()}`,
 				invoiceDueDate: `${('0'+dueDate.getDate()).slice(-2)}/${('0'+(dueDate.getMonth()+1)).slice(-2)}/${dueDate.getFullYear()}`,
 				
 			},
-			fieldsWithError:[]
+			fieldsWithError:[
+				'current.invoiceNumber',
+				'current.pos1.income',
+				'current.pos2.description','current.pos2.amount',
+				'current.pos3.description','current.pos3.amount'
+			]
 		};
 
 		this.secret = localStorage.getItem("ef_secret");
@@ -75,81 +65,53 @@ class Invoice extends Component {
 		});
 	}
 
+	getMatchByType(type){
+
+		if(type === 'number'){
+			return /^[0-9]*$/;
+		}
+
+		if(type === 'date'){
+			return /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+		}
+
+		return /[A-Za-z0-9 _.,!"'/$]*/
+	}
+
 	handleChange(event) {
 
 		const value = event.target.value.trim();
 		const stateLocation = event.target.dataset.stateLocation;
-
-		const noEmptyFields = [
-			'current.invoiceNumber',
-			'current.pos1.income','current.pos1.description',
-			'current.pos2.amount','current.pos2.description',
-			'current.pos3.amount','current.pos3.description'
-		]
-		if(noEmptyFields.includes(stateLocation)){
+		const fieldType = event.target.dataset.type || 'text';
 			
-			if((value === '' || value == null) && !this.state.fieldsWithError.includes(stateLocation)){
+		if((value === '' || value == null || value.match(this.getMatchByType(fieldType))==null)){
+
+			if(!this.state.fieldsWithError.includes(stateLocation)){
 				_.set(this.state, 'fieldsWithError', [...this.state.fieldsWithError, stateLocation]);
-			}else{
-				const fieldsWithError = [...this.state.fieldsWithError];
-				const index = fieldsWithError.indexOf(stateLocation);
+			}
+		}else{
 
-				if (index > -1) {
-					fieldsWithError.splice(index, 1); // 2nd parameter means remove one item only
-				}
+			const fieldsWithError = [...this.state.fieldsWithError];
+			const index = fieldsWithError.indexOf(stateLocation);
 
+			if (index > -1) {
+				fieldsWithError.splice(index, 1);
 				_.set(this.state, 'fieldsWithError', fieldsWithError);
 			}
-		}
 
-		if(['current.invoiceDate','current.invoiceDueDate'].includes(stateLocation)){
-			
-			const matched  = value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-
-			if(matched == null && !this.state.fieldsWithError.includes(stateLocation)){
-				
-				_.set(this.state, 'fieldsWithError', [...this.state.fieldsWithError, stateLocation]);
-			
-			}else{
-
-				const fieldsWithError = [...this.state.fieldsWithError];
-				const index = fieldsWithError.indexOf(stateLocation);
-
-				if (index > -1) {
-					fieldsWithError.splice(index, 1); // 2nd parameter means remove one item only
-				}
-
-				_.set(this.state, 'fieldsWithError', fieldsWithError);
-			}
 		}
 
 		_.set(this.state, stateLocation, value);
 		
-
 		this.setState(this.state);
 	}
 
 
 	componentDidMount(){
 
-		if(this.props?.data?.user?.savedData?.value?.invoice?.general && this.props?.data?.user?.savedData?.value?.invoice?.general !== this.state.general){
-			this.setState({general: this.props.data.user.savedData.value.invoice.general || ''})
-		}
-
-		if(this.props?.data?.user?.savedData?.value?.invoice?.buyer && this.props?.data?.user?.savedData?.value?.invoice?.buyer !== this.state.buyer){
-			this.setState({buyer: this.props.data.user.savedData.value.invoice.buyer || ''})
-		}
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot){
-
-		if(prevProps?.data?.user?.savedData?.value?.invoice?.general && prevProps?.data?.user?.savedData?.value?.invoice?.general !== this.state.general){
-			this.setState({general: prevProps.data.user.savedData.value.invoice.general || ''})
-		}
-
-		if(prevProps?.data?.user?.savedData?.value?.invoice?.buyer && prevProps?.data?.user?.savedData?.value?.invoice?.buyer !== this.state.buyer){
-			this.setState({buyer: prevProps.data.user.savedData.value.invoice.buyer || ''})
-		}
 
 		if(prevProps?.data?.efficiency && prevProps?.data?.efficiency !== this.state.current.pos1.efficiency){
 			this.setState({ 
@@ -185,12 +147,14 @@ class Invoice extends Component {
 				/>
 
 				<hr />
-				<div className="text-right">
+
+				<div className="text-right error">
 					<ReactToPrint
 						content={() => this.componentRef}
 						trigger={() => <button className="">Print to PDF!</button>}
 					/>
 				</div>
+
 				<InvoiceView 
 					ref={el => (this.componentRef = el)}
 					date={{month: this.props.data.user.month, year: this.props.data.user.year}} 
