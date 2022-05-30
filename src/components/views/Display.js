@@ -1,8 +1,7 @@
 import {Component} from 'react';
 
 import Settings from './display/Settings';
-import UserName from './display/UserName';
-import Daysoff from './display/Daysoff';
+
 import Nav from './display/Nav';
 import Stats from './display/Stats';
 import Email from './display/Email';
@@ -21,6 +20,12 @@ class Display extends Component {
 		}
 
 		this.logout = this.logout.bind(this);
+		this.toggleSettings = this.toggleSettings.bind(this);
+	}
+
+	toggleSettings(){
+
+		this.setState({settings:{isActive: !this.state.settings.isActive}})
 	}
 
 	logout(){
@@ -31,29 +36,20 @@ class Display extends Component {
 	}
 
 	render(){
+
 		return(
 
 			<div className="main">
 				
 				<div className="is-flex va-end">
 					<div className="col text-right">
-						<h2><span id="settings" className={this.state.settings.isActive ? 'active' : ''}>⚙️</span></h2>
+						<h2><span className="has-pointer" onClick={this.toggleSettings}>⚙️</span></h2>
 					</div>
 				</div>
 
-				<Settings data={this.props.data} display={this.state.settings}/>
+				{this.state.settings.isActive && <Settings data={this.props.data} />}
 
-
-				<div className="is-flex va-center">
-					<div className="col auto"> <UserName data={this.props.data}/> </div>
-					<div className="col auto"> <Daysoff data={this.props.data}/> </div>
-					<div className="col text-right">
-						<button onClick={this.logout}>Logout</button>
-					</div>
-				</div>
-
-				<hr />
-
+				
 				<Nav data={this.props.data}/>
 
 				<Stats data={this.props.data}/>

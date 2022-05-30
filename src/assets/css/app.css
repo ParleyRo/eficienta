@@ -178,6 +178,7 @@ table td, table th {
 	margin-top: 22px;
 }
 
-#settings{
+.has-pointer{
 	cursor: pointer;
 }
+
