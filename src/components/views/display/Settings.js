@@ -28,13 +28,14 @@ class Settings extends Component {
 			<div className="settings container has-boxshadow">
 
 				<div className="is-flex va-center">
-					<div className="col auto"> <UserName data={this.props.data}/> </div>
+					<div className="col"> <UserName data={this.props.data}/> </div>
 					<div className="col auto"> <Daysoff data={this.props.data}/> </div>
 					<div className="col text-right">
 						<button onClick={this.logout}>Logout</button>
 					</div>
 				</div>
 
+				<hr />
 
 				<Invoice 
 					data={this.props.data}

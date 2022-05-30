@@ -68,6 +68,7 @@ class Invoice extends Component {
 		}
 		
 		this.setState({ajaxLoading: true})
+		
 		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
 		
 		const res = await fetch(url, {
@@ -115,141 +116,153 @@ class Invoice extends Component {
 	render(){
 
 		return (
-		
-			<div className="row is-flex">
-				<div className="col">
+			<>
+				<div className="row is-flex">
 
-					<form onSubmit={this.handleSubmit} className={this.state.formState?'':'error'}>
-						<div className="row is-flex">
-							<div className="col">
-							
-								<h3 className="title">Your company data</h3>
+					<div className="col">
 
-							</div>
-						</div>
+						<h2 className="title">Invoice</h2>
 
-						<div className="row is-flex">
-							<div className="col">
-								<label>
-									<div>Company Name: </div>
-									<input className="large" type="text" value={this.state.general.companyName || ''} data-state-location="general.companyName" onChange={this.handleChange} required />
-								</label>
-							</div>
-
-							<div className="col">
-								<label>
-									<div>Company Registration Number: </div>
-									<input className="large" type="text" value={this.state.general.companyRegistrationNumber || ''} data-state-location="general.companyRegistrationNumber" onChange={this.handleChange} required />
-								</label>
-							</div>
-						</div>
-
-						<div className="row is-flex">
-							<div className="col">
-								<label>
-									<div>VAT number: </div>
-									<input className="large" type="text" value={this.state.general.companyVatNumber || ''} data-state-location="general.companyVatNumber" onChange={this.handleChange} required />
-								</label>
-							</div>
-
-							<div className="col">
-								<label>
-									<div>Address: </div>
-									<input className="large" type="text" value={this.state.general.companyAddress || ''} data-state-location="general.companyAddress" onChange={this.handleChange} required />
-								</label>
-							</div>
-						</div>
-
-
-						<div className="row is-flex">
-							<div className="col">
-								<label>
-									<div>Phone: </div>
-									<input className="large" type="text" value={this.state.general.companyPhone || ''} data-state-location="general.companyPhone" onChange={this.handleChange} required />
-								</label>
-							</div>
-
-							<div className="col">
-								<label>
-									<div>Email: </div>
-									<input className="large" type="text" value={this.state.general.companyEmail || ''} data-state-location="general.companyEmail" onChange={this.handleChange} required />
-								</label>
-							</div>
-						</div>
-
-						<div className="row is-flex">
-							<div className="col">
-								<label>
-									<div>Bank: </div>
-									<input className="large" type="text" value={this.state.general.companyBank || ''} data-state-location="general.companyBank" onChange={this.handleChange} required />
-								</label>
-							</div>
-
-							<div className="col">
-								<label>
-									<div>Swift: </div>
-									<input className="large" type="text" value={this.state.general.companySwift || '' } data-state-location="general.companySwift" onChange={this.handleChange} required />
-								</label>
-							</div>
-						</div>
-
-						<div className="row is-flex">
-							<div className="col">
-								<label>
-									<div>Iban: </div>
-									<input className="large" type="text" value={this.state.general.companyIban || ''} data-state-location="general.companyIban" onChange={this.handleChange} required />
-								</label>
-							</div>
-
-							<div className="col">
-							</div>
-						</div>
-
-						<div className="row is-flex">
-							<div className="col">
-							
-								<h3 className="title">Buyer data</h3>
-
-							</div>
-						</div>
-
-						<div className="row is-flex">
-							<div className="col">
-								<label>
-									<div>Company Name: </div>
-									<input className="large" type="text" value={this.state.buyer.companyName || ''} data-state-location="buyer.companyName" onChange={this.handleChange} required />
-								</label>
-							</div>
-
-							<div className="col">
-								<label>
-									<div>Company Id: </div>
-									<input className="large" type="text" value={this.state.buyer.companyId || ''} data-state-location="buyer.companyId" onChange={this.handleChange} required />
-								</label>
-							</div>
-
-							<div className="col">
-								<label>
-									<div>Company Address: </div>
-									<input className="large" type="text" value={this.state.buyer.companyAddress || ''} data-state-location="buyer.companyAddress" onChange={this.handleChange} required />
-								</label>
-							</div>
-						</div>
-
-
-						<div className="row is-flex">
-							<div className="col text-right">
-
-								<input type="submit" value="Submit" />
-							
-							</div>
-						</div>
-						
-						
-					</form>
-
+					</div>
 				</div>
-			</div>
+				
+				<div className="row is-flex">
+
+					
+					<div className="col">
+
+						<form onSubmit={this.handleSubmit} className={this.state.formState?'':'error'}>
+							<div className="row is-flex">
+								<div className="col">
+								
+									<h3 className="title">Your company data</h3>
+
+								</div>
+							</div>
+
+							<div className="row is-flex">
+								<div className="col">
+									<label>
+										<div>Company Name: </div>
+										<input className="large" type="text" value={this.state.general.companyName || ''} data-state-location="general.companyName" onChange={this.handleChange} required />
+									</label>
+								</div>
+
+								<div className="col">
+									<label>
+										<div>Company Registration Number: </div>
+										<input className="large" type="text" value={this.state.general.companyRegistrationNumber || ''} data-state-location="general.companyRegistrationNumber" onChange={this.handleChange} required />
+									</label>
+								</div>
+							</div>
+
+							<div className="row is-flex">
+								<div className="col">
+									<label>
+										<div>VAT number: </div>
+										<input className="large" type="text" value={this.state.general.companyVatNumber || ''} data-state-location="general.companyVatNumber" onChange={this.handleChange} required />
+									</label>
+								</div>
+
+								<div className="col">
+									<label>
+										<div>Address: </div>
+										<input className="large" type="text" value={this.state.general.companyAddress || ''} data-state-location="general.companyAddress" onChange={this.handleChange} required />
+									</label>
+								</div>
+							</div>
+
+
+							<div className="row is-flex">
+								<div className="col">
+									<label>
+										<div>Phone: </div>
+										<input className="large" type="text" value={this.state.general.companyPhone || ''} data-state-location="general.companyPhone" onChange={this.handleChange} required />
+									</label>
+								</div>
+
+								<div className="col">
+									<label>
+										<div>Email: </div>
+										<input className="large" type="text" value={this.state.general.companyEmail || ''} data-state-location="general.companyEmail" onChange={this.handleChange} required />
+									</label>
+								</div>
+							</div>
+
+							<div className="row is-flex">
+								<div className="col">
+									<label>
+										<div>Bank: </div>
+										<input className="large" type="text" value={this.state.general.companyBank || ''} data-state-location="general.companyBank" onChange={this.handleChange} required />
+									</label>
+								</div>
+
+								<div className="col">
+									<label>
+										<div>Swift: </div>
+										<input className="large" type="text" value={this.state.general.companySwift || '' } data-state-location="general.companySwift" onChange={this.handleChange} required />
+									</label>
+								</div>
+							</div>
+
+							<div className="row is-flex">
+								<div className="col">
+									<label>
+										<div>Iban: </div>
+										<input className="large" type="text" value={this.state.general.companyIban || ''} data-state-location="general.companyIban" onChange={this.handleChange} required />
+									</label>
+								</div>
+
+								<div className="col">
+								</div>
+							</div>
+
+							<div className="row is-flex">
+								<div className="col">
+								
+									<h3 className="title">Buyer data</h3>
+
+								</div>
+							</div>
+
+							<div className="row is-flex">
+								<div className="col">
+									<label>
+										<div>Company Name: </div>
+										<input className="large" type="text" value={this.state.buyer.companyName || ''} data-state-location="buyer.companyName" onChange={this.handleChange} required />
+									</label>
+								</div>
+
+								<div className="col">
+									<label>
+										<div>Company Id: </div>
+										<input className="large" type="text" value={this.state.buyer.companyId || ''} data-state-location="buyer.companyId" onChange={this.handleChange} required />
+									</label>
+								</div>
+
+								<div className="col">
+									<label>
+										<div>Company Address: </div>
+										<input className="large" type="text" value={this.state.buyer.companyAddress || ''} data-state-location="buyer.companyAddress" onChange={this.handleChange} required />
+									</label>
+								</div>
+							</div>
+
+
+							<div className="row is-flex">
+								<div className="col text-right">
+
+									<input type="submit" value="Submit" />
+								
+								</div>
+							</div>
+							
+							
+						</form>
+
+					</div>
+				</div>
+			</>
 		
 		)
 	

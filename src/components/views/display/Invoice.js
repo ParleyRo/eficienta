@@ -2,7 +2,7 @@ import {Component} from 'react';
 import ItemLoading from '../ItemLoading';
 import _ from "lodash";
 
-import InvoiceView from './invoice/View';
+import InvoiceView from './invoice/InvoiceView';
 import CurrentData from './invoice/CurrentData';
 
 import ReactToPrint from 'react-to-print';
@@ -17,7 +17,6 @@ class Invoice extends Component {
 		dueDate.setDate(dueDate.getDate() +10);
 		
 		this.state = {
-			ajaxLoading: false,
 			formState: true,
 			general: {
 				companyName: null,
@@ -122,8 +121,8 @@ class Invoice extends Component {
 
 				_.set(this.state, 'fieldsWithError', fieldsWithError);
 			}
-  			//return (m) ? new Date(m[3], m[2]-1, m[1]) : null;
 		}
+
 		_.set(this.state, stateLocation, value);
 		
 
@@ -173,7 +172,7 @@ class Invoice extends Component {
 				<div className="row is-flex">
 					<div className="col">
 
-						<h2 className="title">Invoice {this.state.ajaxLoading && <ItemLoading />}</h2>
+						<h2 className="title">Invoice</h2>
 
 					</div>
 				</div>
@@ -186,21 +185,26 @@ class Invoice extends Component {
 				/>
 
 				<hr />
-				
-
+				<div className="text-right">
+					<ReactToPrint
+						content={() => this.componentRef}
+						trigger={() => <button className="">Print to PDF!</button>}
+					/>
+				</div>
 				<InvoiceView 
 					ref={el => (this.componentRef = el)}
 					date={{month: this.props.data.user.month, year: this.props.data.user.year}} 
-					general={this.state.general} 
-					buyer={this.state.buyer} 
 					current={this.state.current}
 					fieldsWithError={this.state.fieldsWithError}
+					invoice={this.props.data?.user?.savedData?.value?.invoice}
 				/>
 
-				<ReactToPrint
-					content={() => this.componentRef}
-					trigger={() => <button className="">Print to PDF!</button>}
-				/>
+				<div className="text-right">
+					<ReactToPrint
+						content={() => this.componentRef}
+						trigger={() => <button className="">Print to PDF!</button>}
+					/>
+				</div>
 
 
 			</div>

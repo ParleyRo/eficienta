@@ -21,7 +21,7 @@ class CurrentData extends Component {
 						</div>
 
 						<div className="row is-flex">
-							<div className="col auto">
+							<div className="col">
 								<label>
 									<div>Invoice number: </div>
 									<input className={'large ' + (this.props.fieldsWithError.includes('current.invoiceNumber') || this.props.current.invoiceNumber == null ? 'error':'')} type="text" value={this.props.current.invoiceNumber || ''} data-state-location="current.invoiceNumber" onChange={this.props.handleChange} required />
