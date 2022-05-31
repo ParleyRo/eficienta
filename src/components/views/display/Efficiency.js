@@ -1,7 +1,7 @@
 import ItemLoading from '../ItemLoading';
 
 export default function Efficiency(props) {
-	console.log(props)
+
 	return (
 		<div className="efficiency">
 					

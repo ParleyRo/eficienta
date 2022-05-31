@@ -318,6 +318,25 @@ class App extends Component {
       });
 
     }
+
+    if(data.invoice != null){
+      this.setState({
+        user: {
+          ...this.state.user,
+          savedData: {
+            ...this.state.user.savedData,
+            value: {
+              ...this.state.user.savedData.value,
+              invoice: {
+                ...this.state.user.savedData.value.invoice,
+                general: data.invoice.general, 
+                buyer: data.invoice.buyer
+              }
+            }
+          }
+        }
+      });
+    }
     
   }
 

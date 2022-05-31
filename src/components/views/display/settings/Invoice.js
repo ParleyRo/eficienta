@@ -82,7 +82,7 @@ class Invoice extends Component {
 		this.setState({ajaxLoading: false})
 
 		if(result.success){
-			window.location.reload();
+			this.props.changedData({invoice: {general: this.state.general, buyer: this.state.buyer}})
 		}
 	}
 

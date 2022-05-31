@@ -47,6 +47,7 @@ class Settings extends Component {
 
 				<Invoice 
 					data={this.props.data}
+					changedData={this.props.changedData}
 				/>
 
 			</div>
