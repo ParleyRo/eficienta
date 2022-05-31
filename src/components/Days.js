@@ -45,7 +45,7 @@ export class Days{
 			
 			if(this.constructor.isDayoff(i,this.date.getMonth()) && !this.constructor.isWeekendDay(this.date.getDay())){
 				daysoff++;
-				daysoffList.push(i)
+				daysoffList.push(i);
 			}
 
 			if(this.constructor.isWeekendDay(this.date.getDay())){

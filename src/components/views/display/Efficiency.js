@@ -1,23 +1,22 @@
 import ItemLoading from '../ItemLoading';
 
 export default function Efficiency(props) {
-  return (
-    <div className="efficiency">
-				
-		<div className="row is-flex">
-			<div className="col">
-				<h2 className="title">Efficiency</h2>
+	console.log(props)
+	return (
+		<div className="efficiency">
+					
+			<div className="row is-flex">
+				<div className="col">
+					<h2 className="title">Efficiency</h2>
+				</div>
 			</div>
-		</div>
 
-		<div className="row is-flex">
-			<div className="col">
-				<h3 className="title">{props.data.user?.savedData?.value?.name ? <span>{props.data.user?.savedData?.value?.name} - {props.data.user.month} {props.data.user.day}</span>:<ItemLoading />}</h3>
+			<div className="row is-flex">
+				<div className="col">
+					<h3 className="title">{props.data.user?.savedData?.value?.name} - {props.data.user.month} {props.data.user.day}</h3>
+				</div>
 			</div>
-		</div>
-		
-		<div className="scroll-x">
-		
+
 			<div className="row is-flex">
 				
 				<div className="col">
@@ -53,8 +52,6 @@ export default function Efficiency(props) {
 				</div>
 
 			</div>
-			
 		</div>
-	</div>
-  )
+	)
 }

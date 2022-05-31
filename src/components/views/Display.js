@@ -38,7 +38,7 @@ class Display extends Component {
 						
 						<div className="text-right" >
 							<div className="has-pointer toggleSettings text-center" onClick={this.toggleSettings}>
-								<span className="is-big" title="settings" >⚙️</span>
+								<span className="is-big" title="settings">{this.state.settings.isActive ? '🔙' : '⚙️' }</span>
 								<br />
 								<small>Settings</small>
 							</div>

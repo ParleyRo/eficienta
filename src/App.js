@@ -90,7 +90,6 @@ class App extends Component {
     
     oState.time.daysoff = this.days.daysoff*8;
     oState.daysoff = [...this.days.daysoffList];
-    oState.daysoffView = oState.daysoff.length ? ':'+oState.daysoff.join(',') : '';
 
     oState.time.workHours = oState.workDays*8;
     oState.time.workedHours = oState.workedDays*8;
@@ -255,6 +254,49 @@ class App extends Component {
 
     if(data.daysoff != null){
 
+      let daysoff = 0;
+      let daysoffList = [];
+
+      if(data.daysoff?.[this.date.getMonth()+1]?.length){
+
+        const date = new Date();
+        
+        
+        data.daysoff?.[this.date.getMonth()+1].forEach(day =>{
+
+          date.setDate(day);
+
+          if(!Days.isWeekendDay(date.getDay())){
+            daysoff++;
+            daysoffList.push(day);
+          }
+
+        })
+      }
+
+      const efficiency = Math.round(((this.state.time.everhour+this.state.time.freedays+(daysoff*8)) * 100 ) / this.state.time.workHours);
+
+      const freedaysToday = this.state.freedays.reduce((index,day) =>{
+      
+        if(this.date.getDate() >= day){
+          return index+1;
+        }
+
+        return index;
+
+      },0);
+      const daysoffToday = daysoffList.reduce((index,day) =>{
+      
+        if(this.date.getDate() >= day){
+          return index+1;
+        }
+
+        return index;
+
+      },0);
+
+      const efficiencyToday = Math.round(((this.state.time.everhour+(freedaysToday*8)+(daysoffToday*8)) * 100 ) / this.state.time.workedHours);
+
       this.setState({
         user: {
           ...this.state.user,
@@ -265,7 +307,14 @@ class App extends Component {
               daysoff: data.daysoff
             }
           }
-        }
+        },
+        time:{
+          ...this.state.time,
+          daysoff: daysoff*8
+        },
+        efficiency: efficiency,
+        efficiencyToday: efficiencyToday,
+        daysoff: daysoffList
       });
 
     }

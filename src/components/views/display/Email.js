@@ -50,7 +50,7 @@ class Email extends Component {
 								<p>
 									{this.props.data.time.everhour ? <span>{this.props.data.time.everhour}h</span> : <ItemLoading />}(EverHour)&nbsp;+&nbsp; 
 									{this.props.data.time.freedays}h(Free days)&nbsp;+&nbsp;
-									{this.props.data.time.daysoff}h{this.props.data.daysoffView}(Days off)&nbsp;=&nbsp;
+									{this.props.data.time.daysoff}h{this.props.data.daysoff.length ? ':'+this.props.data.daysoff.join(',') : ''}(Days off)&nbsp;=&nbsp;
 									{this.props.data.time.everhour ? <span >{this.props.data.time.everhour+this.props.data.time.freedays+this.props.data.time.daysoff}h({this.props.data.efficiency}%)</span> : <ItemLoading /> }
 								</p>
 
