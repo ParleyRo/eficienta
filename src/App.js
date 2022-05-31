@@ -39,7 +39,7 @@ class App extends Component {
     
     this.monthPosition = Math.min(0,parseInt(month));
 
-    this.date  = new Date(2022,11,31);
+    this.date  = new Date();
 
     if(this.monthPosition < 0 ){
       this.date.setDate(15);
