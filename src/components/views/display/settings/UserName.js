@@ -37,8 +37,7 @@ class UserName extends Component {
 		
 		if(result.success){
 
-			window.location.reload();
-
+			this.props.changedData({name: this.state.name})
 		}
 	}
 

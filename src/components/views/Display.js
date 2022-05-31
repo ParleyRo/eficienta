@@ -47,7 +47,7 @@ class Display extends Component {
 					</div>
 				</div>
 
-				{this.state.settings.isActive && <Settings data={this.props.data} />}
+				{this.state.settings.isActive && <Settings data={this.props.data} changedData={this.props.changedData} />}
 
 				{!this.state.settings.isActive &&
 				

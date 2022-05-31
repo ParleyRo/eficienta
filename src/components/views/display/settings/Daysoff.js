@@ -15,7 +15,6 @@ class Daysoff extends Component {
 		}
 
 		this.setValues = this.setValues.bind(this);
-		this.dayoffChanges = false;
 	}
 
 	async setValues(values){
@@ -24,7 +23,7 @@ class Daysoff extends Component {
 
 		values.forEach((value,index) =>{
 			oDaysoff[value.month.number] = oDaysoff[value.month.number] || [];
-			oDaysoff[value.month.number].push(value.day)//[...oDaysoff[value.month.number],value.day]
+			oDaysoff[value.month.number].push(value.day);
 		});
 
 		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
@@ -43,7 +42,8 @@ class Daysoff extends Component {
 
 			this.setState({values: oDaysoff});
 
-			this.dayoffChanges = true;
+			this.props.changedData({daysoff: oDaysoff});
+		
 		}
 	}
 	componentDidMount() {
@@ -108,14 +108,6 @@ class Daysoff extends Component {
 							format="DD-MM-YYYY"
 							value={this.state.dates} 
 							onChange={this.setValues}
-							onClose={() => {
-								if(this.dayoffChanges){
-									window.location.reload();
-								}
-							}}
-							onOpen={() => {
-								this.dayoffChanges = false;
-							}}
 							showOtherDays
 							render={<InputIcon/>}
 							

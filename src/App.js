@@ -18,7 +18,6 @@ class App extends Component {
 
     this.state = {
       user:{
-        name: '',
         savedData:{}
       },
       time: {
@@ -48,7 +47,7 @@ class App extends Component {
       
     }
     
-    console.log(1,`Apps: ${this.date.toJSON()}`)
+    console.log(1,`Apps: ${this.date}`)
     
     this.everhourStats = {
       requestStarted: false,
@@ -62,6 +61,8 @@ class App extends Component {
       value: null
     }
 
+    this.changedData= this.changedData.bind(this);
+
   }
 
   setData(){
@@ -74,6 +75,7 @@ class App extends Component {
     oState.user.prevmonth = MonthNames[(this.date.getMonth()+12-1)%12];
     oState.user.nextmonth = this.monthPosition < 0 ? MonthNames[(this.date.getMonth()+12+1)%12] : false;
     oState.user.day = this.date.getDate();
+    oState.user.year = this.date.getFullYear();
 
     oState.time.everhour = Math.round(this.everhourStats.value / 3600);
     
@@ -221,7 +223,9 @@ class App extends Component {
       return;
     }
 
-    const oDays = new Days(this.date,this.userStats.value?.daysoff);
+    Days.daysoff = this.userStats.value?.daysoff;
+
+    const oDays = new Days(this.date);
 
     this.days = oDays.getDays();
     
@@ -231,9 +235,46 @@ class App extends Component {
     
   }
 
+  changedData(data){
+
+    if(data.name != null){
+
+      this.setState({
+        user: {
+          ...this.state.user,
+          savedData: {
+            ...this.state.user.savedData,
+            value: {
+              ...this.state.user.savedData.value,
+              name: data.name
+            }
+          }
+        }
+      });
+    }
+
+    if(data.daysoff != null){
+
+      this.setState({
+        user: {
+          ...this.state.user,
+          savedData: {
+            ...this.state.user.savedData,
+            value: {
+              ...this.state.user.savedData.value,
+              daysoff: data.daysoff
+            }
+          }
+        }
+      });
+
+    }
+    
+  }
 
   render() {
 
+    console.log(2,'Apps',this.state)
     return (
 
         <>
@@ -246,7 +287,7 @@ class App extends Component {
 
 
           { this.state.isLoaded && 
-              <Display data={this.state}/>
+              <Display data={this.state} changedData={this.changedData}/>
           }
           
           { !this.state.isLoaded &&
