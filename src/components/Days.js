@@ -10,18 +10,9 @@ export class Days{
 		12: [1,2,25,26]
 	}
 
-	constructor(monthPosition,day,daysoff){
+	constructor(date,daysoff){
 
-		const date = new Date();
-
-		date.setMonth(date.getMonth()+monthPosition);
-		date.setDate(0);
-
-		this.lastDayOfTheMonth = date.getDate();
-		this.month = date.getMonth();
-	
-		this.day = day;
-		this.date = date;
+		this.date = new Date(date);
 
 		this.daysoff = daysoff || [];
 	}
@@ -40,9 +31,9 @@ export class Days{
 
 		let workedDays = 0;
 
-		this.date.setMonth(this.month);
-
-		for(let i=1; i<=this.lastDayOfTheMonth; i++){
+		const lastDayOfMonth = new Date(this.date.getYear(),this.date.getMonth()+1,0)
+		
+		for(let i=1; i<= lastDayOfMonth.getDate(); i++){
 
 			this.date.setDate(i);
 
@@ -60,7 +51,7 @@ export class Days{
 				weekendDays++;
 			}
 
-			if(!this.isWeekendDay() && (this.day >= i)){
+			if(!this.isWeekendDay() && (this.date.getDate() >= i)){
 				workedDays++;
 			}
 
@@ -79,8 +70,8 @@ export class Days{
   	}
 
 	isDayoff(day){
-	
-		if(this.daysoff[this.month+1] && this.daysoff[this.month+1].includes(day)){
+
+		if(this.daysoff[this.date.getMonth()+1] && this.daysoff[this.date.getMonth()+1].includes(day)){
 			return true;
 		}
 
@@ -89,7 +80,7 @@ export class Days{
 	
 	isFreeDay(day){
 
-		if(this.freedays[this.month+1] && this.freedays[this.month+1].includes(day)){
+		if(this.freedays[this.date.getMonth()+1] && this.freedays[this.date.getMonth()+1].includes(day)){
 			return true;
 		}
 

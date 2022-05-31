@@ -1,22 +1,11 @@
 class Everhour{
 
-	constructor(apikey='', currentMonth=1){
+	constructor(apikey='', date){
+
+		this.from = `${date.getFullYear()}-${date.getMonth()+1}-1`;
+		this.to = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 		
-		const date = new Date();
-
-		if(currentMonth === 1){
-
-			this.from = `${date.getFullYear()}-${date.getMonth()+1}-1`;
-			this.to = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-		
-		}else{
-
-			date.setMonth(date.getMonth()+currentMonth);
-			date.setDate(0);
-
-			this.from = `${date.getFullYear()}-${date.getMonth()+1}-1`;
-			this.to = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-		}
+		console.log('Everhour: ',this.from,this.to);
 		
 		this.apikey = apikey
 	}

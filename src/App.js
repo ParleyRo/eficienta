@@ -35,22 +35,21 @@ class App extends Component {
     };
 
     const queryParams = new URLSearchParams(window.location.search);
-    const month = queryParams.get("month") || 1;
+    const month = queryParams.get("month") || 0;
     
-    this.monthPosition = Math.min(1,parseInt(month));
+    this.monthPosition = Math.min(0,parseInt(month));
 
-    const date = new Date();
-    
-		date.setMonth(date.getMonth()+(this.monthPosition>0?0:this.monthPosition));
+    this.date  = new Date();
 
-    if(this.monthPosition !== 1){
-      date.setDate(0);
+    if(this.monthPosition < 0 ){
+      this.date.setDate(15);
+		  this.date.setMonth(this.date.getMonth()+this.monthPosition+1);
+      this.date.setDate(0);
+      
     }
-
-    this.currentDay = date.getDate();
-    this.currentMonth = date.getMonth();
-    this.currentYear = date.getFullYear();
-
+    
+    console.log(1,'apps',this.date)
+    
     this.everhourStats = {
       requestStarted: false,
       requestFinish: false,
@@ -71,12 +70,11 @@ class App extends Component {
 
     oState.isLoaded = true;
 
-    oState.user.year = this.currentYear;
+    oState.user.month = MonthNames[this.date.getMonth()];
+    oState.user.prevmonth = MonthNames[(this.date.getMonth()+12-1)%12];
+    oState.user.nextmonth = this.monthPosition < 0 ? MonthNames[(this.date.getMonth()+12+1)%12] : false;
+    oState.user.day = this.date.getDate();
 
-    oState.user.month = MonthNames[this.currentMonth];
-    oState.user.prevmonth = MonthNames[((this.currentMonth-1+12)%12)];
-    oState.user.nextmonth = this.monthPosition < 1 ? MonthNames[(this.currentMonth+1)%12] : false;
-    oState.user.day = this.currentDay;
     oState.time.everhour = Math.round(this.everhourStats.value / 3600);
     
     oState.time.freedays = this.days.freedays*8;
@@ -84,7 +82,6 @@ class App extends Component {
     
     oState.workDays = this.days.monthDays - this.days.weekendDays;
     oState.workedDays = this.days.workedDays;
-
 
     oState.weekendDays = this.days.weekendDays;
     oState.monthDays = this.days.monthDays;
@@ -100,7 +97,7 @@ class App extends Component {
 
     const freedaysToday = oState.freedays.reduce((index,day) =>{
       
-      if(this.currentDay >= day){
+      if(this.date.getDate() >= day){
         return index+1;
       }
 
@@ -110,7 +107,7 @@ class App extends Component {
 
     const daysoffToday = oState.daysoff.reduce((index,day) =>{
       
-      if(this.currentDay >= day){
+      if(this.date.getDate() >= day){
         return index+1;
       }
 
@@ -143,7 +140,7 @@ class App extends Component {
 
     this.everhourStats.requestStarted = true;
 
-    const oEverhour = new Everhour(apikey,this.monthPosition);
+    const oEverhour = new Everhour(apikey,this.date);
     const tasks = await oEverhour.fetchUserTasks();
 
     if(tasks.error){
@@ -224,7 +221,7 @@ class App extends Component {
       return;
     }
 
-    const oDays = new Days(this.monthPosition,this.currentDay,this.userStats.value?.daysoff);
+    const oDays = new Days(this.date,this.userStats.value?.daysoff);
 
     this.days = oDays.getDays();
     
