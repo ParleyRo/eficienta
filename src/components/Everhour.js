@@ -5,7 +5,7 @@ class Everhour{
 		this.from = `${date.getFullYear()}-${date.getMonth()+1}-1`;
 		this.to = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 		
-		console.log('Everhour: ',this.from,this.to);
+		console.log(1,`Everhour: from:${this.from}  to:${this.to}`);
 		
 		this.apikey = apikey
 	}
@@ -13,9 +13,6 @@ class Everhour{
 	async fetchUserTasks() {
 
 		try {
-			
-			//const img = await fetch(`http://127.0.0.1:5001/`,{})
-			//await this.sleep(2000)
 			
 			const res = await fetch(`https://api.everhour.com/users/me/time?from=${this.from}&to=${this.to}`, {
 				method: 'GET',

@@ -48,7 +48,7 @@ class App extends Component {
       
     }
     
-    console.log(1,'apps',this.date)
+    console.log(1,`Apps: ${this.date.toJSON()}`)
     
     this.everhourStats = {
       requestStarted: false,
