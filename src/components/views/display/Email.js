@@ -48,10 +48,10 @@ class Email extends Component {
 								<p>{this.props.data.user.month} month efficiency total = {this.props.data.efficiency ? <span>{this.props.data.efficiency}%</span> : <ItemLoading /> } of {this.props.data.time.workHours} hours</p>
 
 								<p>
-									{this.props.data.time.everhour ? <span>{this.props.data.time.everhour}h</span> : <ItemLoading />}(EverHour)&nbsp;+&nbsp; 
+									{this.props.data.time.everhour != null ? <span>{this.props.data.time.everhour}h</span> : <ItemLoading />}(EverHour)&nbsp;+&nbsp; 
 									{this.props.data.time.freedays}h(Free days)&nbsp;+&nbsp;
 									{this.props.data.time.daysoff}h{this.props.data.daysoff.length ? ':'+this.props.data.daysoff.join(',') : ''}(Days off)&nbsp;=&nbsp;
-									{this.props.data.time.everhour ? <span >{this.props.data.time.everhour+this.props.data.time.freedays+this.props.data.time.daysoff}h({this.props.data.efficiency}%)</span> : <ItemLoading /> }
+									{this.props.data.time.everhour != null? <span >{this.props.data.time.everhour+this.props.data.time.freedays+this.props.data.time.daysoff}h({this.props.data.efficiency}%)</span> : <ItemLoading /> }
 								</p>
 
 								<p>bye</p>

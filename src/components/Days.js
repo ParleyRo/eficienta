@@ -32,27 +32,28 @@ export class Days{
 
 		let workedDays = 0;
 
-		const lastDayOfMonth = new Date(this.date.getFullYear(),this.date.getMonth()+1,0)
-		
+		const lastDayOfMonth = new Date(this.date.getFullYear(),this.date.getMonth()+1,0);
+		const date = new Date(this.date)
+
 		for(let i=1; i<= lastDayOfMonth.getDate(); i++){
 
-			this.date.setDate(i);
+			date.setDate(i);
 
-			if(this.constructor.isFreeDay(i,this.date.getMonth()) && !this.constructor.isWeekendDay(this.date.getDay())){
+			if(this.constructor.isFreeDay(i,date.getMonth()) && !this.constructor.isWeekendDay(date.getDay())){
 				freedays++;
 				freedaysList.push(i)
 			}
 			
-			if(this.constructor.isDayoff(i,this.date.getMonth()) && !this.constructor.isWeekendDay(this.date.getDay())){
+			if(this.constructor.isDayoff(i,date.getMonth()) && !this.constructor.isWeekendDay(date.getDay())){
 				daysoff++;
 				daysoffList.push(i);
 			}
 
-			if(this.constructor.isWeekendDay(this.date.getDay())){
+			if(this.constructor.isWeekendDay(date.getDay())){
 				weekendDays++;
 			}
 
-			if(!this.constructor.isWeekendDay(this.date.getDay()) && (this.date.getDate() >= i)){
+			if(!this.constructor.isWeekendDay(date.getDay()) && (this.date.getDate() >= i)){
 				workedDays++;
 			}
 

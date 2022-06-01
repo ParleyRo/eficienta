@@ -21,7 +21,7 @@ class App extends Component {
         savedData:{}
       },
       time: {
-        everhour: 0,
+        everhour: null,
         freedays: 0,
         daysoff: 0,
         workHours: 0
@@ -227,7 +227,7 @@ class App extends Component {
     const oDays = new Days(this.date);
 
     this.days = oDays.getDays();
-    
+    console.log(this.days)
     const oState = this.setData();
 
     this.setState(oState);
