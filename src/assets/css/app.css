@@ -104,15 +104,16 @@ a {
 	overflow-y: hidden;
 }
 
-.icons{
-	font-family: monospace;
-    font-size: 120%;
-    vertical-align: text-bottom;
+.icon{
+    font-size: 150%;
+	vertical-align: sub;
 }
 
-
-
-
+.is-reverse-h{
+	transform:rotate(180deg);
+	display: inline-block;
+	vertical-align: middle;
+}
 .loading{
 	display: flex;
     align-items: center;

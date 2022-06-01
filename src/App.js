@@ -227,7 +227,7 @@ class App extends Component {
     const oDays = new Days(this.date);
 
     this.days = oDays.getDays();
-    console.log(this.days)
+
     const oState = this.setData();
 
     this.setState(oState);
