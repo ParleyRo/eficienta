@@ -7,10 +7,11 @@
     "fastify": "^3.29.0",
     "fastify-cors": "^6.1.0",
     "mongodb": "^4.6.0",
+    "node-fetch": "^3.2.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-multi-date-picker": "^3.3.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-to-print": "^2.14.7",
     "web-vitals": "^2.1.4"
   },
@@ -37,5 +38,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "type": "module"
 }

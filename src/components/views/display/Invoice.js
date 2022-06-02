@@ -1,8 +1,8 @@
 import {Component} from 'react';
 import _ from "lodash";
 
-import InvoiceView from './invoice/InvoiceView';
-import CurrentData from './invoice/CurrentData';
+import InvoiceView from './invoice/InvoiceView.js';
+import CurrentData from './invoice/CurrentData.js';
 
 import ReactToPrint from 'react-to-print';
 

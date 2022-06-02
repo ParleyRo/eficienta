@@ -1,6 +1,6 @@
 import {Component} from 'react';
 import DatePicker from "react-multi-date-picker";
-import InputIcon from "react-multi-date-picker/components/input_icon";
+import InputIcon from "react-multi-date-picker/components/input_icon.js";
 
 class Daysoff extends Component {
 	

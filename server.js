@@ -1,13 +1,25 @@
-const fastify = require('fastify')({ logger: true });
+import Fastify from 'fastify'
+import FastifyCors from 'fastify-cors';
 
-const { MongoClient } = require('mongodb');
-const client = new MongoClient('mongodb://127.0.0.1:27017/');
-const dbName = 'efficiency';
+import { MongoClient } from 'mongodb';
 
-fastify.register(require('fastify-cors'), { 
-	origin: ['http://parley.go.ro:5000', 'http://localhost:5000']
-	//origi: '*'
+import fetch from "node-fetch";
+
+const fastify = Fastify({
+  logger: true
 })
+
+fastify.register(
+	FastifyCors, 
+	{ 
+		origin: ['http://parley.go.ro:5000', 'http://localhost:5000']
+	//origi: '*'
+	}
+)
+
+const client = new MongoClient('mongodb://127.0.0.1:27017/');
+
+const dbName = 'efficiency';
 
 // Declare a route
 fastify.get('/user/:secret', async (req, reply) => {
@@ -42,6 +54,18 @@ fastify.post('/save', async (req, reply) => {
 	
 	return {success: 1}
 });
+
+fastify.get('/cursbnr', async (req, reply) => {
+
+	const res = await fetch('http://www.bnro.ro/files/xml/years/nbrfxrates2022.xml', {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/xml'
+				}
+		});
+
+    const cursBnr = await res.xml();
+})
 
 
 

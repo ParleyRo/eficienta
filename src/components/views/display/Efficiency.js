@@ -1,4 +1,4 @@
-import ItemLoading from '../ItemLoading';
+import ItemLoading from '../ItemLoading.js';
 
 export default function Efficiency(props) {
 

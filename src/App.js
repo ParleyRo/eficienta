@@ -1,10 +1,10 @@
 import {Component} from 'react';
 
-import Everhour from './components/Everhour';
-import Days from './components/Days';
+import Everhour from './components/Everhour.js';
+import Days from './components/Days.js';
 
-import Display from './components/views/Display';
-import UserData from './components/views/UserData';
+import Display from './components/views/Display.js';
+import UserData from './components/views/UserData.js';
 
 import './assets/css/app.css';
 import './assets/css/animations.css';

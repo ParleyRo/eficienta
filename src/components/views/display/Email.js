@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import ItemLoading from '../ItemLoading';
+import ItemLoading from '../ItemLoading.js';
 
 class Email extends Component {
 

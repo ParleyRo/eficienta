@@ -1,11 +1,11 @@
 import {Component} from 'react';
 
-import Settings from './display/Settings';
+import Settings from './display/Settings.js';
 
-import Nav from './display/Nav';
-import Efficiency from './display/Efficiency';
-import Email from './display/Email';
-import Invoice from './display/Invoice';
+import Nav from './display/Nav.js';
+import Efficiency from './display/Efficiency.js';
+import Email from './display/Email.js';
+import Invoice from './display/Invoice.js';
 
 class Display extends Component {
 

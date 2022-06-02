@@ -1,8 +1,8 @@
 import {Component} from 'react';
 
-import UserName from './settings/UserName';
-import Daysoff from './settings/Daysoff';
-import Invoice from './settings/Invoice';
+import UserName from './settings/UserName.js';
+import Daysoff from './settings/Daysoff.js';
+import Invoice from './settings/Invoice.js';
 class Settings extends Component {
 
 	constructor(props) {
