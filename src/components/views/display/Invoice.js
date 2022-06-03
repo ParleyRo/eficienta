@@ -1,4 +1,4 @@
-import {Component} from 'react';
+import React from 'react';
 import _ from "lodash";
 
 import InvoiceView from './invoice/InvoiceView.js';
@@ -6,23 +6,20 @@ import CurrentData from './invoice/CurrentData.js';
 
 import ReactToPrint from 'react-to-print';
 
-class Invoice extends Component {
+class Invoice extends React.Component {
 
 	constructor(props) {
 		super(props);
-		
+
 		const date = new Date();
 		const dueDate = new Date();
 		dueDate.setDate(dueDate.getDate() +10);
 		
-		this.state = {
-			formState: true,
-			
+		this.state = {			
 			current: {
 				pos1: {
 					income: '',
 					description: 'Consulting Services',
-					euroPerHour: 21.25,
 					efficiency: 0
 				},
 				pos2: {
@@ -45,7 +42,8 @@ class Invoice extends Component {
 				'current.pos1.income',
 				'current.pos2.description','current.pos2.amount',
 				'current.pos3.description','current.pos3.amount'
-			]
+			],
+			rate: null
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -104,7 +102,21 @@ class Invoice extends Component {
 	}
 
 
-	componentDidMount(){
+	async componentDidMount(){
+		
+		const date = new Date(`${this.props.data.user.month} ${this.props.data.user.day}, ${this.props.data.user.year}`)
+		const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${date.getDate()}&m=${((date.getMonth()+1)+12)%12}&y=${date.getFullYear()}`;
+
+		const res = await fetch(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+
+    	const rate = await res.json();
+		
+		this.setState({rate:rate});
 
 	}
 
@@ -158,9 +170,10 @@ class Invoice extends Component {
 					current={this.state.current}
 					fieldsWithError={this.state.fieldsWithError}
 					invoice={this.props.data?.user?.savedData?.value?.invoice}
+					rate={this.state.rate}
 				/>
-
-				<div className="text-right">
+				
+				<div className="text-right ">
 					<ReactToPrint
 						content={() => this.componentRef}
 						trigger={() => <button className="">Print to PDF!</button>}

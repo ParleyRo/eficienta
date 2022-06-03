@@ -30,7 +30,7 @@ class UserName extends Component {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({secret: this.props.data.user.savedData.value.secret,name: this.state.name.trim()})
+			body: JSON.stringify({secret: this.props.data.user.savedData.value?.secret,name: this.state.name.trim()})
 		});
 
 		const result = await res.json();

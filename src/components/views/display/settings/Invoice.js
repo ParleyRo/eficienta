@@ -10,7 +10,7 @@ class Invoice extends Component {
 			ajaxLoading: false,
 			formState: true,
 			general: {
-				companyName: props.data.user.savedData.value.invoice,
+				companyName: props.data.user.savedData?.value?.invoice,
 				companyRegistrationNumber: null,
 				companyVatNumber: null,
 				companyAddress: null,

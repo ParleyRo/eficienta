@@ -131,10 +131,7 @@ class App extends Component {
       return false;
     }
 
-    if(this.userStats.requestFinish === false){
-      return true;
-    }
-    
+
     if(this.everhourStats.requestStarted === true){
       return true;
     }
