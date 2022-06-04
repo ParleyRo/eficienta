@@ -33,7 +33,7 @@ class Daysoff extends Component {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({secret: this.props.data.user.savedData.value.secret, daysoff: oDaysoff})
+			body: JSON.stringify({secret: this.props.data.user.data.secret, daysoff: oDaysoff})
 		});
 
 		const result = await res.json();
@@ -48,10 +48,10 @@ class Daysoff extends Component {
 	}
 	componentDidMount() {
 
-		if(this.props.data?.user?.savedData?.value?.daysoff && this.props.data?.user?.savedData?.value?.daysoff !== this.state.daysoff){
+		if(this.props.data?.user?.data?.daysoff && this.props.data?.user?.data?.daysoff !== this.state.daysoff){
 
 			let dates = []
-			for (const [month,daysInMonth] of Object.entries(this.props.data.user.savedData.value.daysoff)) {
+			for (const [month,daysInMonth] of Object.entries(this.props.data.user.data.daysoff)) {
 
 				daysInMonth.forEach((day)=>{
 					
@@ -63,7 +63,7 @@ class Daysoff extends Component {
 			}
 
 			this.setState({
-				daysoff: this.props.data.user.savedData.value.daysoff,
+				daysoff: this.props.data.user.data.daysoff,
 				dates: dates
 			})		
 		}
@@ -72,10 +72,10 @@ class Daysoff extends Component {
 
 	componentDidUpdate(prevProps, prevState, snapshot){
 
-		if(prevProps.data.user?.savedData?.value?.daysoff && prevProps.data.user?.savedData?.value?.daysoff !== this.state.daysoff){
+		if(prevProps.data.user?.data?.daysoff && prevProps.data.user?.data?.daysoff !== this.state.daysoff){
 
 			let dates = []
-			for (const [month,daysInMonth] of Object.entries(prevProps.data.user.savedData.value.daysoff)) {
+			for (const [month,daysInMonth] of Object.entries(prevProps.data.user.data.daysoff)) {
 
 				daysInMonth.forEach((day)=>{
 					
@@ -87,7 +87,7 @@ class Daysoff extends Component {
 			}
 
 			this.setState({
-				daysoff: prevProps.data.user.savedData.value.daysoff,
+				daysoff: prevProps.data.user.data.daysoff,
 				dates: dates
 			})		
 		}

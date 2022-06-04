@@ -169,7 +169,7 @@ class Invoice extends React.Component {
 					date={{month: this.props.data.user.month, year: this.props.data.user.year}} 
 					current={this.state.current}
 					fieldsWithError={this.state.fieldsWithError}
-					invoice={this.props.data?.user?.savedData?.value?.invoice}
+					invoice={this.props.data?.user?.data?.invoice}
 					rate={this.state.rate}
 				/>
 				

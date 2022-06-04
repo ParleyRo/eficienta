@@ -13,7 +13,7 @@ export default function Efficiency(props) {
 
 			<div className="row is-flex">
 				<div className="col">
-					<h3 className="title">{props.data.user?.savedData?.value?.name} - {props.data.user.month} {props.data.user.day}</h3>
+					<h3 className="title">{props.data.user?.data?.name} - {props.data.user.month} {props.data.user.day}</h3>
 				</div>
 			</div>
 

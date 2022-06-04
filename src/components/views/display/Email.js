@@ -36,7 +36,7 @@ class Email extends Component {
 						<div className="col">
 							<h3 className="title">Subject</h3>
 							<br />
-							<p className="subject">{this.props.data.user?.savedData?.value?.name ? <span>monthly efficiency for {this.props.data.user?.savedData?.value?.name } - {this.props.data.user.month}</span> : <ItemLoading />}</p>
+							<p className="subject">{this.props.data.user?.data.name ? <span>monthly efficiency for {this.props.data.user.data.name } - {this.props.data.user.month}</span> : <ItemLoading />}</p>
 						</div>
 					
 						<div className="col">

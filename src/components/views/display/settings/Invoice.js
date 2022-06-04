@@ -10,7 +10,7 @@ class Invoice extends Component {
 			ajaxLoading: false,
 			formState: true,
 			general: {
-				companyName: props.data.user.savedData?.value?.invoice,
+				companyName: props.data.user.data?.invoice,
 				companyRegistrationNumber: null,
 				companyVatNumber: null,
 				companyAddress: null,
@@ -28,12 +28,12 @@ class Invoice extends Component {
 			fieldsWithError:[]
 		};
 		
-		if(this.props.data?.user?.savedData?.value?.invoice?.general != null){
-			this.state.general = {...this.state.general,...this.props.data.user.savedData.value.invoice.general};
+		if(this.props.data?.user?.data?.invoice?.general != null){
+			this.state.general = {...this.state.general,...this.props.data.user.data.invoice.general};
 		}
 
-		if(this.props.data?.user?.savedData?.value?.invoice?.buyer != null){
-			this.state.buyer = {...this.state.buyer,...this.props.data.user.savedData.value.invoice.buyer};
+		if(this.props.data?.user?.data?.invoice?.buyer != null){
+			this.state.buyer = {...this.state.buyer,...this.props.data.user.data.invoice.buyer};
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -74,7 +74,7 @@ class Invoice extends Component {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({secret: this.props.data.user.savedData.value.secret, invoice: {general: this.state.general, buyer: this.state.buyer}})
+			body: JSON.stringify({secret: this.props.data.user.data.secret, invoice: {general: this.state.general, buyer: this.state.buyer}})
 		});
 
 		const result = await res.json();

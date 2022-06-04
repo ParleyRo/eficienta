@@ -18,7 +18,7 @@ class App extends Component {
 
     this.state = {
       user:{
-        savedData:{}
+        data:{}
       },
       time: {
         everhour: null,
@@ -58,7 +58,7 @@ class App extends Component {
     this.userStats = {
       requestStarted: false,
       requestFinish: false,
-      value: null
+      value: {}
     }
 
     this.changedData= this.changedData.bind(this);
@@ -66,7 +66,15 @@ class App extends Component {
   }
 
   setData(){
-  
+
+    if(this.userStats.requestFinish === false){
+      return;
+    }
+
+    if(this.everhourStats.requestFinish === false){
+      return;
+    }
+
     let oState = {...this.state};
 
     oState.isLoaded = true;
@@ -120,7 +128,7 @@ class App extends Component {
 
     oState.currentMonth = this.monthPosition;
 
-    oState.user.savedData = this.userStats
+    oState.user.data = this.userStats.value
 
     return oState;
   }
@@ -130,8 +138,7 @@ class App extends Component {
     if(!apikey){
       return false;
     }
-
-
+    
     if(this.everhourStats.requestStarted === true){
       return true;
     }
@@ -184,7 +191,9 @@ class App extends Component {
     }
 
     this.userStats.value = userData;
-
+    
+    console.log('Saved',userData);
+    
     return true;
 
   }
@@ -200,24 +209,10 @@ class App extends Component {
       return ;
     }
 
+    this.setState({isLoaded: true});
+
     await this.setUserData(secret);
-    
-    const bEverhour = await this.setEverhour(this.userStats.value?.everhour?.apikey);
-
-    if(bEverhour === false && this.userStats.value != null){
-
-        let oState = {isLoaded: false}
-  
-        if(this.userStats.value != null){
-          oState['user']= {
-            savedData: this.userStats.value
-          }
-
-           this.setState(oState);
-        }
-
-      return;
-    }
+    await this.setEverhour(this.userStats.value?.everhour?.apikey);
 
     Days.daysoff = this.userStats.value?.daysoff;
 
@@ -238,12 +233,9 @@ class App extends Component {
       this.setState({
         user: {
           ...this.state.user,
-          savedData: {
-            ...this.state.user.savedData,
-            value: {
-              ...this.state.user.savedData.value,
-              name: data.name
-            }
+          data: {
+            ...this.state.user.data,
+            name: data.name
           }
         }
       });
@@ -257,7 +249,6 @@ class App extends Component {
       if(data.daysoff?.[this.date.getMonth()+1]?.length){
 
         const date = new Date();
-        
         
         data.daysoff?.[this.date.getMonth()+1].forEach(day =>{
 
@@ -297,12 +288,9 @@ class App extends Component {
       this.setState({
         user: {
           ...this.state.user,
-          savedData: {
-            ...this.state.user.savedData,
-            value: {
-              ...this.state.user.savedData.value,
-              daysoff: data.daysoff
-            }
+          data: {
+            ...this.state.user.data,
+            daysoff: data.daysoff
           }
         },
         time:{
@@ -320,15 +308,12 @@ class App extends Component {
       this.setState({
         user: {
           ...this.state.user,
-          savedData: {
-            ...this.state.user.savedData,
-            value: {
-              ...this.state.user.savedData.value,
-              invoice: {
-                ...this.state.user.savedData.value.invoice,
-                general: data.invoice.general, 
-                buyer: data.invoice.buyer
-              }
+          data: {
+            ...this.state.user.data,
+            invoice: {
+              ...this.state.user.data.invoice,
+              general: data.invoice.general, 
+              buyer: data.invoice.buyer
             }
           }
         }
@@ -343,6 +328,7 @@ class App extends Component {
     return (
 
         <>
+
 
           {/*           
             {!this.everhourStats.finish && 

@@ -30,7 +30,7 @@ class UserName extends Component {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({secret: this.props.data.user.savedData.value?.secret,name: this.state.name.trim()})
+			body: JSON.stringify({secret: this.props.data.user.data.secret,name: this.state.name.trim()})
 		});
 
 		const result = await res.json();
@@ -43,10 +43,10 @@ class UserName extends Component {
 
 	componentDidMount() {
 
-		if(this.props.data.user?.savedData?.value?.name && this.props.data.user?.savedData?.value?.name !== this.state.name){
+		if(this.props.data.user?.data?.name && this.props.data.user?.data?.name !== this.state.name){
 
 			this.setState({
-				name: this.props.data.user.savedData.value.name,
+				name: this.props.data.user.data.name,
 			})		
 		}
 
@@ -54,10 +54,10 @@ class UserName extends Component {
 
 	componentDidUpdate(prevProps, prevState, snapshot){
 
-		if(prevProps.data.user?.savedData?.value?.name && null == this.state.name){
+		if(prevProps.data.user?.data?.name && null == this.state.name){
 			
 			this.setState({
-				name: prevProps.data.user.savedData.value.name,
+				name: prevProps.data.user.data.name,
 			})		
 		}
 

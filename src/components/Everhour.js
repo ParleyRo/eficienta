@@ -13,7 +13,7 @@ class Everhour{
 	async fetchUserTasks() {
 
 		try {
-			console.log(3333333333333333333333333)
+
 			const res = await fetch(`https://api.everhour.com/users/me/time?from=${this.from}&to=${this.to}`, {
 				method: 'GET',
 				headers: {
