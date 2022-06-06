@@ -62,7 +62,7 @@ class Display extends Component {
 
 						<hr />
 
-						{/* <Invoice data={this.props.data} /> */}
+						<Invoice data={this.props.data} />
 					</>
 				}
 				

@@ -18,7 +18,7 @@ class Email extends Component {
 	}
 
 	render(){
-console.log(this.props.data.user.daysoff)
+
 		return (
 			
 			<div className="email">

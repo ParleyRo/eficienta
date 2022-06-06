@@ -16,27 +16,6 @@ class App extends Component {
     
     super();
 
-    this.state = {
-      user:{
-        name: null,
-        invoice:{},
-        daysoff:{}
-      },
-      time: {
-        everhour: null,
-        freedays: 0,
-        daysoff: 0,
-        workHours: 0
-      },
-      monthInfo:{
-      
-      },
-      efficiency:{
-
-      },
-      isLoaded: false
-    };
-
     const queryParams = new URLSearchParams(window.location.search);
     const month = queryParams.get("month") || 0;
     
@@ -50,9 +29,38 @@ class App extends Component {
       this.date.setDate(0);
       
     }
+
+    this.state = {
+      user:{
+        name: null,
+        invoice:{},
+        daysoff:{}
+      },
+      time: {
+        everhour: null,
+        freedays: 0,
+        daysoff: 0,
+        workHours: 0
+      },
+      monthInfo:{
+        position: this.monthPosition,
+        name: MonthNames[this.date.getMonth()],
+        prevmonth: MonthNames[(this.date.getMonth()+12-1)%12],
+        nextmonth: this.monthPosition < 0 ? MonthNames[(this.date.getMonth()+12+1)%12] : false,
+        day: this.date.getDate(),
+        year: this.date.getFullYear()
+      },
+      efficiency:{
+
+      },
+      isLoaded: false
+    };
+
     
     console.log(1,`Apps: ${this.date}`)
     
+    
+
     this.everhourStats = {
       requestStarted: false,
       requestFinish: false,
@@ -83,14 +91,7 @@ class App extends Component {
 
     oState.isLoaded = true;
 
-    oState.user = {...this.userStats.value}
-
-    oState.monthInfo.position = this.monthPosition;
-    oState.monthInfo.name = MonthNames[this.date.getMonth()];
-    oState.monthInfo.prevmonth = MonthNames[(this.date.getMonth()+12-1)%12];
-    oState.monthInfo.nextmonth = this.monthPosition < 0 ? MonthNames[(this.date.getMonth()+12+1)%12] : false;
-    oState.monthInfo.day = this.date.getDate();
-    oState.monthInfo.year = this.date.getFullYear();
+    oState.user = {...this.userStats.value};
 
     oState.time.everhour = Math.round(this.everhourStats.value / 3600);
     

@@ -13,6 +13,7 @@ class Invoice extends React.Component {
 
 		const date = new Date();
 		const dueDate = new Date();
+		
 		dueDate.setDate(dueDate.getDate() +10);
 		
 		this.state = {	
@@ -107,52 +108,39 @@ class Invoice extends React.Component {
 
 	async componentDidMount(){
 
+		console.log(3,'invoice', this.props.data);
 		
-		if(this.state.date.day != null){
-			
-			console.log(3,'invoice', this.props.data.user);
+		const date = new Date(`${this.props.data.monthInfo.name} ${this.props.data.monthInfo.day}, ${this.props.data.monthInfo.year}`)
 
-			const date = new Date(`${this.props.data.user.month} ${this.props.data.user.day}, ${this.props.data.user.year}`)
-			
-			const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${date.getDate()}&m=${((date.getMonth()+1)+12)%12}&y=${date.getFullYear()}`;
+		const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${date.getDate()}&m=${((date.getMonth()+1)+12)%12}&y=${date.getFullYear()}`;
 
-			const res = await fetch(url, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
+		const res = await fetch(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
 
-			const rate = await res.json();
-			
-			this.setState({rate:rate});
-		}
-
+		const rate = await res.json();
+		
+		this.setState({rate:rate});
 
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot){
 
-		if(prevProps.data.efficiency && prevProps.data.efficiency !== this.state.current.pos1.efficiency){
+		if(prevProps.data.efficiency.total && prevProps.data.efficiency.total !== this.state.current.pos1.efficiency){
 			this.setState({ 
 				current: { 
 					...this.state.current,
 					pos1: {
 						...this.state.current.pos1,
-						efficiency: prevProps.data.efficiency
+						efficiency: prevProps.data.efficiency.total
 					}
 				}
 			});
 		}
 
-		if(prevProps.data.user.day && prevProps.data.user.day != this.state.date.day){
-		
-			this.setState({date:
-				{
-					day: prevProps.data.user.day
-				}
-			});
-		}
 	}
 	render(){
 
@@ -185,10 +173,10 @@ class Invoice extends React.Component {
 
 				<InvoiceView 
 					ref={el => (this.componentRef = el)}
-					date={{month: this.props.data.user.month, year: this.props.data.user.year}} 
+					date={{month: this.props.data.monthInfo.name, year: this.props.data.monthInfo.year}} 
 					current={this.state.current}
 					fieldsWithError={this.state.fieldsWithError}
-					invoice={this.props.data?.user?.data?.invoice}
+					invoice={this.props.data.user.invoice}
 					rate={this.state.rate}
 				/>
 				
