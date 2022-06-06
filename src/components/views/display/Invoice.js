@@ -52,6 +52,12 @@ class Invoice extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.addNewPos = this.addNewPos.bind(this);
+
+		this.rateStats = {
+			requestStarted: false,
+			requestFinish: false,
+			value: 0
+		}
 	}
 
 	addNewPos(event){
@@ -108,20 +114,25 @@ class Invoice extends React.Component {
 
 	async componentDidMount(){
 		
-		const date = new Date(`${this.props.data.monthInfo.name} ${this.props.data.monthInfo.day}, ${this.props.data.monthInfo.year}`)
+		if(this.rateStats.requestStarted === false){
+			
+			this.rateStats.requestStarted = true;
 
-		const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${date.getDate()}&m=${((date.getMonth()+1)+12)%12}&y=${date.getFullYear()}`;
+			const date = new Date(`${this.props.data.monthInfo.name} ${this.props.data.monthInfo.day}, ${this.props.data.monthInfo.year}`)
 
-		const res = await fetch(url, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
+			const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${date.getDate()}&m=${((date.getMonth()+1)+12)%12}&y=${date.getFullYear()}`;
 
-		const rate = await res.json();
-		
-		this.setState({rate:rate});
+			const res = await fetch(url, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			const rate = await res.json();
+			
+			this.setState({rate:rate});
+		}
 
 	}
 
