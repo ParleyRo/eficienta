@@ -1,6 +1,6 @@
 import {Component} from 'react';
 
-class UserData extends Component {
+class LoginRegister extends Component {
 	
 	constructor(props) {
 		super(props);
@@ -112,4 +112,4 @@ class UserData extends Component {
 	}
 }
 
-export default UserData;
+export default LoginRegister;

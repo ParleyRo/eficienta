@@ -4,9 +4,7 @@ class Everhour{
 
 		this.from = `${date.getFullYear()}-${date.getMonth()+1}-1`;
 		this.to = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-		
-		console.log(1,`Everhour: from:${this.from}  to:${this.to}`);
-		
+				
 		this.apikey = apikey
 	}
 

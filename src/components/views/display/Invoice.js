@@ -107,8 +107,6 @@ class Invoice extends React.Component {
 
 
 	async componentDidMount(){
-
-		console.log(3,'invoice', this.props.data);
 		
 		const date = new Date(`${this.props.data.monthInfo.name} ${this.props.data.monthInfo.day}, ${this.props.data.monthInfo.year}`)
 

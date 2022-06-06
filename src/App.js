@@ -4,7 +4,7 @@ import Everhour from './components/Everhour.js';
 import Days from './components/Days.js';
 
 import Display from './components/views/Display.js';
-import UserData from './components/views/UserData.js';
+import LoginRegister from './components/views/LoginRegister.js';
 
 import './assets/css/app.css';
 import './assets/css/animations.css';
@@ -122,7 +122,7 @@ class App extends Component {
 
     },0);
 
-    const daysoffToday = oState.user.daysoff?.[this.date.getMonth()+1].reduce((index,day) =>{
+    const daysoffToday = (oState.user.daysoff?.[this.date.getMonth()+1]||[]).reduce((index,day) =>{
       
       if(this.date.getDate() >= day){
         return index+1;
@@ -196,9 +196,7 @@ class App extends Component {
     }
 
     this.userStats.value = userData;
-    
-    console.log('Saved',userData);
-    
+        
     return true;
 
   }
@@ -344,27 +342,17 @@ class App extends Component {
   }
 
   render() {
-
-    console.log(2,'Apps',this.state);
     
     return (
 
         <>
-
-
-          {/*           
-            {!this.everhourStats.finish && 
-            <h1 className="loading text-center green">Getting data from Everhour api</h1>
-            } 
-          */}
-
 
           { this.state.isLoaded && 
               <Display data={this.state} changedData={this.changedData}/>
           }
           
           { !this.state.isLoaded &&
-               <UserData data={this.userStats.value}/>
+               <LoginRegister data={this.userStats.value}/>
           }
 
         </>
