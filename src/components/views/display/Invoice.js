@@ -15,7 +15,7 @@ class Invoice extends React.Component {
 		const dueDate = new Date();
 		dueDate.setDate(dueDate.getDate() +10);
 		
-		this.state = {			
+		this.state = {	
 			current: {
 				pos1: {
 					income: '',
@@ -43,6 +43,9 @@ class Invoice extends React.Component {
 				'current.pos2.description','current.pos2.amount',
 				'current.pos3.description','current.pos3.amount'
 			],
+			date: {
+				day: null
+			},
 			rate: null
 		};
 
@@ -103,26 +106,34 @@ class Invoice extends React.Component {
 
 
 	async componentDidMount(){
-		
-		const date = new Date(`${this.props.data.user.month} ${this.props.data.user.day}, ${this.props.data.user.year}`)
-		const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${date.getDate()}&m=${((date.getMonth()+1)+12)%12}&y=${date.getFullYear()}`;
 
-		const res = await fetch(url, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-
-    	const rate = await res.json();
 		
-		this.setState({rate:rate});
+		if(this.state.date.day != null){
+			
+			console.log(3,'invoice', this.props.data.user);
+
+			const date = new Date(`${this.props.data.user.month} ${this.props.data.user.day}, ${this.props.data.user.year}`)
+			
+			const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${date.getDate()}&m=${((date.getMonth()+1)+12)%12}&y=${date.getFullYear()}`;
+
+			const res = await fetch(url, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			const rate = await res.json();
+			
+			this.setState({rate:rate});
+		}
+
 
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot){
 
-		if(prevProps?.data?.efficiency && prevProps?.data?.efficiency !== this.state.current.pos1.efficiency){
+		if(prevProps.data.efficiency && prevProps.data.efficiency !== this.state.current.pos1.efficiency){
 			this.setState({ 
 				current: { 
 					...this.state.current,
@@ -134,6 +145,14 @@ class Invoice extends React.Component {
 			});
 		}
 
+		if(prevProps.data.user.day && prevProps.data.user.day != this.state.date.day){
+		
+			this.setState({date:
+				{
+					day: prevProps.data.user.day
+				}
+			});
+		}
 	}
 	render(){
 

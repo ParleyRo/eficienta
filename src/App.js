@@ -18,7 +18,9 @@ class App extends Component {
 
     this.state = {
       user:{
-        data:{}
+        name: null,
+        invoice:{},
+        daysoff:{}
       },
       time: {
         everhour: null,
@@ -26,10 +28,12 @@ class App extends Component {
         daysoff: 0,
         workHours: 0
       },
-      daysoff: [],
-      freedays: [],
-      weekendDays: 0,
-      monthDays: 0,
+      monthInfo:{
+      
+      },
+      efficiency:{
+
+      },
       isLoaded: false
     };
 
@@ -79,32 +83,34 @@ class App extends Component {
 
     oState.isLoaded = true;
 
-    oState.user.month = MonthNames[this.date.getMonth()];
-    oState.user.prevmonth = MonthNames[(this.date.getMonth()+12-1)%12];
-    oState.user.nextmonth = this.monthPosition < 0 ? MonthNames[(this.date.getMonth()+12+1)%12] : false;
-    oState.user.day = this.date.getDate();
-    oState.user.year = this.date.getFullYear();
+    oState.user = {...this.userStats.value}
+
+    oState.monthInfo.position = this.monthPosition;
+    oState.monthInfo.name = MonthNames[this.date.getMonth()];
+    oState.monthInfo.prevmonth = MonthNames[(this.date.getMonth()+12-1)%12];
+    oState.monthInfo.nextmonth = this.monthPosition < 0 ? MonthNames[(this.date.getMonth()+12+1)%12] : false;
+    oState.monthInfo.day = this.date.getDate();
+    oState.monthInfo.year = this.date.getFullYear();
 
     oState.time.everhour = Math.round(this.everhourStats.value / 3600);
     
     oState.time.freedays = this.days.freedays*8;
-    oState.freedays = [...this.days.freedaysList];
+    oState.monthInfo.freedays = [...this.days.freedaysList];
     
-    oState.workDays = this.days.monthDays - this.days.weekendDays;
-    oState.workedDays = this.days.workedDays;
+    oState.monthInfo.workDays = this.days.monthDays - this.days.weekendDays;
+    oState.monthInfo.workedDays = this.days.workedDays;
 
-    oState.weekendDays = this.days.weekendDays;
-    oState.monthDays = this.days.monthDays;
+    oState.monthInfo.weekendDays = this.days.weekendDays;
+    oState.monthInfo.monthDays = this.days.monthDays;
     
     oState.time.daysoff = this.days.daysoff*8;
-    oState.daysoff = [...this.days.daysoffList];
 
-    oState.time.workHours = oState.workDays*8;
-    oState.time.workedHours = oState.workedDays*8;
+    oState.time.workHours = oState.monthInfo.workDays*8;
+    oState.time.workedHours = oState.monthInfo.workedDays*8;
 
-    oState.efficiency = Math.round(((oState.time.everhour+oState.time.freedays+oState.time.daysoff) * 100 ) / oState.time.workHours);
+    oState.efficiency.total = Math.round(((oState.time.everhour+oState.time.freedays+oState.time.daysoff) * 100 ) / oState.time.workHours);
 
-    const freedaysToday = oState.freedays.reduce((index,day) =>{
+    const freedaysToday = oState.monthInfo.freedays.reduce((index,day) =>{
       
       if(this.date.getDate() >= day){
         return index+1;
@@ -114,7 +120,7 @@ class App extends Component {
 
     },0);
 
-    const daysoffToday = oState.daysoff.reduce((index,day) =>{
+    const daysoffToday = oState.user.daysoff[this.date.getMonth()+1].reduce((index,day) =>{
       
       if(this.date.getDate() >= day){
         return index+1;
@@ -124,11 +130,7 @@ class App extends Component {
 
     },0);
 
-    oState.efficiencyToday = Math.round(((oState.time.everhour+(freedaysToday*8)+(daysoffToday*8)) * 100 ) / oState.time.workedHours);
-
-    oState.currentMonth = this.monthPosition;
-
-    oState.user.data = this.userStats.value
+    oState.efficiency.current = Math.round(((oState.time.everhour+(freedaysToday*8)+(daysoffToday*8)) * 100 ) / oState.time.workedHours);
 
     return oState;
   }
@@ -208,21 +210,45 @@ class App extends Component {
 
       return ;
     }
+    
+    const $this = this;
 
-    this.setState({isLoaded: true});
+    if(this.userStats.requestStarted === false){
 
-    await this.setUserData(secret);
-    await this.setEverhour(this.userStats.value?.everhour?.apikey);
+      $this.setState({isLoaded: true});
 
-    Days.daysoff = this.userStats.value?.daysoff;
+      new Promise(async function(resolve, reject) {
 
-    const oDays = new Days(this.date);
+          await $this.setUserData(secret);
+          
+          resolve();
+      
+      }).then(async function(result) {
 
-    this.days = oDays.getDays();
+          if($this.userStats.value.everhour?.apikey == null){
+            throw 'There is no everhour apikey saved';
+          }
+          await $this.setEverhour($this.userStats.value.everhour.apikey)
+          
+      }).then(function(result) {
+      
+          Days.daysoff = $this.userStats.value.daysoff;
 
-    const oState = this.setData();
+          const oDays = new Days($this.date);
 
-    this.setState(oState);
+          $this.days = oDays.getDays();
+
+          const oState = $this.setData();
+
+          $this.setState(oState);
+
+      }).catch(err => {
+
+          console.error(err)
+      
+      });
+    
+    }
     
   }
 
@@ -233,10 +259,7 @@ class App extends Component {
       this.setState({
         user: {
           ...this.state.user,
-          data: {
-            ...this.state.user.data,
-            name: data.name
-          }
+          name: data.name
         }
       });
     }
@@ -262,18 +285,9 @@ class App extends Component {
         })
       }
 
-      const efficiency = Math.round(((this.state.time.everhour+this.state.time.freedays+(daysoff*8)) * 100 ) / this.state.time.workHours);
+      const efficiencyTotal = Math.round(((this.state.time.everhour+this.state.time.freedays+(daysoff*8)) * 100 ) / this.state.time.workHours);
 
-      const freedaysToday = this.state.freedays.reduce((index,day) =>{
-      
-        if(this.date.getDate() >= day){
-          return index+1;
-        }
-
-        return index;
-
-      },0);
-      const daysoffToday = daysoffList.reduce((index,day) =>{
+      const freedaysCurrent = this.state.monthInfo.freedays.reduce((index,day) =>{
       
         if(this.date.getDate() >= day){
           return index+1;
@@ -283,38 +297,42 @@ class App extends Component {
 
       },0);
 
-      const efficiencyToday = Math.round(((this.state.time.everhour+(freedaysToday*8)+(daysoffToday*8)) * 100 ) / this.state.time.workedHours);
+      const daysoffCurrent = daysoffList.reduce((index,day) =>{
+      
+        if(this.date.getDate() >= day){
+          return index+1;
+        }
+
+        return index;
+
+      },0);
+
+      const efficiencyCurrent = Math.round(((this.state.time.everhour+(freedaysCurrent*8)+(daysoffCurrent*8)) * 100 ) / this.state.time.workedHours);
 
       this.setState({
         user: {
           ...this.state.user,
-          data: {
-            ...this.state.user.data,
-            daysoff: data.daysoff
-          }
+          daysoff: data.daysoff
         },
         time:{
           ...this.state.time,
           daysoff: daysoff*8
         },
-        efficiency: efficiency,
-        efficiencyToday: efficiencyToday,
-        daysoff: daysoffList
+        efficiency: {
+          total: efficiencyTotal,
+          current: efficiencyCurrent
+        }
       });
 
     }
-
     if(data.invoice != null){
       this.setState({
         user: {
           ...this.state.user,
-          data: {
-            ...this.state.user.data,
-            invoice: {
-              ...this.state.user.data.invoice,
-              general: data.invoice.general, 
-              buyer: data.invoice.buyer
-            }
+          invoice: {
+            ...this.state.user.invoice,
+            general: data.invoice.general, 
+            buyer: data.invoice.buyer
           }
         }
       });
@@ -324,7 +342,8 @@ class App extends Component {
 
   render() {
 
-    console.log(2,'Apps',this.state)
+    console.log(2,'Apps',this.state);
+    
     return (
 
         <>

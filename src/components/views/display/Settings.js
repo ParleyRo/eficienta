@@ -35,10 +35,16 @@ class Settings extends Component {
 
 				<div className="is-flex va-center responsive">
 					<div className="col auto">
-						<UserName data={this.props.data} changedData={this.props.changedData}/>
+						<UserName 
+							data={this.props.data}
+							changedData={this.props.changedData}
+						/>
 					</div>
 					<div className="col auto">
-						<Daysoff data={this.props.data} changedData={this.props.changedData}/>
+						<Daysoff 
+							data={this.props.data}
+							changedData={this.props.changedData}
+						/>
 					</div>
 					
 				</div>

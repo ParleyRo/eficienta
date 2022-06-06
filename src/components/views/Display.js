@@ -54,15 +54,15 @@ class Display extends Component {
 					<>
 						<Nav data={this.props.data}/>
 
-						<Efficiency data={this.props.data}/>
+						{/* <Efficiency data={this.props.data}/> */}
 
 						<hr />
 						
-						<Email data={this.props.data} />
+						{/* <Email data={this.props.data} />
 
 						<hr />
 
-						<Invoice data={this.props.data} />
+						<Invoice data={this.props.data} /> */}
 					</>
 				}
 				

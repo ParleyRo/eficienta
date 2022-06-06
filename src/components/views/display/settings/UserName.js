@@ -7,21 +7,20 @@ class UserName extends Component {
 		super(props);
 		
 		this.state = {
-			name: null
+			name: props.data.user.name || null
 		}
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 	}
 
 	handleChange(event) {
-		
+
 		this.setState({name: event.target.value});
 	}
 
 	async handleSubmit(event) {
 
 		event.preventDefault();
-
 		
 		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
 		
@@ -30,7 +29,7 @@ class UserName extends Component {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({secret: this.props.data.user.data.secret,name: this.state.name.trim()})
+			body: JSON.stringify({secret: this.props.data.user.secret,name: this.state.name.trim()})
 		});
 
 		const result = await res.json();
@@ -41,29 +40,6 @@ class UserName extends Component {
 		}
 	}
 
-	componentDidMount() {
-
-		if(this.props.data.user?.data?.name && this.props.data.user?.data?.name !== this.state.name){
-
-			this.setState({
-				name: this.props.data.user.data.name,
-			})		
-		}
-
-	}
-
-	componentDidUpdate(prevProps, prevState, snapshot){
-
-		if(prevProps.data.user?.data?.name && null == this.state.name){
-			
-			this.setState({
-				name: prevProps.data.user.data.name,
-			})		
-		}
-
-	}
-
-	
 	render(){
 
 		return (

@@ -10,32 +10,24 @@ class Invoice extends Component {
 			ajaxLoading: false,
 			formState: true,
 			general: {
-				companyName: props.data.user.data?.invoice,
-				companyRegistrationNumber: null,
-				companyVatNumber: null,
-				companyAddress: null,
-				companyPhone: null,
-				companyEmail: null,
-				companyBank: null,
-				companySwift: null,
-				companyIban: null
+				companyName: props.data.user.invoice?.general?.companyName || '',
+				companyRegistrationNumber: props.data.user.invoice?.general?.companyRegistrationNumber || '',
+				companyVatNumber: props.data.user.invoice?.general?.companyVatNumber || '',
+				companyAddress: props.data.user.invoice?.general?.companyAddress || '',
+				companyPhone: props.data.user.invoice?.general?.companyPhone || '',
+				companyEmail: props.data.user.invoice?.general?.companyEmail || '',
+				companyBank: props.data.user.invoice?.general?.companyBank || '',
+				companySwift: props.data.user.invoice?.general?.companySwift || '',
+				companyIban: props.data.user.invoice?.general?.companyIban || ''
 			},
 			buyer: {
-				companyName: null,
-				companyId: null,
-				companyAddress: null
+				companyName: props.data.user.invoice?.buyer?.companyName || '',
+				companyId: props.data.user.invoice?.buyer?.companyId || '',
+				companyAddress: props.data.user.invoice?.buyer?.companyAddress || ''
 			},
 			fieldsWithError:[]
 		};
 		
-		if(this.props.data?.user?.data?.invoice?.general != null){
-			this.state.general = {...this.state.general,...this.props.data.user.data.invoice.general};
-		}
-
-		if(this.props.data?.user?.data?.invoice?.buyer != null){
-			this.state.buyer = {...this.state.buyer,...this.props.data.user.data.invoice.buyer};
-		}
-
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
@@ -48,14 +40,14 @@ class Invoice extends Component {
 
 		for (const [key] of Object.entries(this.state.general)) {
 
-			if(this.state.general[key] == null || this.state.general[key] === ''){
+			if(this.state.general[key] === ''){
 				isValid = false;
 			}
 		}
 
 		for (const [key] of Object.entries(this.state.buyer)) {
 
-			if(this.state.buyer[key] == null || this.state.buyer[key] === ''){
+			if(this.state.buyer[key] === ''){
 				isValid = false;
 			}
 		}
@@ -74,7 +66,13 @@ class Invoice extends Component {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({secret: this.props.data.user.data.secret, invoice: {general: this.state.general, buyer: this.state.buyer}})
+			body: JSON.stringify({
+				secret: this.props.data.user.secret, 
+				invoice: {
+					general: this.state.general,
+					buyer: this.state.buyer
+				}
+			})
 		});
 
 		const result = await res.json();
@@ -82,7 +80,12 @@ class Invoice extends Component {
 		this.setState({ajaxLoading: false})
 
 		if(result.success){
-			this.props.changedData({invoice: {general: this.state.general, buyer: this.state.buyer}})
+			this.props.changedData({
+				invoice: {
+					general: this.state.general,
+					buyer: this.state.buyer
+				}
+			});
 		}
 	}
 
@@ -90,9 +93,8 @@ class Invoice extends Component {
 
 		const value = event.target.value.trim();
 		const stateLocation = event.target.dataset.stateLocation;
-
 			
-		if((value === '' || value == null) && !this.state.fieldsWithError.includes(stateLocation)){
+		if((value === '') && !this.state.fieldsWithError.includes(stateLocation)){
 			_.set(this.state, 'fieldsWithError', [...this.state.fieldsWithError, stateLocation]);
 		}else{
 			const fieldsWithError = [...this.state.fieldsWithError];
@@ -106,7 +108,6 @@ class Invoice extends Component {
 		}
 
 		_.set(this.state, stateLocation, value);
-		
 
 		this.setState(this.state);
 	}
@@ -142,14 +143,14 @@ class Invoice extends Component {
 								<div className="col">
 									<label>
 										<div>Company Name: </div>
-										<input className="large" type="text" value={this.state.general.companyName || ''} data-state-location="general.companyName" onChange={this.handleChange} required />
+										<input className="large" type="text" value={this.state.general.companyName} data-state-location="general.companyName" onChange={this.handleChange} required />
 									</label>
 								</div>
 
 								<div className="col">
 									<label>
 										<div>Company Registration Number: </div>
-										<input className="large" type="text" value={this.state.general.companyRegistrationNumber || ''} data-state-location="general.companyRegistrationNumber" onChange={this.handleChange} required />
+										<input className="large" type="text" value={this.state.general.companyRegistrationNumber} data-state-location="general.companyRegistrationNumber" onChange={this.handleChange} required />
 									</label>
 								</div>
 							</div>
@@ -158,14 +159,14 @@ class Invoice extends Component {
 								<div className="col">
 									<label>
 										<div>VAT number: </div>
-										<input className="large" type="text" value={this.state.general.companyVatNumber || ''} data-state-location="general.companyVatNumber" onChange={this.handleChange} required />
+										<input className="large" type="text" value={this.state.general.companyVatNumber} data-state-location="general.companyVatNumber" onChange={this.handleChange} required />
 									</label>
 								</div>
 
 								<div className="col">
 									<label>
 										<div>Address: </div>
-										<input className="large" type="text" value={this.state.general.companyAddress || ''} data-state-location="general.companyAddress" onChange={this.handleChange} required />
+										<input className="large" type="text" value={this.state.general.companyAddress} data-state-location="general.companyAddress" onChange={this.handleChange} required />
 									</label>
 								</div>
 							</div>
@@ -175,14 +176,14 @@ class Invoice extends Component {
 								<div className="col">
 									<label>
 										<div>Phone: </div>
-										<input className="large" type="text" value={this.state.general.companyPhone || ''} data-state-location="general.companyPhone" onChange={this.handleChange} required />
+										<input className="large" type="text" value={this.state.general.companyPhone} data-state-location="general.companyPhone" onChange={this.handleChange} required />
 									</label>
 								</div>
 
 								<div className="col">
 									<label>
 										<div>Email: </div>
-										<input className="large" type="text" value={this.state.general.companyEmail || ''} data-state-location="general.companyEmail" onChange={this.handleChange} required />
+										<input className="large" type="text" value={this.state.general.companyEmail} data-state-location="general.companyEmail" onChange={this.handleChange} required />
 									</label>
 								</div>
 							</div>
@@ -191,14 +192,14 @@ class Invoice extends Component {
 								<div className="col">
 									<label>
 										<div>Bank: </div>
-										<input className="large" type="text" value={this.state.general.companyBank || ''} data-state-location="general.companyBank" onChange={this.handleChange} required />
+										<input className="large" type="text" value={this.state.general.companyBank} data-state-location="general.companyBank" onChange={this.handleChange} required />
 									</label>
 								</div>
 
 								<div className="col">
 									<label>
 										<div>Swift: </div>
-										<input className="large" type="text" value={this.state.general.companySwift || '' } data-state-location="general.companySwift" onChange={this.handleChange} required />
+										<input className="large" type="text" value={this.state.general.companySwift} data-state-location="general.companySwift" onChange={this.handleChange} required />
 									</label>
 								</div>
 							</div>
@@ -207,7 +208,7 @@ class Invoice extends Component {
 								<div className="col">
 									<label>
 										<div>Iban: </div>
-										<input className="large" type="text" value={this.state.general.companyIban || ''} data-state-location="general.companyIban" onChange={this.handleChange} required />
+										<input className="large" type="text" value={this.state.general.companyIban} data-state-location="general.companyIban" onChange={this.handleChange} required />
 									</label>
 								</div>
 
