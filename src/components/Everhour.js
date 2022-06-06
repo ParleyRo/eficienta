@@ -20,8 +20,6 @@ class Everhour{
 				}
 			});
 
-			console.log('Everhour request: ',res.status)
-
 			if(res.status === 404){
 				return {
 					error: {

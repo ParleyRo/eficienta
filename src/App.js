@@ -24,6 +24,7 @@ class App extends Component {
     this.date  = new Date();
 
     if(this.monthPosition < 0 ){
+
       this.date.setDate(15);
 		  this.date.setMonth(this.date.getMonth()+this.monthPosition+1);
       this.date.setDate(0);
@@ -56,11 +57,6 @@ class App extends Component {
       },
       isLoaded: false
     };
-
-    
-    console.log(1,`Apps: ${this.date}`)
-    
-    
 
     this.everhourStats = {
       requestStarted: false,
