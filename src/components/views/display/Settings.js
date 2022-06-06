@@ -2,7 +2,7 @@ import {Component} from 'react';
 
 import UserName from './settings/UserName.js';
 import Daysoff from './settings/Daysoff.js';
-import Invoice from './settings/Invoice.js';
+import InvoiceData from './settings/InvoiceData.js';
 class Settings extends Component {
 
 	constructor(props) {
@@ -51,7 +51,7 @@ class Settings extends Component {
 
 				<hr />
 
-				<Invoice 
+				<InvoiceData
 					data={this.props.data}
 					changedData={this.props.changedData}
 				/>

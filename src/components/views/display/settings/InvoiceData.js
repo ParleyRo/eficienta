@@ -2,7 +2,7 @@ import {Component} from 'react';
 
 import _ from "lodash";
 
-class Invoice extends Component {
+class InvoiceData extends Component {
 	
 	constructor(props) {
 		super(props);
@@ -269,4 +269,4 @@ class Invoice extends Component {
 
 }
 
-export default Invoice;
+export default InvoiceData;
