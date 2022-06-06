@@ -13,17 +13,17 @@ export default function Efficiency(props) {
 
 			<div className="row is-flex">
 				<div className="col">
-					<h3 className="title">{props.data.user?.data?.name} - {props.data.user.month} {props.data.user.day}</h3>
+					<h3 className="title">{props.data.user.name || ''} - {props.data.monthInfo.name} {props.data.monthInfo.day}</h3>
 				</div>
 			</div>
 
 			<div className="row is-flex">
 				
 				<div className="col">
-					<p>MonthDays: {props.data.monthDays}</p>
-					<p>WeekendDays: {props.data.weekendDays}</p>
-					<p>WorkDays: {props.data.workDays}</p>
-					<p className="green"><b>WorkedDays: {props.data.workedDays}</b></p>
+					<p>MonthDays: {props.data.monthInfo.monthDays}</p>
+					<p>WeekendDays: {props.data.monthInfo.weekendDays}</p>
+					<p>WorkDays: {props.data.monthInfo.workDays}</p>
+					<p className="green"><b>WorkedDays: {props.data.monthInfo.workedDays}</b></p>
 				</div>
 
 				<div className="col">
@@ -39,13 +39,13 @@ export default function Efficiency(props) {
 				</div>
 
 				<div className="col">
-					<p className="is-flex va-center">Efficiency:&nbsp;{props.data.efficiency
-							? <span>{props.data.efficiency}%</span>
+					<p className="is-flex va-center">Efficiency:&nbsp;{props.data.efficiency.total
+							? <span>{props.data.efficiency.total}%</span>
 							: <ItemLoading />
 						}
 					</p>
-					<p className="green is-flex va-center"><b>Efficiency today:&nbsp;{props.data.efficiencyToday
-							? <span>{props.data.efficiencyToday}%</span>
+					<p className="green is-flex va-center"><b>Efficiency today:&nbsp;{props.data.efficiency.current
+							? <span>{props.data.efficiency.current}%</span>
 							: <ItemLoading data={{color: 'green'}}/>
 						}
 					</b></p>

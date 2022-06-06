@@ -18,7 +18,7 @@ class Email extends Component {
 	}
 
 	render(){
-
+console.log(this.props.data.user.daysoff)
 		return (
 			
 			<div className="email">
@@ -36,7 +36,7 @@ class Email extends Component {
 						<div className="col">
 							<h3 className="title">Subject</h3>
 							<br />
-							<p className="subject">{this.props.data.user?.data.name ? <span>monthly efficiency for {this.props.data.user.data.name } - {this.props.data.user.month}</span> : <ItemLoading />}</p>
+							<p className="subject">{this.props.data.user.name ? <span>monthly efficiency for {this.props.data.user.name } - {this.props.data.monthInfo.name}</span> : <ItemLoading />}</p>
 						</div>
 					
 						<div className="col">
@@ -45,13 +45,13 @@ class Email extends Component {
 							<div className="body">
 								<p>Hi</p>
 
-								<p>{this.props.data.user.month} month efficiency total = {this.props.data.efficiency ? <span>{this.props.data.efficiency}%</span> : <ItemLoading /> } of {this.props.data.time.workHours} hours</p>
+								<p>{this.props.data.monthInfo.name} month efficiency total = {this.props.data.efficiency.total ? <span>{this.props.data.efficiency.total}%</span> : <ItemLoading /> } of {this.props.data.time.workHours} hours</p>
 
 								<p>
 									{this.props.data.time.everhour != null ? <span>{this.props.data.time.everhour}h</span> : <ItemLoading />}(EverHour)&nbsp;+&nbsp; 
 									{this.props.data.time.freedays}h(Free days)&nbsp;+&nbsp;
-									{this.props.data.time.daysoff}h{this.props.data.daysoff.length ? ':'+this.props.data.daysoff.join(',') : ''}(Days off)&nbsp;=&nbsp;
-									{this.props.data.time.everhour != null? <span >{this.props.data.time.everhour+this.props.data.time.freedays+this.props.data.time.daysoff}h({this.props.data.efficiency}%)</span> : <ItemLoading /> }
+									{this.props.data.time.daysoff}h{this.props.data.user.daysoff.length ? ':'+this.props.data.user.daysoff.join(',') : ''}(Days off)&nbsp;=&nbsp;
+									{this.props.data.time.everhour != null? <span >{this.props.data.time.everhour+this.props.data.time.freedays+this.props.data.time.daysoff}h({this.props.data.efficiency.total}%)</span> : <ItemLoading /> }
 								</p>
 
 								<p>bye</p>
