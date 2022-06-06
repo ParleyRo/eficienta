@@ -7,9 +7,17 @@ class ViewInvoice extends Component {
 		super(props);
 		this.state={};
 	}
+	
+	addCommaToLargeNumbers(number){
 
+		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	render(){
-
+		
+		const totalAmount = parseInt(((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)) 
+			+ parseInt(this.props.current.pos2.active ? this.props.current.pos2.amount || 0 : 0) 
+			+ parseInt(this.props.current.pos3.active ? this.props.current.pos3.amount || 0 : 0);
+		
 		return(
 
 			<div className="scroll-x">
@@ -75,12 +83,12 @@ class ViewInvoice extends Component {
 
 							<div className="col">
 								<p><b>Buyer / Cumpărător:</b></p>
-								<h3 className="turquoise">{this.props.invoice.buyer?.companyName}</h3>
+								<h3 className="turquoise">{this.props.invoice?.buyer?.companyName}</h3>
 								<p>
-									Company ID: <b>{this.props.invoice.buyer?.companyId}</b>
+									Company ID: <b>{this.props.invoice?.buyer?.companyId}</b>
 								</p>
 								<p>
-									Address: <b>{this.props.invoice.buyer?.companyAddress}</b>
+									Address: <b>{this.props.invoice?.buyer?.companyAddress}</b>
 								</p>
 
 							</div>
@@ -109,38 +117,76 @@ class ViewInvoice extends Component {
 											<td>1</td>
 											<td className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>
 												<div>
-													<span><b>{(this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100}</b></span>
+													<span><b>{this.addCommaToLargeNumbers((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)}</b></span>
 													<br />
-													<small><i>({ parseFloat(this.props.rate?.data?.value * ((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)).toFixed(2) })</i></small>
+													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)).toFixed(2)) })</i></small>
 												</div>
 												
 											</td>
 											<td className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>
 												<div>
-													<span><b>{(this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100}</b></span>
+													<span><b>{this.addCommaToLargeNumbers((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)}</b></span>
 													<br />
-													<small><i>({ parseFloat(this.props.rate?.data?.value * ((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)).toFixed(2) })</i></small>
+													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)).toFixed(2)) })</i></small>
 												</div>
 											</td>
 										</tr>
 
 										{this.props.current.pos2.active && <tr>
 											<td>2</td>
-											<td>{this.props.current.pos2.description}</td>
+											<td className={this.props.fieldsWithError.includes('current.pos2.description') ? 'red error' : ''}>{this.props.current.pos2.description ? this.props.current.pos2.description : '?????'}</td>
 											<td>1</td>
 											<td>1</td>
-											<td>{this.props.current.pos2.amount}</td>
-											<td>{this.props.current.pos2.amount}</td>
+											<td className={this.props.fieldsWithError.includes('current.pos2.amount') ? 'red error' : ''}>
+												<div>
+													<span><b>{this.addCommaToLargeNumbers( this.props.current.pos2.amount )}</b></span>
+													<br />
+													<small><i>({ this.addCommaToLargeNumbers(parseFloat( this.props.rate?.data?.value * this.props.current.pos2.amount).toFixed(2) )})</i></small>
+												</div>
+											</td>
+											<td className={this.props.fieldsWithError.includes('current.pos2.amount') ? 'red error' : ''}>
+												<div>
+													<span><b>{this.addCommaToLargeNumbers( this.props.current.pos2.amount )}</b></span>
+													<br />
+													<small><i>({ this.addCommaToLargeNumbers( parseFloat(this.props.rate?.data?.value * this.props.current.pos2.amount).toFixed(2) ) })</i></small>
+												</div>
+											</td>
 										</tr>}
 
 										{this.props.current.pos3.active && <tr>
 											<td>3</td>
-											<td>{this.props.current.pos3.description}</td>
+											<td className={this.props.fieldsWithError.includes('current.pos3.description') ? 'red error' : ''}>{this.props.current.pos3.description ? this.props.current.pos3.description : '?????'}</td>
 											<td>1</td>
 											<td>1</td>
-											<td>{this.props.current.pos3.amount}</td>
-											<td>{this.props.current.pos3.amount}</td>
+											<td className={this.props.fieldsWithError.includes('current.pos3.amount') ? 'red error' : ''}>
+												<div>
+													<span><b>{this.addCommaToLargeNumbers( this.props.current.pos3.amount )}</b></span>
+													<br />
+													<small><i>({ this.addCommaToLargeNumbers( parseFloat(this.props.rate?.data?.value * this.props.current.pos3.amount).toFixed(2) ) })</i></small>
+												</div>
+											</td>
+											<td className={this.props.fieldsWithError.includes('current.pos3.amount') ? 'red error' : ''}>
+												<div>
+													<span><b>{this.addCommaToLargeNumbers( this.props.current.pos3.amount )}</b></span>
+													<br />
+													<small><i>({ this.addCommaToLargeNumbers( parseFloat(this.props.rate?.data?.value * this.props.current.pos3.amount).toFixed(2) ) })</i></small>
+												</div>
+											</td>
 										</tr>}
+										<tr>
+											<td colSpan="5">
+												<span><b>Invoice Total -EUR-</b></span>
+												<br />
+												<small><i>(Valoare totală de plată factura curentă -RON-)</i></small>
+											</td>
+											<td>
+												<div>
+													<span><b>{totalAmount}</b></span>
+													<br />
+													<small><i>({ parseFloat(this.props.rate?.data?.value * totalAmount).toFixed(2) })</i></small>
+												</div>
+											</td>
+										</tr>
 									</tbody>
 								
 								</table>

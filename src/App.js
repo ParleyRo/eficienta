@@ -40,7 +40,8 @@ class App extends Component {
         everhour: null,
         freedays: 0,
         daysoff: 0,
-        workHours: 0
+        workHours: 0,
+        missingHours: 0
       },
       monthInfo:{
         position: this.monthPosition,
@@ -121,7 +122,7 @@ class App extends Component {
 
     },0);
 
-    const daysoffToday = oState.user.daysoff[this.date.getMonth()+1].reduce((index,day) =>{
+    const daysoffToday = oState.user.daysoff?.[this.date.getMonth()+1].reduce((index,day) =>{
       
       if(this.date.getDate() >= day){
         return index+1;
@@ -132,7 +133,8 @@ class App extends Component {
     },0);
 
     oState.efficiency.current = Math.round(((oState.time.everhour+(freedaysToday*8)+(daysoffToday*8)) * 100 ) / oState.time.workedHours);
-
+    oState.time.missingHours = oState.time.workedHours - (freedaysToday*8) - (oState.time.everhour + (daysoffToday*8))
+    
     return oState;
   }
 

@@ -29,13 +29,23 @@ export default function Efficiency(props) {
 				<div className="col">
 					<p>WorkHours: {props.data.time.workHours}h</p>
 					<p className="green">WorkedHours: {props.data.time.workedHours}h</p>
-					<p className="orange is-flex va-center">Everhour:&nbsp;{props.data.time.everhour != null
-							? <span>{props.data.time.everhour}h</span> 
+
+					{ props.data.time.missingHours > 0  && 
+						<p className="red">Missing Hours: &nbsp;{props.data.time.missingHours != null
+								? <span>{props.data.time.missingHours}h</span>
+								: <ItemLoading data={{color: 'orange'}}/>
+							}
+						</p>
+					}
+
+					<p className={'is-flex va-center ' + (props.data.time.everhour === 0 ? 'red':'orange')}>Everhour:&nbsp;{props.data.time.everhour != null
+							? <span >{props.data.time.everhour}h</span> 
 							: <ItemLoading data={{color: 'orange'}}/>
 						}
 					</p>
 					<p className="orange">Free days: {props.data.time.freedays}h</p>
 					<p className="orange">Days off: {props.data.time.daysoff}h</p>
+
 				</div>
 
 				<div className="col">
@@ -44,7 +54,7 @@ export default function Efficiency(props) {
 							: <ItemLoading />
 						}
 					</p>
-					<p className="green is-flex va-center"><b>Efficiency today:&nbsp;{props.data.efficiency.current
+					<p className="green is-flex va-center"><b>Efficiency till today:&nbsp;{props.data.efficiency.current
 							? <span>{props.data.efficiency.current}%</span>
 							: <ItemLoading data={{color: 'green'}}/>
 						}

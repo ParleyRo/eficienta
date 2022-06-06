@@ -142,6 +142,48 @@ class Invoice extends React.Component {
 		}
 
 	}
+
+	printHandler(resolve, reject) {
+
+		let fieldsWithError = [...this.state.fieldsWithError];
+		let index = null;
+
+		if(this.state.current.pos2.active === false){
+			
+			index = fieldsWithError.indexOf('current.pos2.description');
+			if (index > -1) {
+				fieldsWithError.splice(index, 1); // 2nd parameter means remove one item only
+			}
+
+			index = fieldsWithError.indexOf('current.pos2.amount');
+			if (index > -1) {
+				fieldsWithError.splice(index, 1); // 2nd parameter means remove one item only
+			}
+		}
+
+		if(this.state.current.pos3.active === false){
+			
+			index = fieldsWithError.indexOf('current.pos3.description');
+			if (index > -1) {
+				fieldsWithError.splice(index, 1); // 2nd parameter means remove one item only
+			}
+
+			index = fieldsWithError.indexOf('current.pos3.amount');
+			if (index > -1) {
+				fieldsWithError.splice(index, 1); // 2nd parameter means remove one item only
+			}
+		}
+
+		if(fieldsWithError.length){
+			if(!window.confirm('Are you sure? there are some empty fields !!!')){
+				reject();
+				return; 
+			}
+		}
+
+		resolve();
+	
+	}
 	render(){
 
 		return (
@@ -168,6 +210,12 @@ class Invoice extends React.Component {
 					<ReactToPrint
 						content={() => this.componentRef}
 						trigger={() => <button className="">Print to PDF!</button>}
+						onBeforePrint={async () => {
+							await new Promise((resolve, reject) => {
+								this.printHandler(resolve, reject);
+							});
+						}}
+						
 					/>
 				</div>
 
