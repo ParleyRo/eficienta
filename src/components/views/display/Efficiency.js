@@ -2,6 +2,13 @@ import ItemLoading from '../ItemLoading.js';
 
 export default function Efficiency(props) {
 
+	const setEverhour = function(event){
+		
+		props.changedData({
+			everhour: event.target.value
+		});	
+	}
+	
 	return (
 		<div className="efficiency">
 					
@@ -38,8 +45,12 @@ export default function Efficiency(props) {
 						</p>
 					}
 
-					<p className={'is-flex va-center ' + (props.data.time.everhour === 0 ? 'red':'orange')}>Everhour:&nbsp;{props.data.time.everhour != null
-							? <span >{props.data.time.everhour}h</span> 
+					<p className="is-flex va-center orange">Everhour:&nbsp;{props.data.time.everhour != null
+							? <span >{props.data.time.everhour > 0 
+									? props.data.time.everhour + 'h'
+									: <label><input onBlur={setEverhour} className="fixedWidth60"/></label> 
+								}
+								</span>
 							: <ItemLoading data={{color: 'orange'}}/>
 						}
 					</p>

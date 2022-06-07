@@ -152,6 +152,7 @@ class App extends Component {
     if(tasks.error){
       
       this.everhourStats.requestFinish = true;
+      this.everhourStats.value = 0;
       return false;
 
     }
@@ -225,7 +226,8 @@ class App extends Component {
           if($this.userStats.value.everhour?.apikey == null){
             throw 'There is no everhour apikey saved';
           }
-          await $this.setEverhour($this.userStats.value.everhour.apikey)
+          
+          await $this.setEverhour($this.userStats.value.everhour.apikey);
           
       }).then(function(result) {
       
@@ -250,6 +252,44 @@ class App extends Component {
   }
 
   changedData(data){
+
+    if(data.everhour != null){
+
+      const efficiencyTotal = Math.round(((parseInt(data.everhour)+this.state.time.freedays+this.state.time.daysoff) * 100 ) / this.state.time.workHours);
+
+      const freedaysCurrent = this.state.monthInfo.freedays.reduce((index,day) =>{
+      
+        if(this.date.getDate() >= day){
+          return index+1;
+        }
+
+        return index;
+
+      },0);
+
+      const daysoffCurrent = (this.state.user.daysoff?.[this.date.getMonth()+1]||[]).reduce((index,day) =>{
+      
+        if(this.date.getDate() >= day){
+          return index+1;
+        }
+
+        return index;
+
+      },0);
+
+      const efficiencyCurrent = Math.round(((parseInt(data.everhour)+(freedaysCurrent*8)+(daysoffCurrent*8)) * 100 ) / this.state.time.workedHours);
+
+      this.setState({
+        time: {
+          ...this.state.time,
+          everhour: parseInt(data.everhour)
+        },
+        efficiency: {
+          total: efficiencyTotal,
+          current: efficiencyCurrent
+        }
+      })
+    }
 
     if(data.name != null){
 
@@ -338,7 +378,7 @@ class App extends Component {
   }
 
   render() {
-    
+    console.log(this.state)
     return (
 
         <>

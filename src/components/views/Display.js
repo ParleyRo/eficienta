@@ -54,7 +54,7 @@ class Display extends Component {
 					<>
 						<Nav data={this.props.data}/>
 
-						<Efficiency data={this.props.data}/>
+						<Efficiency data={this.props.data} changedData={this.props.changedData}/>
 
 						<hr />
 						

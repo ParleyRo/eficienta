@@ -12,8 +12,8 @@ class Invoice extends React.Component {
 		super(props);
 
 		const date = new Date();
-		const dueDate = new Date();
 		
+		const dueDate = new Date();
 		dueDate.setDate(dueDate.getDate() +10);
 		
 		this.state = {	
@@ -36,7 +36,6 @@ class Invoice extends React.Component {
 				invoiceNumber: '',
 				invoiceDate: `${('0'+date.getDate()).slice(-2)}/${('0'+(date.getMonth()+1)).slice(-2)}/${date.getFullYear()}`,
 				invoiceDueDate: `${('0'+dueDate.getDate()).slice(-2)}/${('0'+(dueDate.getMonth()+1)).slice(-2)}/${dueDate.getFullYear()}`,
-				
 			},
 			fieldsWithError:[
 				'current.invoiceNumber',
@@ -52,6 +51,7 @@ class Invoice extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.addNewPos = this.addNewPos.bind(this);
+		this.getRate = this.getRate.bind(this);
 
 		this.rateStats = {
 			requestStarted: false,
@@ -77,23 +77,57 @@ class Invoice extends React.Component {
 		}
 
 		if(type === 'date'){
-			return /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+			return /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
 		}
 
 		return /[A-Za-z0-9 _.,!"'/$]*/
 	}
 
-	handleChange(event) {
+	async getRate(){
 
-		const value = event.target.value.trim();
+		if(this.state.current.invoiceDate.match(this.getMatchByType('date')) == null){
+			return;
+		}
+
+		const y = parseInt(this.state.current.invoiceDate.split('/')[2]);
+		const m = parseInt(this.state.current.invoiceDate.split('/')[1]);
+		const d = parseInt(this.state.current.invoiceDate.split('/')[0]);
+		
+		const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${d}&m=${m}&y=${y}`;
+
+		const res = await fetch(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+		
+		const json = await res.json();
+
+		this.setState({rate: json});
+
+		return json[0];
+	}
+
+	async handleChange(event) {
+
+		const value = event.target.value.replace(/\s/g, '');
 		const stateLocation = event.target.dataset.stateLocation;
 		const fieldType = event.target.dataset.type || 'text';
-			
-		if((value === '' || value == null || value.match(this.getMatchByType(fieldType))==null)){
+		
+		if(fieldType === 'date'){
+		
+			if(value.split('/').length < 3){
+				return;
+			}
+		}
+
+		if((value === '' || value == null || value.match(this.getMatchByType(fieldType)) == null)){
 
 			if(!this.state.fieldsWithError.includes(stateLocation)){
 				_.set(this.state, 'fieldsWithError', [...this.state.fieldsWithError, stateLocation]);
 			}
+
 		}else{
 
 			const fieldsWithError = [...this.state.fieldsWithError];
@@ -103,12 +137,12 @@ class Invoice extends React.Component {
 				fieldsWithError.splice(index, 1);
 				_.set(this.state, 'fieldsWithError', fieldsWithError);
 			}
-
 		}
 
 		_.set(this.state, stateLocation, value);
 		
 		this.setState(this.state);
+
 	}
 
 
@@ -118,20 +152,8 @@ class Invoice extends React.Component {
 			
 			this.rateStats.requestStarted = true;
 
-			const date = new Date(`${this.props.data.monthInfo.name} ${this.props.data.monthInfo.day}, ${this.props.data.monthInfo.year}`)
-
-			const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${date.getDate()}&m=${((date.getMonth()+1)+12)%12}&y=${date.getFullYear()}`;
-
-			const res = await fetch(url, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			});
-
-			const rate = await res.json();
+			await this.getRate();
 			
-			this.setState({rate:rate});
 		}
 
 	}
@@ -211,6 +233,8 @@ class Invoice extends React.Component {
 					fieldsWithError={this.state.fieldsWithError} 
 					handleChange={this.handleChange}
 					addNewPos={this.addNewPos}
+					getRate={this.getRate}
+					rate={this.state.rate}
 				/>
 
 				<hr />
@@ -241,6 +265,12 @@ class Invoice extends React.Component {
 					<ReactToPrint
 						content={() => this.componentRef}
 						trigger={() => <button className="">Print to PDF!</button>}
+						onBeforePrint={async () => {
+							await new Promise((resolve, reject) => {
+								this.printHandler(resolve, reject);
+							});
+						}}
+						
 					/>
 				</div>
 

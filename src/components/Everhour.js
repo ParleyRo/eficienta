@@ -28,6 +28,7 @@ class Everhour{
 					}
 				}
 			}
+			
 			return await res.json();
 
 		} catch (error) {

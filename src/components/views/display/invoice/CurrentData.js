@@ -2,6 +2,7 @@ import {Component} from 'react';
 
 class CurrentData extends Component {
 
+
 	render(){
 
 		return(
@@ -28,18 +29,24 @@ class CurrentData extends Component {
 										<input className={'large ' + (this.props.fieldsWithError.includes('current.invoiceNumber') ? 'error':'')} type="text" value={this.props.current.invoiceNumber} data-state-location="current.invoiceNumber" onChange={this.props.handleChange} required />
 									</label>
 								</div>
-
 								<div className="col auto">
 									<label>
-										<div>Invoice date: </div>
-										<input className={'large ' + (this.props.fieldsWithError.includes('current.invoiceDate') ? 'error' : '')} type="text" value={this.props.current.invoiceDate} data-state-location="current.invoiceDate" onChange={this.props.handleChange} required />
+										<small>Rate date: {this.props.rate?.date.split('-')[2]}/{this.props.rate?.date.split('-')[1]}/{this.props.rate?.date.split('-')[0]}</small>
+										<br />
+										<small>{this.props.rate?.data.currency}: {this.props.rate?.data.value}</small>
+									</label>
+								</div>
+								<div className="col auto">
+									<label>
+										<div>Invoice date: <small>(dd/mm/yyyy)</small></div>
+										<input className={'large ' + (this.props.fieldsWithError.includes('current.invoiceDate') ? 'error' : '')} type="text" value={this.props.current.invoiceDate} onBlur={this.props.getRate} data-type="date" data-state-location="current.invoiceDate" onChange={this.props.handleChange} required />
 									</label>
 								</div>
 
 								<div className="col auto">
 									<label>
-										<div>Invoice due date: </div>
-										<input className={'large ' + (this.props.fieldsWithError.includes('current.invoiceDueDate') ? 'error' : '')}type="text" value={this.props.current.invoiceDueDate} data-state-location="current.invoiceDueDate" onChange={this.props.handleChange} required />
+										<div>Invoice due date: <small>(dd/mm/yyyy)</small></div>
+										<input className={'large ' + (this.props.fieldsWithError.includes('current.invoiceDueDate') ? 'error' : '')} type="text" value={this.props.current.invoiceDueDate} data-type="date" data-state-location="current.invoiceDueDate" onChange={this.props.handleChange} required />
 									</label>
 								</div>
 
