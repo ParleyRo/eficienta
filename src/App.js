@@ -136,7 +136,12 @@ class App extends Component {
 
   async setEverhour(apikey){
 
-    if(!apikey){
+    if(apikey == null){
+      
+      this.everhourStats.requestStarted = true;
+      this.everhourStats.requestFinish = true;
+      this.everhourStats.value = 0;
+      
       return false;
     }
     
@@ -153,8 +158,8 @@ class App extends Component {
       
       this.everhourStats.requestFinish = true;
       this.everhourStats.value = 0;
-      return false;
 
+      return false;
     }
 
     tasks.forEach((task)=>{
@@ -223,11 +228,7 @@ class App extends Component {
       
       }).then(async function(result) {
 
-          if($this.userStats.value.everhour?.apikey == null){
-            throw 'There is no everhour apikey saved';
-          }
-          
-          await $this.setEverhour($this.userStats.value.everhour.apikey);
+          await $this.setEverhour($this.userStats.value.everhour?.apikey);
           
       }).then(function(result) {
       
