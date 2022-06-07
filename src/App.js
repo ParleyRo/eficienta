@@ -129,7 +129,7 @@ class App extends Component {
     },0);
 
     oState.efficiency.current = Math.round(((oState.time.everhour+(freedaysToday*8)+(daysoffToday*8)) * 100 ) / oState.time.workedHours);
-    oState.time.missingHours = oState.time.workedHours - (freedaysToday*8) - (oState.time.everhour + (daysoffToday*8))
+    oState.time.missingHours = oState.time.workedHours - (freedaysToday*8) - (oState.time.everhour + (daysoffToday*8));
     
     return oState;
   }
@@ -282,13 +282,16 @@ class App extends Component {
       this.setState({
         time: {
           ...this.state.time,
-          everhour: parseInt(data.everhour)
+          everhour: parseInt(data.everhour),
+          missingHours: this.state.time.workedHours - (freedaysCurrent*8) - (parseInt(data.everhour) + (daysoffCurrent*8) )
         },
         efficiency: {
           total: efficiencyTotal,
           current: efficiencyCurrent
         }
       })
+      
+      delete data.everhour;
     }
 
     if(data.name != null){
@@ -299,6 +302,8 @@ class App extends Component {
           name: data.name
         }
       });
+
+      delete data.name;
     }
 
     if(data.daysoff != null){
@@ -353,7 +358,8 @@ class App extends Component {
         },
         time:{
           ...this.state.time,
-          daysoff: daysoff*8
+          daysoff: daysoff*8,
+          missingHours: this.state.time.workedHours - (freedaysCurrent*8) - (this.state.time.everhour + (daysoffCurrent*8) )
         },
         efficiency: {
           total: efficiencyTotal,
@@ -361,7 +367,9 @@ class App extends Component {
         }
       });
 
+      delete data.daysoff;
     }
+
     if(data.invoice != null){
       this.setState({
         user: {
@@ -373,12 +381,18 @@ class App extends Component {
           }
         }
       });
+      
+      delete data.invoice;
     }
     
+    if(Object.entries(data).length){
+      throw `Missing data change: ${Object.entries(data)}`;
+    }
+
   }
 
   render() {
-    console.log(this.state)
+
     return (
 
         <>

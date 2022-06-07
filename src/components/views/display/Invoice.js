@@ -120,6 +120,10 @@ class Invoice extends React.Component {
 			if(value.split('/').length < 3){
 				return;
 			}
+
+			if(value.length > 10){
+				return;
+			}
 		}
 
 		if((value === '' || value == null || value.match(this.getMatchByType(fieldType)) == null)){

@@ -8,7 +8,7 @@ export default function Efficiency(props) {
 			everhour: event.target.value
 		});	
 	}
-	
+
 	return (
 		<div className="efficiency">
 					
@@ -48,7 +48,7 @@ export default function Efficiency(props) {
 					<p className="is-flex va-center orange">Everhour:&nbsp;{props.data.time.everhour != null
 							? <span >{props.data.time.everhour > 0 
 									? props.data.time.everhour + 'h'
-									: <label><input onBlur={setEverhour} className="fixedWidth60"/></label> 
+									: <label><input onBlur={setEverhour} className="custom"/></label> 
 								}
 								</span>
 							: <ItemLoading data={{color: 'orange'}}/>
