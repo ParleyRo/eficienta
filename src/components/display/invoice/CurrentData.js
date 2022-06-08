@@ -74,7 +74,7 @@ class CurrentData extends Component {
 								</div>
 
 								<div className="col auto">
-									{(this.props.current.pos3.active === false ) &&<button data-pos="2" onClick={this.props.addNewPos}>{this.props.current.pos2.active ? 'Remove pos 2' : 'Add new pos'}</button>}
+									{(this.props.current.pos3.active === false ) &&<button data-pos="2" onClick={this.props.addNewPos}>{this.props.current.pos2.active ? '➖' : '➕'}</button>}
 								</div>
 
 							</div>
@@ -100,7 +100,7 @@ class CurrentData extends Component {
 								</div>
 
 								<div className="col auto">
-									<button data-pos="3" onClick={this.props.addNewPos}>{this.props.current.pos3.active ? 'Remove pos 3' : 'Add new pos'} </button>
+									<button data-pos="3" onClick={this.props.addNewPos} title="qqq">{this.props.current.pos3.active ? '➖' : '➕'} </button>
 								</div>
 
 							</div>}

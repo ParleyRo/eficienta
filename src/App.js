@@ -9,8 +9,6 @@ import LoginRegister from './components/LoginRegister.js';
 import './assets/css/app.css';
 import './assets/css/animations.css';
 
-import _ from "lodash";
-
 const MonthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 class App extends Component {
 
@@ -173,7 +171,7 @@ class App extends Component {
     if(currentTime.duration != null){
       this.everhourStats.value += currentTime.duration;
     }
-    
+
     this.everhourStats.requestFinish = true;
 
     return true;
@@ -395,7 +393,7 @@ class App extends Component {
     }
     
     if(Object.entries(data).length){
-      throw `Missing data change: ${Object.entries(data)}`;
+      throw new Error(`Missing data change: ${Object.entries(data).toString()}`);
     }
 
   }
