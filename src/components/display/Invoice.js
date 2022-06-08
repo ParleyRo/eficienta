@@ -118,11 +118,11 @@ class Invoice extends React.Component {
 		if(fieldType === 'date'){
 		
 			if(value.split('/').length < 3){
-				return;
+				return false;
 			}
 
 			if(value.length > 10){
-				return;
+				return false;
 			}
 		}
 

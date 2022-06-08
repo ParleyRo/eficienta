@@ -1,4 +1,4 @@
-export class Days{
+class Days{
 
 	static freedays = {
 		1: [1,2,24],
