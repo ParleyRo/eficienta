@@ -13,11 +13,19 @@ class CurrentData extends Component {
 					
 						<div>
 
-							<div className="row isflex">
+							<div className="row is-flex">
 								<div className="col">
-								
-									<h3 className="title">Current data</h3>
+									<h3 className="col title">Current data</h3>
+								</div>
 
+								<div className="col">
+									<div className="text-right">
+										<label>
+											<small>Rate date: {this.props.rate?.date.split('-')[2]}/{this.props.rate?.date.split('-')[1]}/{this.props.rate?.date.split('-')[0]}</small>
+											<br />
+											<small>{this.props.rate?.data.currency}: {this.props.rate?.data.value}</small>
+										</label>
+									</div>
 								</div>
 							</div>
 
@@ -28,13 +36,7 @@ class CurrentData extends Component {
 										<input className={'large ' + (this.props.fieldsWithError.includes('current.invoiceNumber') ? 'error':'')} type="text" value={this.props.current.invoiceNumber} data-state-location="current.invoiceNumber" onChange={this.props.handleChange} required />
 									</label>
 								</div>
-								<div className="col auto">
-									<label>
-										<small>Rate date: {this.props.rate?.date.split('-')[2]}/{this.props.rate?.date.split('-')[1]}/{this.props.rate?.date.split('-')[0]}</small>
-										<br />
-										<small>{this.props.rate?.data.currency}: {this.props.rate?.data.value}</small>
-									</label>
-								</div>
+								
 								<div className="col auto">
 									<label>
 										<div>Invoice date: <small>(dd/mm/yyyy)</small></div>
