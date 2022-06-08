@@ -2,19 +2,13 @@ import {Component} from 'react';
 
 class ViewInvoice extends Component {
 
-	constructor(props) {
-
-		super(props);
-		this.state={};
-	}
-	
 	addCommaToLargeNumbers(number){
 
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	}
+	
 	render(){
-		
-		const totalAmount = parseInt(((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)) 
+		const totalAmount = parseInt(((this.props.efficiency?.total * this.props.current.pos1.income||0) / 100)) 
 			+ parseInt(this.props.current.pos2.active ? this.props.current.pos2.amount || 0 : 0) 
 			+ parseInt(this.props.current.pos3.active ? this.props.current.pos3.amount || 0 : 0);
 		
@@ -117,17 +111,17 @@ class ViewInvoice extends Component {
 											<td>1</td>
 											<td className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>
 												<div>
-													<span><b>{this.addCommaToLargeNumbers((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)}</b></span>
+													<span><b>{this.addCommaToLargeNumbers((this.props.efficiency?.total * this.props.current.pos1.income||0) / 100)}</b></span>
 													<br />
-													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)).toFixed(2)) })</i></small>
+													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.efficiency?.total * this.props.current.pos1.income||0) / 100)).toFixed(2)) })</i></small>
 												</div>
 												
 											</td>
 											<td className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>
 												<div>
-													<span><b>{this.addCommaToLargeNumbers((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)}</b></span>
+													<span><b>{this.addCommaToLargeNumbers((this.props.efficiency?.total * this.props.current.pos1.income||0) / 100)}</b></span>
 													<br />
-													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100)).toFixed(2)) })</i></small>
+													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.efficiency?.total * this.props.current.pos1.income||0) / 100)).toFixed(2)) })</i></small>
 												</div>
 											</td>
 										</tr>
@@ -196,7 +190,7 @@ class ViewInvoice extends Component {
 						<div className="row is-flex">
 							<div className="col">
 								<p>Invoice {this.props.date.month} {this.props.date.year}</p>
-								<p className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{(this.props.current.pos1.income || 0) / 80} eur / hour * 80 hours = {(this.props.current.pos1.efficiency * this.props.current.pos1.income||0) / 100} euro</p>
+								<p className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{(this.props.current.pos1.income || 0) / 80} eur / hour * 80 hours = {(this.props.efficiency?.total * this.props.current.pos1.income||0) / 100} euro</p>
 							</div>
 						</div>
 						

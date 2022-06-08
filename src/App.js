@@ -9,6 +9,8 @@ import LoginRegister from './components/LoginRegister.js';
 import './assets/css/app.css';
 import './assets/css/animations.css';
 
+import _ from "lodash";
+
 const MonthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 class App extends Component {
 
@@ -55,7 +57,7 @@ class App extends Component {
       efficiency:{
 
       },
-      isLoaded: false
+      isLoaded: true
     };
 
     this.everhourStats = {
@@ -72,6 +74,7 @@ class App extends Component {
 
     this.changedData= this.changedData.bind(this);
 
+    this.stateList = [];
   }
 
   setData(){
@@ -202,7 +205,7 @@ class App extends Component {
     return true;
 
   }
-  
+
   async componentDidMount() {
 
     const secret = localStorage.getItem("ef_secret");
@@ -216,10 +219,9 @@ class App extends Component {
     
     const $this = this;
 
-    if(this.userStats.requestStarted === false){
-
-      $this.setState({isLoaded: true});
-
+    if(this.userStats.requestStarted === true){
+      return;
+    }
       new Promise(async function(resolve, reject) {
 
           await $this.setUserData(secret);
@@ -244,16 +246,17 @@ class App extends Component {
 
       }).catch(err => {
 
+          $this.setState({isLoaded: true});
+
           console.error(err)
       
       });
     
-    }
+    
     
   }
 
   changedData(data){
-
     if(data.everhour != null){
 
       const efficiencyTotal = Math.round(((parseInt(data.everhour)+this.state.time.freedays+this.state.time.daysoff) * 100 ) / this.state.time.workHours);
@@ -393,7 +396,7 @@ class App extends Component {
   }
 
   render() {
-
+    //console.log(1,'Apps Rendered')
     return (
 
         <>

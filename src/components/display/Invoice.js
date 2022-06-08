@@ -21,7 +21,6 @@ class Invoice extends React.Component {
 				pos1: {
 					income: '',
 					description: 'Consulting Services',
-					efficiency: 0
 				},
 				pos2: {
 					active: false,
@@ -162,22 +161,6 @@ class Invoice extends React.Component {
 
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot){
-
-		if(prevProps.data.efficiency.total && prevProps.data.efficiency.total !== this.state.current.pos1.efficiency){
-			this.setState({ 
-				current: { 
-					...this.state.current,
-					pos1: {
-						...this.state.current.pos1,
-						efficiency: prevProps.data.efficiency.total
-					}
-				}
-			});
-		}
-
-	}
-
 	printHandler(resolve, reject) {
 
 		let fieldsWithError = [...this.state.fieldsWithError];
@@ -220,7 +203,7 @@ class Invoice extends React.Component {
 	
 	}
 	render(){
-
+		console.log(1,'Invoice Rendered')
 		return (
 			<div className="invoice">
 
@@ -263,6 +246,7 @@ class Invoice extends React.Component {
 					fieldsWithError={this.state.fieldsWithError}
 					invoice={this.props.data.user.invoice}
 					rate={this.state.rate}
+					efficiency={this.props.data.efficiency}
 				/>
 				
 				<div className="text-right ">

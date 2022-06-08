@@ -2,7 +2,6 @@ import {Component} from 'react';
 
 class CurrentData extends Component {
 
-
 	render(){
 
 		return(
