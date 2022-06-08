@@ -11,12 +11,6 @@ export default function Efficiency(props) {
 
 	return (
 		<div className="efficiency">
-					
-			<div className="row is-flex">
-				<div className="col">
-					<h2 className="title">Efficiency</h2>
-				</div>
-			</div>
 
 			<div className="row is-flex">
 				<div className="col">

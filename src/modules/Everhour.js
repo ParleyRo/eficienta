@@ -4,7 +4,7 @@ class Everhour{
 
 		this.from = `${date.getFullYear()}-${date.getMonth()+1}-1`;
 		this.to = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-				
+
 		this.apikey = apikey
 	}
 
@@ -37,7 +37,37 @@ class Everhour{
 			}
 		}
 	}
+	
+	async getCurrentTime(){
+	
+		try {
 
+			const res = await fetch(`https://api.everhour.com/timers/current`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Api-Key': this.apikey
+				}
+			});
+
+			if(res.status === 404){
+				return {
+					error: {
+						type: 'bad_api_key',
+						description: 'Not a valid api key'
+					}
+				}
+			}
+			
+			return await res.json();
+			
+		} catch (error) {
+			
+			return {
+				error
+			}
+		}
+	}
 	async sleep(ms) {
   		return new Promise(resolve => setTimeout(resolve, ms));
 	}

@@ -23,22 +23,17 @@ class Email extends Component {
 			
 			<div className="email">
 
-				<div className="row is-flex">
-					<div className="col">
-						<h2 className="title">Email</h2>
-					</div>
-					
-				</div>
-
 				<div className="scroll-x">
 				
-					<div className="row is-flex responsive">
+					<div className="row is-flex">
 						<div className="col">
 							<h3 className="title">Subject</h3>
 							<br />
 							<p className="subject">{this.props.data.user.name ? <span>monthly efficiency for {this.props.data.user.name } - {this.props.data.monthInfo.name}</span> : <ItemLoading />}</p>
 						</div>
+					</div>
 					
+					<div className="row is-flex">
 						<div className="col">
 							<h3 className="title">Body</h3>
 							<br />

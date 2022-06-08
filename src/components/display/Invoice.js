@@ -205,15 +205,7 @@ class Invoice extends React.Component {
 	render(){
 		console.log(1,'Invoice Rendered')
 		return (
-			<div className="invoice">
-
-				<div className="row is-flex">
-					<div className="col">
-
-						<h2 className="title">Invoice</h2>
-
-					</div>
-				</div>
+			<div className="invoice scroll-y">
 				
 				<CurrentData 
 					current={this.state.current} 
@@ -238,6 +230,8 @@ class Invoice extends React.Component {
 						
 					/>
 				</div>
+				
+				<br />
 
 				<InvoiceView 
 					ref={el => (this.componentRef = el)}

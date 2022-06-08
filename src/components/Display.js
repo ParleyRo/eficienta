@@ -3,6 +3,7 @@ import {Component} from 'react';
 import Settings from './display/Settings.js';
 
 import Nav from './display/Nav.js';
+import Menu from './display/Menu.js';
 import Efficiency from './display/Efficiency.js';
 import Email from './display/Email.js';
 import Invoice from './display/Invoice.js';
@@ -16,15 +17,43 @@ class Display extends Component {
 		this.state = {
 			settings: {
 				isActive: false
+			},
+			menu: {
+				efficiency: true,
+				email: false,
+				invoice: false
 			}
 		}
 
 		this.toggleSettings = this.toggleSettings.bind(this);
+		this.makeActive = this.makeActive.bind(this);
 	}
 
 	toggleSettings(){
 
 		this.setState({settings:{isActive: !this.state.settings.isActive}})
+	}
+
+	makeActive(event){
+
+		let menu = {
+			efficiency: false,
+			email: false,
+			invoice: false
+		}
+
+		if(this.state.menu[event.target.dataset.target] == null){
+			return;
+		}
+
+		if(this.state.menu[event.target.dataset.target] === true){
+			return;
+		}
+
+		menu[event.target.dataset.target] = true;
+
+		this.setState({menu: menu});
+
 	}
 
 	render(){
@@ -52,17 +81,29 @@ class Display extends Component {
 				{!this.state.settings.isActive &&
 				
 					<>
+
 						<Nav data={this.props.data}/>
-
-						<Efficiency data={this.props.data} changedData={this.props.changedData}/>
-
-						<hr />
 						
-						<Email data={this.props.data} />
+						<hr />
+
+						<Menu makeActive={this.makeActive} menu={this.state.menu} />
 
 						<hr />
 
-						<Invoice data={this.props.data} />
+						<br />
+						
+						{this.state.menu.efficiency && 
+							<Efficiency data={this.props.data} changedData={this.props.changedData}/>
+						}
+
+						{this.state.menu.email && 
+							<Email data={this.props.data} />
+						}
+
+						{this.state.menu.invoice && 
+							<Invoice data={this.props.data} />
+						}
+
 					</>
 				}
 				

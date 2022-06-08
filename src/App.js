@@ -156,6 +156,7 @@ class App extends Component {
 
     const oEverhour = new Everhour(apikey,this.date);
     const tasks = await oEverhour.fetchUserTasks();
+    const currentTime = await oEverhour.getCurrentTime();
 
     if(tasks.error){
       
@@ -169,6 +170,10 @@ class App extends Component {
       this.everhourStats.value += task.time
     });
 
+    if(currentTime.duration != null){
+      this.everhourStats.value += currentTime.duration;
+    }
+    
     this.everhourStats.requestFinish = true;
 
     return true;
