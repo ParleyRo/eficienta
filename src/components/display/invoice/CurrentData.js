@@ -74,7 +74,7 @@ class CurrentData extends Component {
 								</div>
 
 								<div className="col auto">
-									{(this.props.current.pos3.active === false ) &&<button data-pos="2" onClick={this.props.addNewPos}>{this.props.current.pos2.active ? '➖' : '➕'}</button>}
+									{(this.props.current.pos3.active === false && !this.props.current.pos2.active ) && <button data-pos="2" onClick={this.props.addNewPos}>➕</button>}
 								</div>
 
 							</div>
@@ -100,7 +100,8 @@ class CurrentData extends Component {
 								</div>
 
 								<div className="col auto">
-									<button data-pos="3" onClick={this.props.addNewPos} title="qqq">{this.props.current.pos3.active ? '➖' : '➕'} </button>
+									{this.props.current.pos3.active === false && <button data-pos="3" onClick={this.props.addNewPos} >➕</button>}
+									{(this.props.current.pos3.active === false ) && <button data-pos="2" onClick={this.props.addNewPos}>➖</button>}
 								</div>
 
 							</div>}
@@ -123,6 +124,10 @@ class CurrentData extends Component {
 										<div>Amount: </div>
 										<input className={'large ' + (this.props.fieldsWithError.includes('current.pos3.amount') ? 'error' : '')} type="text" value={this.props.current.pos3.amount || ''} data-state-location="current.pos3.amount" onChange={this.props.handleChange} required />
 									</label>
+								</div>
+								
+								<div className="col auto">
+									<button data-pos="3" onClick={this.props.addNewPos} >➖ </button>
 								</div>
 
 							</div>}

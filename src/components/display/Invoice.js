@@ -205,7 +205,7 @@ class Invoice extends React.Component {
 	render(){
 		console.log(1,'Invoice Rendered')
 		return (
-			<div className="invoice scroll-y">
+			<div className="invoice scroll-y custom-scroll">
 				
 				<CurrentData 
 					current={this.state.current} 
@@ -227,7 +227,6 @@ class Invoice extends React.Component {
 								this.printHandler(resolve, reject);
 							});
 						}}
-						
 					/>
 				</div>
 				
