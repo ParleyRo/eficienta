@@ -76,8 +76,11 @@ class ViewInvoice extends Component {
 							</div>
 
 							<div className="col">
+								
 								<p><b>Buyer / Cumpărător:</b></p>
+								
 								<h3 className="turquoise">{this.props.invoice?.buyer?.companyName}</h3>
+								
 								<p>
 									Company ID: <b>{this.props.invoice?.buyer?.companyId}</b>
 								</p>

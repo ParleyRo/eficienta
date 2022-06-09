@@ -35,7 +35,8 @@ class App extends Component {
       user:{
         name: null,
         invoice:{},
-        daysoff:{}
+        daysoff:{},
+        invoices:{}
       },
       time: {
         everhour: null,

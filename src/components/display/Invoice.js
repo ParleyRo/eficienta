@@ -10,7 +10,7 @@ class Invoice extends React.Component {
 
 	constructor(props) {
 		super(props);
-
+console.log(props)
 		const date = new Date();
 		
 		const dueDate = new Date();
@@ -51,6 +51,7 @@ class Invoice extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.addNewPos = this.addNewPos.bind(this);
 		this.getRate = this.getRate.bind(this);
+		this.saveInvoice = this.saveInvoice.bind(this);
 
 		this.rateStats = {
 			requestStarted: false,
@@ -59,6 +60,66 @@ class Invoice extends React.Component {
 		}
 	}
 
+	async saveInvoice(){
+
+		if(!window.confirm('You are about to save this Invoice. Are you sure ?!?')){
+			return; 
+		}
+
+		if(this.props.data.user.invoices?.[this.props.data.monthInfo.year][this.props.data.monthInfo.name] != null){
+			setTimeout(() =>{
+			
+				if(!window.confirm('You already have one saved. Will you overwrite !?!')){
+					return; 
+				}
+
+			},1000);
+		}
+
+		let data = {
+			secret: this.props.data.user.secret, 
+			invoices: {...this.props.data.user.invoices}
+		}
+
+		data.invoices[this.props.data.monthInfo.year]?.[this.props.data.monthInfo.name] = {
+			general: this.props.data.user.invoice.general,
+			buyer: this.props.data.user.invoice.general,
+			current: this.state.current,
+			efficiency: this.props.data.efficiency,
+			rates: this.state.rate
+		}
+		console.log(data)
+		// const data = {
+		// 	secret: this.props.data.user.secret, 
+		// 	invoices:{
+		// 		...this.props.data.user.invoices,
+		// 		[this.props.data.monthInfo.year]:{
+		// 			...this.props.data,
+		// 			[this.props.data.monthInfo.name]:{
+		// 				general: this.props.data.user.invoice.general,
+		// 				buyer: this.props.data.user.invoice.general,
+		// 				current: this.state.current,
+		// 				efficiency: this.props.data.efficiency,
+		// 				rates: this.state.rate
+		// 			}
+		// 		}
+		// 	}
+		// }
+		
+		return;
+		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
+
+		const res = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		});
+
+		const result = await res.json();
+
+	}
 	addNewPos(event){
 
 		let oCurrent = this.state.current;
@@ -161,7 +222,7 @@ class Invoice extends React.Component {
 
 	}
 
-	printHandler(resolve, reject) {
+	printHandler() {
 
 		let fieldsWithError = [...this.state.fieldsWithError];
 		let index = null;
@@ -194,16 +255,15 @@ class Invoice extends React.Component {
 
 		if(fieldsWithError.length){
 			if(!window.confirm('Are you sure? there are some empty fields !!!')){
-				reject();
-				return; 
+				return false;
 			}
 		}
 
-		resolve();
+		return true;
 	
 	}
 	render(){
-		console.log(1,'Invoice Rendered')
+
 		return (
 			<div className="invoice scroll-y custom-scroll">
 				
@@ -219,12 +279,22 @@ class Invoice extends React.Component {
 				<hr />
 
 				<div className="text-right ">
+					<button onClick={async () =>{
+							await new Promise((resolve, reject) => {
+								this.saveInvoice();
+							});
+						}}>
+						Save this Invoice
+					</button>
+					&nbsp;&nbsp;
 					<ReactToPrint
 						content={() => this.componentRef}
 						trigger={() => <button className="">Print to PDF!</button>}
 						onBeforePrint={async () => {
 							await new Promise((resolve, reject) => {
-								this.printHandler(resolve, reject);
+								if(this.printHandler()){
+									resolve();
+								};
 							});
 						}}
 					/>
@@ -248,7 +318,9 @@ class Invoice extends React.Component {
 						trigger={() => <button className="">Print to PDF!</button>}
 						onBeforePrint={async () => {
 							await new Promise((resolve, reject) => {
-								this.printHandler(resolve, reject);
+								if(this.printHandler()){
+									resolve();
+								};
 							});
 						}}
 						
