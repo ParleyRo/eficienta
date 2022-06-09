@@ -23,7 +23,7 @@ class CurrentData extends Component {
 										<label>
 											<small>Rate date: {this.props.rate?.date.split('-')[2]}/{this.props.rate?.date.split('-')[1]}/{this.props.rate?.date.split('-')[0]}</small>
 											<br />
-											<small>{this.props.rate?.data.currency}: {this.props.rate?.data.value}</small>
+											<small><b>{this.props.rate?.data.currency}: {this.props.rate?.data.value}</b></small>
 										</label>
 									</div>
 								</div>
