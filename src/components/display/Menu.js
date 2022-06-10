@@ -14,6 +14,10 @@ class Menu extends Component {
 				<div className="col">
 					<h2 className={(this.props.menu.invoice?'active':'')+' title text-center'}><span data-target="invoice" onClick={this.props.makeActive}>📝<br />Invoice</span></h2>
 				</div>
+
+				<div className="col">
+					<h2 className={(this.props.menu.invoices?'active':'')+' title text-center'}><span data-target="invoices" onClick={this.props.makeActive}>📂<br />Invoices</span></h2>
+				</div>
 			</div>
 		)
 	}

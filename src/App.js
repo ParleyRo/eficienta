@@ -155,7 +155,7 @@ class App extends Component {
 
     const oEverhour = new Everhour(apikey,this.date);
     const tasks = await oEverhour.fetchUserTasks();
-    const currentTime = await oEverhour.getCurrentTime();
+    const currentTime = this.state.monthInfo.position === 0 ? await oEverhour.getCurrentTime() : {};
 
     if(tasks.error){
       

@@ -7,6 +7,7 @@ import Menu from './display/Menu.js';
 import Efficiency from './display/Efficiency.js';
 import Email from './display/Email.js';
 import Invoice from './display/Invoice.js';
+import Invoices from './display/Invoices.js';
 
 class Display extends Component {
 
@@ -21,7 +22,8 @@ class Display extends Component {
 			menu: {
 				efficiency: true,
 				email: false,
-				invoice: false
+				invoice: false,
+				invoices: false
 			}
 		}
 
@@ -102,6 +104,10 @@ class Display extends Component {
 
 						{this.state.menu.invoice && 
 							<Invoice data={this.props.data} />
+						}
+
+						{this.state.menu.invoices && 
+							<Invoices data={this.props.data} />
 						}
 
 					</>

@@ -32,7 +32,7 @@ console.log(props)
 					description: '',
 					amount: ''
 				},
-				invoiceNumber: '',
+				invoiceNumber: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current?.invoiceNumber || '',
 				invoiceDate: `${('0'+date.getDate()).slice(-2)}/${('0'+(date.getMonth()+1)).slice(-2)}/${date.getFullYear()}`,
 				invoiceDueDate: `${('0'+dueDate.getDate()).slice(-2)}/${('0'+(dueDate.getMonth()+1)).slice(-2)}/${dueDate.getFullYear()}`,
 			},
@@ -78,35 +78,21 @@ console.log(props)
 
 		let data = {
 			secret: this.props.data.user.secret, 
-			invoices: {...this.props.data.user.invoices}
+			invoices: {
+				...this.props.data.user.invoices,
+				[this.props.data.monthInfo.year]: {
+					...this.props.data.user.invoices[this.props.data.monthInfo.year],
+					[this.props.data.monthInfo.name]: {
+						general: this.props.data.user.invoice.general,
+						buyer: this.props.data.user.invoice.general,
+						current: this.state.current,
+						efficiency: this.props.data.efficiency,
+						rates: this.state.rate
+					}
+				}
+			}
 		}
 
-		data.invoices[this.props.data.monthInfo.year]?.[this.props.data.monthInfo.name] = {
-			general: this.props.data.user.invoice.general,
-			buyer: this.props.data.user.invoice.general,
-			current: this.state.current,
-			efficiency: this.props.data.efficiency,
-			rates: this.state.rate
-		}
-		console.log(data)
-		// const data = {
-		// 	secret: this.props.data.user.secret, 
-		// 	invoices:{
-		// 		...this.props.data.user.invoices,
-		// 		[this.props.data.monthInfo.year]:{
-		// 			...this.props.data,
-		// 			[this.props.data.monthInfo.name]:{
-		// 				general: this.props.data.user.invoice.general,
-		// 				buyer: this.props.data.user.invoice.general,
-		// 				current: this.state.current,
-		// 				efficiency: this.props.data.efficiency,
-		// 				rates: this.state.rate
-		// 			}
-		// 		}
-		// 	}
-		// }
-		
-		return;
 		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
 
 		const res = await fetch(url, {
