@@ -53,7 +53,7 @@ class CurrentData extends Component {
 
 							</div>
 
-							<div className="pos1 row is-flex va-center">
+							<div className="pos1 row is-flex va-end">
 								
 								<div className="col auto">
 									Pos no.1
@@ -79,7 +79,7 @@ class CurrentData extends Component {
 
 							</div>
 
-							{this.props.current.pos2.active && <div className="pos2 row is-flex va-center">
+							{this.props.current.pos2.active && <div className="pos2 row is-flex va-end">
 								
 								<div className="col auto">
 									Pos no.2
@@ -106,7 +106,7 @@ class CurrentData extends Component {
 
 							</div>}
 
-							{this.props.current.pos3.active && <div className="pos3 row is-flex va-center">
+							{this.props.current.pos3.active && <div className="pos3 row is-flex va-end">
 								
 								<div className="col auto">
 									Pos no.3

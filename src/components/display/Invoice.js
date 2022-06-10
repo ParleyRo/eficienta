@@ -10,7 +10,7 @@ class Invoice extends React.Component {
 
 	constructor(props) {
 		super(props);
-console.log(props)
+
 		const date = new Date();
 		
 		const dueDate = new Date();
@@ -19,34 +19,54 @@ console.log(props)
 		this.state = {	
 			current: {
 				pos1: {
-					income: '',
-					description: 'Consulting Services',
+					income: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos1.income || '',
+					description: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos1.description || 'Consulting Services',
 				},
 				pos2: {
-					active: false,
-					description: '',
-					amount: ''
+					active: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos2.active || false,
+					description: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos2.description || '',
+					amount: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos2.amount || '',
 				},
 				pos3: {
-					active: false,
-					description: '',
-					amount: ''
+					active: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos3.active || false,
+					description: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos3.description || '',
+					amount: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos3.amount || '',
 				},
-				invoiceNumber: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current?.invoiceNumber || '',
+				invoiceNumber: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.invoiceNumber || '',
 				invoiceDate: `${('0'+date.getDate()).slice(-2)}/${('0'+(date.getMonth()+1)).slice(-2)}/${date.getFullYear()}`,
 				invoiceDueDate: `${('0'+dueDate.getDate()).slice(-2)}/${('0'+(dueDate.getMonth()+1)).slice(-2)}/${dueDate.getFullYear()}`,
 			},
-			fieldsWithError:[
-				'current.invoiceNumber',
-				'current.pos1.income',
-				'current.pos2.description','current.pos2.amount',
-				'current.pos3.description','current.pos3.amount'
-			],
+			fieldsWithError:[],
 			date: {
 				day: null
 			},
 			rate: null
 		};
+		
+		if(this.state.current.invoiceNumber === ''){
+			this.state.fieldsWithError.push('current.invoiceNumber');
+		}
+
+		if(this.state.current.pos1.income === ''){
+			this.state.fieldsWithError.push('current.pos1.income')
+		}
+
+		
+		if(this.state.current.pos2.amount === ''){
+			this.state.fieldsWithError.push('current.pos2.amount');
+		}
+
+		if(this.state.current.pos2.description === ''){
+			this.state.fieldsWithError.push('current.pos2.description');
+		}
+
+		if(this.state.current.pos3.amount === ''){
+			this.state.fieldsWithError.push('current.pos3.amount');
+		}
+
+		if(this.state.current.pos3.description === ''){
+			this.state.fieldsWithError.push('current.pos3.description');
+		}
 
 		this.handleChange = this.handleChange.bind(this);
 		this.addNewPos = this.addNewPos.bind(this);
@@ -66,7 +86,7 @@ console.log(props)
 			return; 
 		}
 
-		if(this.props.data.user.invoices?.[this.props.data.monthInfo.year][this.props.data.monthInfo.name] != null){
+		if(this.props.data.user.invoices?.[this.props.data.monthInfo.year]?.[this.props.data.monthInfo.name] != null){
 			setTimeout(() =>{
 			
 				if(!window.confirm('You already have one saved. Will you overwrite !?!')){
@@ -87,7 +107,7 @@ console.log(props)
 						buyer: this.props.data.user.invoice.general,
 						current: this.state.current,
 						efficiency: this.props.data.efficiency,
-						rates: this.state.rate
+						rate: this.state.rate
 					}
 				}
 			}
@@ -157,12 +177,16 @@ console.log(props)
 
 	async handleChange(event) {
 
-		const value = event.target.value.replace(/\s/g, '');
+		//const value = event.target.value.replace(/\s/g, '');
+		let value = event.target.value.trim();
+		
 		const stateLocation = event.target.dataset.stateLocation;
 		const fieldType = event.target.dataset.type || 'text';
 		
 		if(fieldType === 'date'){
-		
+			
+			let value = value.replace(/\s/g, '');
+
 			if(value.split('/').length < 3){
 				return false;
 			}
@@ -265,7 +289,7 @@ console.log(props)
 				<hr />
 
 				<div className="text-right ">
-					<button onClick={async () =>{
+					<button className="button is-primary" onClick={async () =>{
 							await new Promise((resolve, reject) => {
 								this.saveInvoice();
 							});
@@ -275,7 +299,7 @@ console.log(props)
 					&nbsp;&nbsp;
 					<ReactToPrint
 						content={() => this.componentRef}
-						trigger={() => <button className="">Print to PDF!</button>}
+						trigger={() => <button className="button">Print to PDF!</button>}
 						onBeforePrint={async () => {
 							await new Promise((resolve, reject) => {
 								if(this.printHandler()){
@@ -301,7 +325,7 @@ console.log(props)
 				<div className="text-right ">
 					<ReactToPrint
 						content={() => this.componentRef}
-						trigger={() => <button className="">Print to PDF!</button>}
+						trigger={() => <button className="button">Print to PDF!</button>}
 						onBeforePrint={async () => {
 							await new Promise((resolve, reject) => {
 								if(this.printHandler()){

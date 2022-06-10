@@ -22,9 +22,12 @@ class Display extends Component {
 			menu: {
 				efficiency: true,
 				email: false,
-				invoice: false,
-				invoices: false
+				invoice: false
 			}
+		}
+
+		if(!Object.entries(this.props.data.user.invoices).length){
+			this.state.menu['invoices'] = false;
 		}
 
 		this.toggleSettings = this.toggleSettings.bind(this);
@@ -41,7 +44,8 @@ class Display extends Component {
 		let menu = {
 			efficiency: false,
 			email: false,
-			invoice: false
+			invoice: false,
+			invoices: false
 		}
 
 		if(this.state.menu[event.target.dataset.target] == null){

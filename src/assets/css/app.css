@@ -139,7 +139,64 @@ a {
     justify-content: center;
     height: 100vh;
 }
+.button{
+	-moz-appearance: none;
+    -webkit-appearance: none;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: .375em;
+    box-shadow: none;
+    display: inline-flex;
+    font-size: 1rem;
+    height: 2.5em;
+    justify-content: flex-start;
+    line-height: 1.5;
+    padding-bottom: calc(.5em - 1px);
+    padding-left: calc(.75em - 1px);
+    padding-right: calc(.75em - 1px);
+    padding-top: calc(.5em - 1px);
+    position: relative;
+    vertical-align: top;
+}
+.button{
+	background-color: #fff;
+    border-color: #dbdbdb;
+    border-width: 1px;
+    color: #363636;
+    cursor: pointer;
+    justify-content: center;
+    padding-bottom: calc(.5em - 1px);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: calc(.5em - 1px);
+    text-align: center;
+    white-space: nowrap;
+}
 
+.button.is-primary {
+    background-color: #00d1b2;
+    border-color: transparent;
+    color: #fff;
+}
+.button.is-danger {
+    background-color: #f14668;
+    border-color: transparent;
+    color: #fff;
+}
+.button:hover {
+    border-color: #b5b5b5;
+    color: #363636;
+}
+.button.is-primary:hover {
+    background-color: #00c4a7;
+    border-color: transparent;
+    color: #fff;
+}
+.button.is-danger:hover {
+    background-color: #f03a5f;
+    border-color: transparent;
+    color: #fff;
+}
 .invoice{
 	margin-right: calc(-1.5rem);
     padding-right: calc(1.5rem);
@@ -219,6 +276,7 @@ a {
 .menu .title:not(.active) > *:hover{
 	transform: scale(1.3);
 }
+
 /* Form style */
 label input,
 label input:focus
@@ -278,6 +336,42 @@ table td, table th {
     margin-top: 0;
 }
 
+.invoicesContainer{
+	position: relative;
+	overflow: auto;
+	height: calc(100vh - 360px);
+}
+
+.invoicesContainer > div{
+	transform: scale(0.33);
+    position: absolute;
+    width: calc(19cm + 2cm);
+    height: calc(24.7cm + 1.5cm);
+	transition: all 0.5s ease-out;
+	cursor: pointer;
+}
+.invoicesContainer > div:hover{
+	transform: scale(0.36);
+}
+
+.invoicesContainer > div.active{
+	transform: scale(1);
+    left: calc((100% - 21cm) / 2) !important;
+    top: 0 !important;
+    z-index: 2;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+	background: #fff;
+}
+
+.invoicesContainer .InvoiceContent{
+	background: #fff;
+	box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+	z-index: 1;
+}
+
+.invoiceContainer:not(.active) .actions{
+	display: none;
+}
 
 @media(max-width: 768px){
 	
