@@ -347,7 +347,10 @@ table td, table th {
     position: absolute;
     width: calc(19cm + 2cm);
     height: calc(24.7cm + 1.5cm);
-	transition: all 0.5s ease-out;
+	transition: transform 0.5s ease-out,
+				left 0.5s ease-out;
+}
+.invoicesContainer .invoiceContainer:not(.active){
 	cursor: pointer;
 }
 .invoicesContainer > div:hover{
@@ -369,6 +372,14 @@ table td, table th {
 	z-index: 1;
 }
 
+.invoiceContainer .actions{
+	position: sticky;
+    width: 100%;
+    top: 0;
+	left: 0;
+    z-index: 2;
+    background: #fff;
+}
 .invoiceContainer:not(.active) .actions{
 	display: none;
 }

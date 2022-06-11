@@ -1,6 +1,8 @@
 import {Component} from 'react';
 
 import InvoiceView from './invoice/InvoiceView';
+
+import ReactToPrint from 'react-to-print';
 class Invoices extends Component {
 	
 	constructor(props) {
@@ -16,17 +18,23 @@ class Invoices extends Component {
 
 		this.addActive = this.addActive.bind(this);
 		this.closeActive = this.closeActive.bind(this);
-		
-	}
-	
-	closeActive(event){
+		this.deleteActive = this.deleteActive.bind(this);
 
+	}
+
+	deleteActive(event){
+
+	}
+	closeActive(event){
 		this.setState({activeInnvoice: 0});
 	}
 	addActive(event){
+		
+		if(event.target.tagName.toLowerCase() === 'button'){
+			return;
+		}
 
 		this.setState({activeInnvoice: event.currentTarget.dataset.key});
-
 	}
 
 	render(){
@@ -44,17 +52,14 @@ class Invoices extends Component {
 					year: year,
 					month: month
 				}
+
 			});
 		
 		});
-        
-		const unitCm = 37; //1cm = 37px
-
-		const smallPaperHeight =  (((this.totalInvoices % 3)+1) * (unitCm * 26.2 * 0.33) + ((this.totalInvoices % 3)+1) * 16)
 
 		return(
 				
-				<div className="invoicesContainer custom-scroll" style={{minHeight: smallPaperHeight+'px'}}>
+				<div className="invoicesContainer custom-scroll" >
 					{	this.props.data.user.invoices != null && 
 						invoicesDates.map(invoiceDateList=>{
 							
@@ -79,7 +84,7 @@ class Invoices extends Component {
 											<h1 className="text-center">{invoiceDate.year} - {invoiceDate.month}</h1>
 
 											<InvoiceView 
-												
+												ref={el => (this.componentRef = el)}
 												date={{
 													month: invoiceDate.month,
 													year: invoiceDate.year
