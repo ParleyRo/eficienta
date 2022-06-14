@@ -261,6 +261,33 @@ class App extends Component {
   }
 
   changedData(data){
+
+    if(data.invoicesAdd != null){
+      let invoices = {...this.state.user.invoices}
+      invoices[data.invoicesAdd.year][data.invoicesAdd.month] = data.invoicesAdd.invoice;
+console.log(data.invoicesAdd)
+      this.setState({
+        ...this.state.user,
+        invoices
+      });
+
+      delete data.invoicesAdd
+    
+    }
+
+    if(data.invoicesDelete != null){
+      let invoices = {...this.state.user.invoices}
+
+      delete invoices[data.invoicesDelete.year][data.invoicesDelete.month];
+
+      this.setState({
+        ...this.state.user,
+        invoices
+      });    
+
+      delete data.invoicesDelete;
+    }
+
     if(data.everhour != null){
 
       const efficiencyTotal = Math.round(((parseInt(data.everhour)+this.state.time.freedays+this.state.time.daysoff) * 100 ) / this.state.time.workHours);

@@ -8,9 +8,9 @@ class ViewInvoice extends Component {
 	}
 	
 	render(){
-		const totalAmount = parseInt(((this.props.efficiency?.total * this.props.current.pos1.income||0) / 100)) 
-			+ parseInt(this.props.current.pos2.active ? this.props.current.pos2.amount || 0 : 0) 
-			+ parseInt(this.props.current.pos3.active ? this.props.current.pos3.amount || 0 : 0);
+		const totalAmount = parseInt(((this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100)) 
+			+ parseInt(this.props.current?.pos2?.active ? this.props.current?.pos2?.amount || 0 : 0) 
+			+ parseInt(this.props.current?.pos3?.active ? this.props.current?.pos3?.amount || 0 : 0);
 		
 		return(
 
@@ -62,15 +62,15 @@ class ViewInvoice extends Component {
 								<h3 className="turquoise">INVOICE / FACTURĂ</h3>
 								
 								<p className={this.props.fieldsWithError.includes('current.invoiceNumber') ? 'red error' : ''}>
-									Invoice-Number: <b>{this.props.current.invoiceNumber}</b>
+									Invoice-Number: <b>{this.props.current?.invoiceNumber||''}</b>
 								</p>
 
 								<p className={this.props.fieldsWithError.includes('invoiceDate') ? 'red error' : ''}>
-									Invoice-Datee(dd/mm/yyyy): <b>{this.props.current.invoiceDate}</b>
+									Invoice-Datee(dd/mm/yyyy): <b>{this.props.current?.invoiceDate}</b>
 								</p>
 
 								<p className={this.props.fieldsWithError.includes('invoiceDueDate')? ' red error' : ''}>
-									Due-Datee(dd/mm/yyyy): <b>{this.props.current.invoiceDueDate}</b>
+									Due-Datee(dd/mm/yyyy): <b>{this.props.current?.invoiceDueDate}</b>
 								</p>
 
 							</div>
@@ -109,64 +109,64 @@ class ViewInvoice extends Component {
 									<tbody>
 										<tr>
 											<td>1</td>
-											<td>{this.props.current.pos1.description}</td>
+											<td>{this.props.current?.pos1?.description}</td>
 											<td>1</td>
 											<td>1</td>
 											<td className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>
 												<div>
-													<span><b>{this.addCommaToLargeNumbers((this.props.efficiency?.total * this.props.current.pos1.income||0) / 100)}</b></span>
+													<span><b>{this.addCommaToLargeNumbers((this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100)}</b></span>
 													<br />
-													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.efficiency?.total * this.props.current.pos1.income||0) / 100)).toFixed(2)) })</i></small>
+													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100)).toFixed(2)) })</i></small>
 												</div>
 												
 											</td>
 											<td className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>
 												<div>
-													<span><b>{this.addCommaToLargeNumbers((this.props.efficiency?.total * this.props.current.pos1.income||0) / 100)}</b></span>
+													<span><b>{this.addCommaToLargeNumbers((this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100)}</b></span>
 													<br />
-													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.efficiency?.total * this.props.current.pos1.income||0) / 100)).toFixed(2)) })</i></small>
+													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100)).toFixed(2)) })</i></small>
 												</div>
 											</td>
 										</tr>
 
-										{this.props.current.pos2.active && <tr>
+										{this.props.current?.pos2?.active && <tr>
 											<td>2</td>
-											<td className={this.props.fieldsWithError.includes('current.pos2.description') ? 'red error' : ''}>{this.props.current.pos2.description ? this.props.current.pos2.description : '?????'}</td>
+											<td className={this.props.fieldsWithError.includes('current.pos2.description') ? 'red error' : ''}>{this.props.current?.pos2?.description ? this.props.current.pos2.description : '?????'}</td>
 											<td>1</td>
 											<td>1</td>
 											<td className={this.props.fieldsWithError.includes('current.pos2.amount') ? 'red error' : ''}>
 												<div>
-													<span><b>{this.addCommaToLargeNumbers( this.props.current.pos2.amount )}</b></span>
+													<span><b>{this.addCommaToLargeNumbers( this.props.current?.pos2?.amount )}</b></span>
 													<br />
 													<small><i>({ this.addCommaToLargeNumbers(parseFloat( this.props.rate?.data?.value * this.props.current.pos2.amount).toFixed(2) )})</i></small>
 												</div>
 											</td>
 											<td className={this.props.fieldsWithError.includes('current.pos2.amount') ? 'red error' : ''}>
 												<div>
-													<span><b>{this.addCommaToLargeNumbers( this.props.current.pos2.amount )}</b></span>
+													<span><b>{this.addCommaToLargeNumbers( this.props.current?.pos2?.amount )}</b></span>
 													<br />
 													<small><i>({ this.addCommaToLargeNumbers( parseFloat(this.props.rate?.data?.value * this.props.current.pos2.amount).toFixed(2) ) })</i></small>
 												</div>
 											</td>
 										</tr>}
 
-										{this.props.current.pos3.active && <tr>
+										{this.props.current?.pos3?.active && <tr>
 											<td>3</td>
 											<td className={this.props.fieldsWithError.includes('current.pos3.description') ? 'red error' : ''}>{this.props.current.pos3.description ? this.props.current.pos3.description : '?????'}</td>
 											<td>1</td>
 											<td>1</td>
 											<td className={this.props.fieldsWithError.includes('current.pos3.amount') ? 'red error' : ''}>
 												<div>
-													<span><b>{this.addCommaToLargeNumbers( this.props.current.pos3.amount )}</b></span>
+													<span><b>{this.addCommaToLargeNumbers( this.props.current?.pos3?.amount )}</b></span>
 													<br />
-													<small><i>({ this.addCommaToLargeNumbers( parseFloat(this.props.rate?.data?.value * this.props.current.pos3.amount).toFixed(2) ) })</i></small>
+													<small><i>({ this.addCommaToLargeNumbers( parseFloat(this.props.rate?.data?.value * this.props.current?.pos3?.amount).toFixed(2) ) })</i></small>
 												</div>
 											</td>
 											<td className={this.props.fieldsWithError.includes('current.pos3.amount') ? 'red error' : ''}>
 												<div>
 													<span><b>{this.addCommaToLargeNumbers( this.props.current.pos3.amount )}</b></span>
 													<br />
-													<small><i>({ this.addCommaToLargeNumbers( parseFloat(this.props.rate?.data?.value * this.props.current.pos3.amount).toFixed(2) ) })</i></small>
+													<small><i>({ this.addCommaToLargeNumbers( parseFloat(this.props.rate?.data?.value * this.props.current?.pos3?.amount).toFixed(2) ) })</i></small>
 												</div>
 											</td>
 										</tr>}
@@ -193,7 +193,7 @@ class ViewInvoice extends Component {
 						<div className="row is-flex">
 							<div className="col">
 								<p>Invoice {this.props.date.month} {this.props.date.year}</p>
-								<p className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{(this.props.current.pos1.income || 0) / 80} eur / hour * 80 hours = {(this.props.efficiency?.total * this.props.current.pos1.income||0) / 100} euro</p>
+								<p className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{(this.props.current?.pos1?.income || 0) / 80} eur / hour * 80 hours = {(this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100} euro</p>
 							</div>
 						</div>
 						

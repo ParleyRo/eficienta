@@ -107,11 +107,11 @@ class Display extends Component {
 						}
 
 						{this.state.menu.invoice && 
-							<Invoice data={this.props.data} />
+							<Invoice data={this.props.data} changedData={this.props.changedData}/>
 						}
 
 						{this.state.menu.invoices && 
-							<Invoices data={this.props.data} />
+							<Invoices data={this.props.data} changedData={this.props.changedData}/>
 						}
 
 					</>

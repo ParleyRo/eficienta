@@ -22,8 +22,34 @@ class Invoices extends Component {
 
 	}
 
-	deleteActive(event){
+	async deleteActive(event){
 
+		if(!window.confirm('Are you sure about deleting this invoice ?!!!')){
+			return; 
+		}
+
+		const data = {
+			secret: this.props.data.user.secret,
+			year: event.currentTarget.dataset.year,
+			month: event.currentTarget.dataset.month
+		}
+
+		const url = `${window.location.protocol}//${window.location.hostname}:5001/delete`;
+
+		const res = await fetch(url, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		});
+
+		const result = await res.json();
+
+		this.props.changedData({invoicesDelete:{year: data.year, month: data.month}});
+		
+		this.setState({activeInnvoice: 0});
+		
 	}
 	closeActive(event){
 		this.setState({activeInnvoice: 0});
@@ -70,14 +96,14 @@ class Invoices extends Component {
 								const yPosition = Math.floor(this.index / 3);
 																
 								const left = `calc((-1) * (100% - 21cm) + (((21cm + ((100% - 21cm) / 3) ) * 0.33 * ${xPosition})) - 1.5rem)`;
-								const top = `calc((-1) * (26.2cm * 0.33) + (26.2cm * 0.33 * ${yPosition}) ${yPosition > 0 ? '+ 2.5rem' : ''})`;
+								const top = `calc((-1) * (26.2cm * 0.33) + (26.2cm * 0.33 * ${yPosition}) ${yPosition > 0 ? '+ 3rem' : ''})`;
 								
 								this.index++;
 								
 								return <div className={(this.state.activeInnvoice == this.index ? 'active' : '') + ' invoiceContainer'} onClick={this.addActive} data-key={this.index} key={this.index} style={{left: left, top: top}}>
 
 											<div className="text-right actions">
-												<button className="button is-danger">Delete</button>
+												<button className="button is-danger" data-year={invoiceDate.year} data-month={invoiceDate.month} onClick={this.deleteActive}>Delete</button>
 												<button className="button" onClick={this.closeActive}>Ⓧ</button>
 											</div>
 											

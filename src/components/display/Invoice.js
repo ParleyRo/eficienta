@@ -15,7 +15,7 @@ class Invoice extends React.Component {
 		
 		const dueDate = new Date();
 		dueDate.setDate(dueDate.getDate() +10);
-		
+		console.log('Invoice:',props)
 		this.state = {	
 			current: {
 				pos1: {
@@ -124,6 +124,11 @@ class Invoice extends React.Component {
 		});
 
 		const result = await res.json();
+		this.props.changedData({invoicesAdd:{
+			invoice: data.invoices[this.props.data.monthInfo.year][this.props.data.monthInfo.name],
+			year: this.props.data.monthInfo.year, 
+			month: this.props.data.monthInfo.name
+		}})
 
 	}
 	addNewPos(event){
