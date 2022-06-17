@@ -348,7 +348,8 @@ table td, table th {
     width: calc(19cm + 2cm);
     height: calc(24.7cm + 1.5cm);
 	transition: transform 0.5s ease-out,
-				left 0.5s ease-out;
+				left 0.2s ease-out,
+
 }
 .invoicesContainer .invoiceContainer:not(.active){
 	cursor: pointer;
