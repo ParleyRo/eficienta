@@ -1,8 +1,6 @@
 import {Component} from 'react';
 
 import InvoiceView from './invoice/InvoiceView';
-
-import ReactToPrint from 'react-to-print';
 class Invoices extends Component {
 	
 	constructor(props) {
@@ -44,10 +42,10 @@ class Invoices extends Component {
 			body: JSON.stringify(data)
 		});
 
-		const result = await res.json();
+		await res.json();
 
 		this.props.changedData({invoicesDelete:{year: data.year, month: data.month}});
-		
+
 		this.setState({activeInnvoice: 0});
 		
 	}
@@ -100,7 +98,7 @@ class Invoices extends Component {
 								
 								this.index++;
 								
-								return <div className={(this.state.activeInnvoice == this.index ? 'active' : '') + ' invoiceContainer'} onClick={this.addActive} data-key={this.index} key={this.index} style={{left: left, top: top}}>
+								return <div className={(this.state.activeInnvoice === this.index ? 'active' : '') + ' invoiceContainer'} onClick={this.addActive} data-key={this.index} key={this.index} style={{left: left, top: top}}>
 
 											<div className="text-right actions">
 												<button className="button is-danger" data-year={invoiceDate.year} data-month={invoiceDate.month} onClick={this.deleteActive}>Delete</button>

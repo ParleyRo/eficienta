@@ -123,7 +123,8 @@ class Invoice extends React.Component {
 			body: JSON.stringify(data)
 		});
 
-		const result = await res.json();
+		await res.json();
+		
 		this.props.changedData({invoicesAdd:{
 			invoice: data.invoices[this.props.data.monthInfo.year][this.props.data.monthInfo.name],
 			year: this.props.data.monthInfo.year, 
@@ -190,7 +191,7 @@ class Invoice extends React.Component {
 		
 		if(fieldType === 'date'){
 			
-			let value = value.replace(/\s/g, '');
+			value = value.replace(/\s/g, '');
 
 			if(value.split('/').length < 3){
 				return false;

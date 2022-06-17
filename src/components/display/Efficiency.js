@@ -39,6 +39,14 @@ export default function Efficiency(props) {
 						</p>
 					}
 
+					{ props.data.time.missingHours < 0  && 
+						<p className="blue">Over Hours: &nbsp;{props.data.time.missingHours != null
+								? <span>{props.data.time.missingHours * (-1)}h</span>
+								: <ItemLoading data={{color: 'orange'}}/>
+							}
+						</p>
+					}
+
 					<p className="is-flex va-center orange">Everhour:&nbsp;{props.data.time.everhour != null
 							? <span >{props.data.time.everhour > 0 
 									? props.data.time.everhour + 'h'
