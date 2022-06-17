@@ -263,9 +263,11 @@ class App extends Component {
   changedData(data){
 
     if(data.invoicesAdd != null){
+     
       let invoices = {...this.state.user.invoices}
+     
       invoices[data.invoicesAdd.year][data.invoicesAdd.month] = data.invoicesAdd.invoice;
-console.log(data.invoicesAdd)
+
       this.setState({
         ...this.state.user,
         invoices
@@ -276,6 +278,7 @@ console.log(data.invoicesAdd)
     }
 
     if(data.invoicesDelete != null){
+      
       let invoices = {...this.state.user.invoices}
 
       delete invoices[data.invoicesDelete.year][data.invoicesDelete.month];

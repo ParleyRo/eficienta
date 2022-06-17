@@ -15,7 +15,7 @@ class Invoice extends React.Component {
 		
 		const dueDate = new Date();
 		dueDate.setDate(dueDate.getDate() +10);
-		console.log('Invoice:',props)
+
 		this.state = {	
 			current: {
 				pos1: {

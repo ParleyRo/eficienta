@@ -50,15 +50,16 @@ class Invoices extends Component {
 		
 	}
 	closeActive(event){
+
 		this.setState({activeInnvoice: 0});
 	}
 	addActive(event){
-		
+
 		if(event.target.tagName.toLowerCase() === 'button'){
 			return;
 		}
 
-		this.setState({activeInnvoice: event.currentTarget.dataset.key});
+		this.setState({activeInnvoice: parseInt(event.currentTarget.dataset.key)});
 	}
 
 	render(){
@@ -97,7 +98,7 @@ class Invoices extends Component {
 								const top = `calc((-1) * (26.2cm * 0.33) + (26.2cm * 0.33 * ${yPosition}) ${yPosition > 0 ? '+ 3rem' : ''})`;
 								
 								this.index++;
-								
+
 								return <div className={(this.state.activeInnvoice === this.index ? 'active' : '') + ' invoiceContainer'} onClick={this.addActive} data-key={this.index} key={this.index} style={{left: left, top: top}}>
 
 											<div className="text-right actions">
