@@ -90,7 +90,7 @@ class App extends Component {
 
     oState.isLoaded = true;
 
-    oState.user = {...this.userStats.value};
+    oState.user = {...oState.user,...this.userStats.value};
 
     oState.time.everhour = Math.round(this.everhourStats.value / 3600);
     
