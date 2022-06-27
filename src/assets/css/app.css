@@ -133,6 +133,11 @@ a {
 	display: inline-block;
 	vertical-align: middle;
 }
+
+.half-width {
+	width: 50%;
+	margin: inherit;
+}
 .loading{
 	display: flex;
     align-items: center;
