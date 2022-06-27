@@ -67,7 +67,7 @@ class Invoices extends Component {
 		this.totalInvoices = 0;
 		this.index = 0;
 		
-		const invoicesDates = Object.keys(this.props.data.user.invoices).map((year)=>{
+		const invoicesDates = Object.keys(this.props.data.user.invoices || []).map((year)=>{
 			
 			return Object.keys(this.props.data.user.invoices[year]).map((month) => {
 				
