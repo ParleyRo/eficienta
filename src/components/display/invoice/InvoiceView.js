@@ -8,9 +8,12 @@ class ViewInvoice extends Component {
 	}
 	
 	render(){
+
 		const totalAmount = parseInt(((this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100)) 
 			+ parseInt(this.props.current?.pos2?.active ? this.props.current?.pos2?.amount || 0 : 0) 
 			+ parseInt(this.props.current?.pos3?.active ? this.props.current?.pos3?.amount || 0 : 0);
+
+		const emptyFieldText = '...empty';
 		
 		return(
 
@@ -23,31 +26,31 @@ class ViewInvoice extends Component {
 						<div className="row is-flex">
 
 							<div className="col">
-								<h2 className="turquoise">{this.props.invoice?.general?.companyName}</h2>
+								<h2 className={this.props.invoice?.general?.companyName ? 'turquoise' : 'red'}>{this.props.invoice?.general?.companyName || 'Company Name Here'}</h2>
 
-								<p>
-									Company Registration Number: <b>{this.props.invoice?.general?.companyRegistrationNumber}</b>
+								<p className={this.props.invoice?.general?.companyRegistrationNumber ? '' : 'red'}>
+									Company Registration Number: <b>{this.props.invoice?.general?.companyRegistrationNumber || emptyFieldText}</b>
 								</p>
-								<p>
-									VAT number: <b>{this.props.invoice?.general?.companyVatNumber}</b>
+								<p className={this.props.invoice?.general?.companyVatNumber ? '' : 'red'}>
+									VAT number: <b>{this.props.invoice?.general?.companyVatNumber || emptyFieldText}</b>
 								</p>
-								<p>
-									Address: <b>{this.props.invoice?.general?.companyAddress}</b>
+								<p className={this.props.invoice?.general?.companyAddress ? '' : 'red'}>
+									Address: <b>{this.props.invoice?.general?.companyAddress || emptyFieldText}</b>
 								</p>
-								<p>
-									Phone: <b>{this.props.invoice?.general?.companyPhone}</b>
+								<p className={this.props.invoice?.general?.companyPhone ? '' : 'red'}>
+									Phone: <b>{this.props.invoice?.general?.companyPhone || emptyFieldText}</b>
 								</p>
-								<p>
-									Email: <b>{this.props.invoice?.general?.companyEmail}</b>
+								<p className={this.props.invoice?.general?.companyEmail ? '' : 'red'}>
+									Email: <b>{this.props.invoice?.general?.companyEmail || emptyFieldText}</b>
 								</p>
-								<p>
-									Bank: <b>{this.props.invoice?.general?.companyBank}</b>
+								<p className={this.props.invoice?.general?.companyBank ? '' : 'red'}>
+									Bank: <b>{this.props.invoice?.general?.companyBank || emptyFieldText}</b>
 								</p>
-								<p>
-									SWIFT: <b>{this.props.invoice?.general?.companySwift}</b>
+								<p className={this.props.invoice?.general?.companySwift ? '' : 'red'}>
+									SWIFT: <b>{this.props.invoice?.general?.companySwift || emptyFieldText}</b>
 								</p>
-								<p>
-									IBAN(EUR): <b>{this.props.invoice?.general?.companyIban}</b>
+								<p className={this.props.invoice?.general?.companyIban ? '' : 'red'}>
+									IBAN(EUR): <b>{this.props.invoice?.general?.companyIban || emptyFieldText}</b>
 								</p>
 							</div>
 						</div>
@@ -79,13 +82,13 @@ class ViewInvoice extends Component {
 								
 								<p><b>Buyer / Cumpărător:</b></p>
 								
-								<h3 className="turquoise">{this.props.invoice?.buyer?.companyName}</h3>
+								<h3 className={this.props.invoice?.buyer?.companyName ? 'turquoise' : 'red'}>{this.props.invoice?.buyer?.companyName || 'Buyer Company Name Here'}</h3>
 								
-								<p>
-									Company ID: <b>{this.props.invoice?.buyer?.companyId}</b>
+								<p className={this.props.invoice?.buyer?.companyId ? '' : 'red'}>
+									Company ID: <b>{this.props.invoice?.buyer?.companyId || emptyFieldText}</b>
 								</p>
-								<p>
-									Address: <b>{this.props.invoice?.buyer?.companyAddress}</b>
+								<p className={this.props.invoice?.buyer?.companyAddress ? '' : 'red'}>
+									Address: <b>{this.props.invoice?.buyer?.companyAddress || emptyFieldText}</b>
 								</p>
 
 							</div>
