@@ -196,7 +196,7 @@ class ViewInvoice extends Component {
 						<div className="row is-flex">
 							<div className="col">
 								<p>Invoice {this.props.date.month} {this.props.date.year}</p>
-								<p className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{(this.props.current?.pos1?.income || 0) / 80} eur / hour * 80 hours = {(this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100} euro</p>
+								<p className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{parseFloat((this.props.efficiency?.total * (this.props.current?.pos1?.income || 0) / 100) / 80).toFixed(2)} eur / hour * 80 hours = {(this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100} euro</p>
 							</div>
 						</div>
 						
