@@ -33,7 +33,7 @@ class Invoice extends React.Component {
 					amount: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos3.amount || '',
 				},
 				invoiceNumber: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.invoiceNumber || '',
-				invoiceDate:  this.formatDate(this.props.data.user.invoices[this.props.data.monthInfo.year][this.props.data.monthInfo.name].rate.date,date),
+				invoiceDate:  this.formatDate(this.props.data.user.invoices[this.props.data.monthInfo.year]?.[this.props.data.monthInfo.name]?.rate?.date,date),
 				invoiceDueDate: `${('0'+dueDate.getDate()).slice(-2)}/${('0'+(dueDate.getMonth()+1)).slice(-2)}/${dueDate.getFullYear()}`,
 			},
 			fieldsWithError:[],

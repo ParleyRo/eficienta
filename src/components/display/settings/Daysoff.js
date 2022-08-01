@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import DatePicker from "react-multi-date-picker";
+import DatePicker, { DateObject } from "react-multi-date-picker";
 import InputIcon from "react-multi-date-picker/components/input_icon.js";
 
 class Daysoff extends Component {
@@ -85,6 +85,7 @@ class Daysoff extends Component {
 							format="DD-MM-YYYY"
 							value={this.state.dates} 
 							onChange={this.setValues}
+							currentDate={new DateObject(new Date(`${this.props.data.monthInfo.year}-${this.props.data.monthInfo.name}-1`))}
 							showOtherDays
 							render={<InputIcon/>}
 							
