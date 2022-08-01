@@ -120,7 +120,7 @@ class Invoices extends Component {
 													general: this.props.data.user.invoices[invoiceDate.year][invoiceDate.month].general,
 													buyer: this.props.data.user.invoices[invoiceDate.year][invoiceDate.month].buyer
 												}}
-												rate={this.props.data.user.invoices[invoiceDate.year][invoiceDate.month].rates}
+												rate={this.props.data.user.invoices[invoiceDate.year][invoiceDate.month].rate}
 												efficiency={this.props.data.user.invoices[invoiceDate.year][invoiceDate.month].efficiency}
 											/> 
 									</div>

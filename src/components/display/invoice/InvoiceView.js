@@ -69,11 +69,11 @@ class ViewInvoice extends Component {
 								</p>
 
 								<p className={this.props.fieldsWithError.includes('invoiceDate') ? 'red error' : ''}>
-									Invoice-Datee(dd/mm/yyyy): <b>{this.props.current?.invoiceDate}</b>
+									Invoice-Date(dd/mm/yyyy): <b>{this.props.current?.invoiceDate}</b>
 								</p>
 
 								<p className={this.props.fieldsWithError.includes('invoiceDueDate')? ' red error' : ''}>
-									Due-Datee(dd/mm/yyyy): <b>{this.props.current?.invoiceDueDate}</b>
+									Due-Date(dd/mm/yyyy): <b>{this.props.current?.invoiceDueDate}</b>
 								</p>
 
 							</div>

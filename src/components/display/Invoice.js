@@ -14,7 +14,7 @@ class Invoice extends React.Component {
 		const date = new Date();
 		
 		const dueDate = new Date();
-		dueDate.setDate(dueDate.getDate() +10);
+		dueDate.setDate(dueDate.getDate() + 10);
 
 		this.state = {	
 			current: {
@@ -33,7 +33,7 @@ class Invoice extends React.Component {
 					amount: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos3.amount || '',
 				},
 				invoiceNumber: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.invoiceNumber || '',
-				invoiceDate: `${('0'+date.getDate()).slice(-2)}/${('0'+(date.getMonth()+1)).slice(-2)}/${date.getFullYear()}`,
+				invoiceDate:  this.formatDate(this.props.data.user.invoices[this.props.data.monthInfo.year][this.props.data.monthInfo.name].rate.date,date),
 				invoiceDueDate: `${('0'+dueDate.getDate()).slice(-2)}/${('0'+(dueDate.getMonth()+1)).slice(-2)}/${dueDate.getFullYear()}`,
 			},
 			fieldsWithError:[],
@@ -42,7 +42,7 @@ class Invoice extends React.Component {
 			},
 			rate: null
 		};
-		
+				
 		if(this.state.current.invoiceNumber === ''){
 			this.state.fieldsWithError.push('current.invoiceNumber');
 		}
@@ -78,8 +78,20 @@ class Invoice extends React.Component {
 			requestFinish: false,
 			value: 0
 		}
+
 	}
 
+	formatDate(invoiceDate,currentDate) {
+
+		if(invoiceDate == null){
+			return `${('0'+currentDate.getDate()).slice(-2)}/${('0'+(currentDate.getMonth()+1)).slice(-2)}/${currentDate.getFullYear()}`
+		}
+
+		const aInvoiceDate = invoiceDate.split('-');
+
+		return `${('0'+aInvoiceDate[2]).slice(-2)}/${('0'+(aInvoiceDate[1])).slice(-2)}/${aInvoiceDate[0]}`
+	
+	}
 	async saveInvoice(){
 
 		if(!window.confirm('You are about to save this Invoice. Are you sure ?!?')){
@@ -104,7 +116,7 @@ class Invoice extends React.Component {
 					...this.props.data.user.invoices[this.props.data.monthInfo.year],
 					[this.props.data.monthInfo.name]: {
 						general: this.props.data.user.invoice.general,
-						buyer: this.props.data.user.invoice.general,
+						buyer: this.props.data.user.invoice.buyer,
 						current: this.state.current,
 						efficiency: this.props.data.efficiency,
 						rate: this.state.rate
