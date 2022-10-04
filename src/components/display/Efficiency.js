@@ -42,10 +42,10 @@ export default function Efficiency(props) {
 							: <ItemLoading data={{color: 'orange'}}/>
 						}
 					</p>
-					<p className="orange">Free days: {props.data.time.freedays}h</p>
-					<p className="orange">Days off: {props.data.time.daysoff}h</p>
 
+					<p className="orange">Free days: {props.data.time.freedays}h</p>
 					
+					<p className="orange">Days off: {props.data.time.daysoff}h</p>
 
 					{ props.data.time.missingHours > 0  && 
 						<p className="red">Missing Hours: &nbsp;{props.data.time.missingHours != null
@@ -56,12 +56,14 @@ export default function Efficiency(props) {
 					}
 
 					{ props.data.time.missingHours < 0  && 
-						<p className="blue">Over Hours: &nbsp;{props.data.time.missingHours != null
+						<p className="orange">Over Hours: &nbsp;{props.data.time.missingHours != null
 								? <span>{props.data.time.missingHours * (-1)}h</span>
 								: <ItemLoading data={{color: 'orange'}}/>
 							}
 						</p>
 					}
+
+					<p className="orange"><b>Total: {props.data.time.everhour + props.data.time.freedays + props.data.time.daysoff}h</b></p>
 
 					<hr className="half-width" />
 
