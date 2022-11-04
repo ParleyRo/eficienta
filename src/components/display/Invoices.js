@@ -32,7 +32,7 @@ class Invoices extends Component {
 			month: event.currentTarget.dataset.month
 		}
 
-		const url = `${window.location.protocol}//${window.location.hostname}:5001/delete`;
+		const url = `${window.location.protocol}//${window.location.hostname}:6000/delete`;
 
 		const res = await fetch(url, {
 			method: 'DELETE',
