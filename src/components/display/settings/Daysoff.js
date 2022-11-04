@@ -26,7 +26,7 @@ class Daysoff extends Component {
 			oDaysoff[value.month.number].push(value.day);
 		});
 
-		const url = `${window.location.protocol}//${window.location.hostname}:6000/save`;
+		const url = `${window.location.protocol}//${window.location.hostname}:4000/save`;
 		
 		const res = await fetch(url, {
 			method: 'POST',
