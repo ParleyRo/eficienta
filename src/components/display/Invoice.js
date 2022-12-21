@@ -19,15 +19,18 @@ class Invoice extends React.Component {
 		this.state = {	
 			current: {
 				pos1: {
+					index: 1,
 					income: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos1.income || '',
 					description: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos1.description || 'Consulting Services',
 				},
 				pos2: {
+					index: 2,
 					active: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos2.active || false,
 					description: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos2.description || '',
 					amount: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos2.amount || '',
 				},
 				pos3: {
+					index: 3,
 					active: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos3.active || false,
 					description: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos3.description || '',
 					amount: props.data.user.invoices?.[props.data.monthInfo.year]?.[props.data.monthInfo.name]?.current.pos3.amount || '',

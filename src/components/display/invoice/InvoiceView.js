@@ -110,8 +110,8 @@ class ViewInvoice extends Component {
 									</thead>
 
 									<tbody>
-										<tr>
-											<td>1</td>
+										{this.props.current?.pos1?.income > 0 && <tr>
+											<td>{this.props.current?.pos1?.index}</td>
 											<td>{this.props.current?.pos1?.description}</td>
 											<td>1</td>
 											<td>1</td>
@@ -130,10 +130,10 @@ class ViewInvoice extends Component {
 													<small><i>({ this.addCommaToLargeNumbers(parseFloat(this.props.rate?.data?.value * ((this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100)).toFixed(2)) })</i></small>
 												</div>
 											</td>
-										</tr>
+										</tr> }
 
 										{this.props.current?.pos2?.active && <tr>
-											<td>2</td>
+											<td>{this.props.current?.pos1?.income > 0 ? this.props.current?.pos2?.index : this.props.current?.pos2?.index - 1}</td>
 											<td className={this.props.fieldsWithError.includes('current.pos2.description') ? 'red error' : ''}>{this.props.current?.pos2?.description ? this.props.current.pos2.description : '?????'}</td>
 											<td>1</td>
 											<td>1</td>
@@ -154,7 +154,7 @@ class ViewInvoice extends Component {
 										</tr>}
 
 										{this.props.current?.pos3?.active && <tr>
-											<td>3</td>
+											<td>{this.props.current?.pos1?.income > 0 ? this.props.current?.pos3?.index : this.props.current?.pos3?.index - 1}</td>
 											<td className={this.props.fieldsWithError.includes('current.pos3.description') ? 'red error' : ''}>{this.props.current.pos3.description ? this.props.current.pos3.description : '?????'}</td>
 											<td>1</td>
 											<td>1</td>
@@ -196,7 +196,9 @@ class ViewInvoice extends Component {
 						<div className="row is-flex">
 							<div className="col">
 								<p>Invoice {this.props.date.month} {this.props.date.year}</p>
-								<p className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{parseFloat((this.props.efficiency?.total * (this.props.current?.pos1?.income || 0) / 100) / 80).toFixed(2)} eur / hour * 80 hours = {(this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100} euro</p>
+								{this.props.current?.pos1?.income > 0 && 
+									<p className={this.props.fieldsWithError.includes('current.pos1.income') ? 'red error' : ''}>{parseFloat((this.props.efficiency?.total * (this.props.current?.pos1?.income || 0) / 100) / 80).toFixed(2)} eur / hour * 80 hours = {(this.props.efficiency?.total * this.props.current?.pos1?.income||0) / 100} euro</p>
+								}
 							</div>
 						</div>
 						
