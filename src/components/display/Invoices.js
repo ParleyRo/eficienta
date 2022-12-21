@@ -67,30 +67,27 @@ class Invoices extends Component {
 		this.totalInvoices = 0;
 		this.index = 0;
 		
-		const invoicesDates = Object.keys(this.props.data.user.invoices || []).map((year)=>{
+		// const invoicesDates = Object.keys(this.props.data.user.invoices || []).map((year)=>{
 			
-			return Object.keys(this.props.data.user.invoices[year]).map((month) => {
+		// 	return Object.keys(this.props.data.user.invoices[year]).map((month) => {
 				
-				this.totalInvoices++;
+		// 		this.totalInvoices++;
 				
-				return {
-					year: year,
-					month: month
-				}
+		// 		return {
+		// 			year: year,
+		// 			month: month
+		// 		}
 
-			});
+		// 	});
 		
-		});
+		// });
 
 		return(
 				
 				<div className="invoicesContainer custom-scroll" >
 					{	this.props.data.user.invoices != null && 
-						invoicesDates.map(invoiceDateList=>{
-							
-							return invoiceDateList.map((invoiceDate)=>{
+						Object.keys(this.props.data.user.invoices || []).map((invoiceNumber)=>{
 
-								
 								const xPosition = this.index % 3;
 								const yPosition = Math.floor(this.index / 3);
 																
@@ -102,30 +99,29 @@ class Invoices extends Component {
 								return <div className={(this.state.activeInnvoice === this.index ? 'active' : '') + ' invoiceContainer'} onClick={this.addActive} data-key={this.index} key={this.index} style={{left: left, top: top}}>
 
 											<div className="text-right actions">
-												<button className="button is-danger" data-year={invoiceDate.year} data-month={invoiceDate.month} onClick={this.deleteActive}>Delete</button>
+												<button className="button is-danger" data-year={this.props.data.user.invoices[invoiceNumber].invoicedAt.year} data-month={this.props.data.user.invoices[invoiceNumber].invoicedAt.month} onClick={this.deleteActive}>Delete</button>
 												<button className="button" onClick={this.closeActive}>Ⓧ</button>
 											</div>
 											
-											<h1 className="text-center">{invoiceDate.year} - {invoiceDate.month}</h1>
+											<h1 className="text-center">{this.props.data.user.invoices[invoiceNumber].invoicedAt.year} - {this.props.data.user.invoices[invoiceNumber].invoicedAt.month}</h1>
 
 											<InvoiceView 
 												ref={el => (this.componentRef = el)}
 												date={{
-													month: invoiceDate.month,
-													year: invoiceDate.year
+													month: this.props.data.user.invoices[invoiceNumber].invoicedAt.month,
+													year: this.props.data.user.invoices[invoiceNumber].invoicedAt.year
 												}} 
-												current={this.props.data.user.invoices[invoiceDate.year][invoiceDate.month].current}
+												current={this.props.data.user.invoices[invoiceNumber].current}
 												fieldsWithError={[]}
 												invoice={{
-													general: this.props.data.user.invoices[invoiceDate.year][invoiceDate.month].general,
-													buyer: this.props.data.user.invoices[invoiceDate.year][invoiceDate.month].buyer
+													general: this.props.data.user.invoices[invoiceNumber].general,
+													buyer: this.props.data.user.invoices[invoiceNumber].buyer
 												}}
-												rate={this.props.data.user.invoices[invoiceDate.year][invoiceDate.month].rate}
-												efficiency={this.props.data.user.invoices[invoiceDate.year][invoiceDate.month].efficiency}
+												rate={this.props.data.user.invoices[invoiceNumber].rate}
+												efficiency={this.props.data.user.invoices[invoiceNumber].efficiency}
 											/> 
 									</div>
 							
-							});
 
 						})
 					}

@@ -96,34 +96,41 @@ class Invoice extends React.Component {
 	
 	}
 	async saveInvoice(){
+		
+		// if(this.state.fieldsWithError.length){
+		// 	alert('You have empty fields');
+		// 	console.log(this.state.fieldsWithError)
+		// 	return; 
+		// }
 
 		if(!window.confirm('You are about to save this Invoice. Are you sure ?!?')){
 			return; 
 		}
 
-		if(this.props.data.user.invoices?.[this.props.data.monthInfo.year]?.[this.props.data.monthInfo.name] != null){
+		if(this.props.data.user.invoices?.[this.state.current.invoiceNumber] != null){
 			setTimeout(() =>{
 			
 				if(!window.confirm('You already have one saved. Will you overwrite !?!')){
 					return; 
 				}
 
-			},1000);
+			},500);
 		}
 
 		let data = {
 			secret: this.props.data.user.secret, 
 			invoices: {
 				...this.props.data.user.invoices,
-				[this.props.data.monthInfo.year]: {
-					...this.props.data.user.invoices[this.props.data.monthInfo.year],
-					[this.props.data.monthInfo.name]: {
-						general: this.props.data.user.invoice.general,
-						buyer: this.props.data.user.invoice.buyer,
-						current: this.state.current,
-						efficiency: this.props.data.efficiency,
-						rate: this.state.rate
-					}
+				[this.state.current.invoiceNumber]: {
+					invoicedAt: {
+						year: this.props.data.monthInfo.year,
+						month: this.props.data.monthInfo.name
+					},
+					general: this.props.data.user.invoice.general,
+					buyer: this.props.data.user.invoice.buyer,
+					current: this.state.current,
+					efficiency: this.props.data.efficiency,
+					rate: this.state.rate
 				}
 			}
 		}
@@ -141,9 +148,8 @@ class Invoice extends React.Component {
 		await res.json();
 		
 		this.props.changedData({invoicesAdd:{
-			invoice: data.invoices[this.props.data.monthInfo.year][this.props.data.monthInfo.name],
-			year: this.props.data.monthInfo.year, 
-			month: this.props.data.monthInfo.name
+			invoice: data.invoices[this.state.current.invoiceNumber],
+			number: this.state.current.invoiceNumber
 		}})
 
 	}

@@ -266,7 +266,7 @@ class App extends Component {
      
       let invoices = {...this.state.user.invoices}
      
-      invoices[data.invoicesAdd.year][data.invoicesAdd.month] = data.invoicesAdd.invoice;
+      invoices[data.invoicesAdd.number] = data.invoicesAdd.invoice;
 
       this.setState({
         ...this.state.user,
@@ -281,7 +281,7 @@ class App extends Component {
       
       let invoices = {...this.state.user.invoices}
 
-      delete invoices[data.invoicesDelete.year][data.invoicesDelete.month];
+      delete invoices[data.invoicesDelete.number];
 
       this.setState({
         ...this.state.user,
