@@ -66,34 +66,21 @@ class Invoices extends Component {
 
 		this.totalInvoices = 0;
 		this.index = 0;
-		
-		// const invoicesDates = Object.keys(this.props.data.user.invoices || []).map((year)=>{
-			
-		// 	return Object.keys(this.props.data.user.invoices[year]).map((month) => {
-				
-		// 		this.totalInvoices++;
-				
-		// 		return {
-		// 			year: year,
-		// 			month: month
-		// 		}
-
-		// 	});
-		
-		// });
 
 		return(
 				
 				<div className="invoicesContainer custom-scroll" >
 					{	this.props.data.user.invoices != null && 
-						Object.keys(this.props.data.user.invoices || []).map((invoiceNumber)=>{
+						Object.keys(this.props.data.user.invoices || {}).reverse().map((invoiceNumber)=>{
 
 								const xPosition = this.index % 3;
 								const yPosition = Math.floor(this.index / 3);
-																
+
+								const rowPosition = Math.ceil((this.index + 1) / 3) - 1;
+
 								const left = `calc((-1) * (100% - 21cm) + (((21cm + ((100% - 21cm) / 3) ) * 0.33 * ${xPosition})) - 1.5rem)`;
-								const top = `calc((-1) * (26.2cm * 0.33) + (26.2cm * 0.33 * ${yPosition}) ${yPosition > 0 ? '+ 3rem' : ''})`;
-								
+								const top = `calc((-1) * (26.2cm * 0.33) + (26.2cm * 0.33 * ${yPosition})  + ( ${rowPosition} * 3rem ) )`;
+
 								this.index++;
 
 								return <div className={(this.state.activeInnvoice === this.index ? 'active' : '') + ' invoiceContainer'} onClick={this.addActive} data-key={this.index} key={this.index} style={{left: left, top: top}}>

@@ -97,11 +97,10 @@ class Invoice extends React.Component {
 	}
 	async saveInvoice(){
 		
-		// if(this.state.fieldsWithError.length){
-		// 	alert('You have empty fields');
-		// 	console.log(this.state.fieldsWithError)
-		// 	return; 
-		// }
+		if(this.state.current.invoiceNumber === ''){
+			alert('Invoice Number is required');
+			return; 
+		}
 
 		if(!window.confirm('You are about to save this Invoice. Are you sure ?!?')){
 			return; 
@@ -185,7 +184,7 @@ class Invoice extends React.Component {
 		const y = parseInt(this.state.current.invoiceDate.split('/')[2]);
 		const m = parseInt(this.state.current.invoiceDate.split('/')[1]);
 		const d = parseInt(this.state.current.invoiceDate.split('/')[0]);
-		
+
 		const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${d}&m=${m}&y=${y}`;
 
 		const res = await fetch(url, {
@@ -301,6 +300,9 @@ class Invoice extends React.Component {
 	}
 	render(){
 
+		const aInvoicesKeys = Object.keys(this.props.data.user.invoices || {});
+		const lastInvoiceNumber = aInvoicesKeys[aInvoicesKeys.length-1];
+
 		return (
 			<div className="invoice scroll-y custom-scroll">
 				
@@ -311,6 +313,7 @@ class Invoice extends React.Component {
 					addNewPos={this.addNewPos}
 					getRate={this.getRate}
 					rate={this.state.rate}
+					lastInvoiceNumber={lastInvoiceNumber}
 				/>
 
 				<hr />

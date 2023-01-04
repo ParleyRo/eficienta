@@ -14,7 +14,13 @@ export default function Efficiency(props) {
 
 			<div className="row is-flex">
 				<div className="col">
-					<h3 className="title">{props.data.user.name || ''} - {props.data.monthInfo.name} {props.data.monthInfo.day}</h3>
+				<h3 className="title">
+					{props.data.user.name != null 
+						? props.data.user.name
+						: <span className="red">Unknown</span>
+					}
+					{} - {props.data.monthInfo.name} {props.data.monthInfo.day}
+				</h3>
 				</div>
 			</div>
 
@@ -45,7 +51,7 @@ export default function Efficiency(props) {
 
 					<p className="orange">Free days: {props.data.time.freedays}h</p>
 					
-					<p className="orange">Days off: {props.data.time.daysoff}h</p>
+					<p className="blue">Days off: {props.data.time.daysoff}h</p>
 
 					{ props.data.time.missingHours > 0  && 
 						<p className="red">Missing Hours: &nbsp;{props.data.time.missingHours != null

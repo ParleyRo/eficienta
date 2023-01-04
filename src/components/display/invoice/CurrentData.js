@@ -33,7 +33,7 @@ class CurrentData extends Component {
 								<div className="col">
 									<label>
 										<div>Invoice number: </div>
-										<input className={'large ' + (this.props.fieldsWithError.includes('current.invoiceNumber') ? 'error':'')} type="text" value={this.props.current.invoiceNumber} data-state-location="current.invoiceNumber" onChange={this.props.handleChange} required />
+										<input placeholder={this.props.lastInvoiceNumber != null ? ('Last number: ' + this.props.lastInvoiceNumber) : '1'} className={'large ' + (this.props.fieldsWithError.includes('current.invoiceNumber') ? 'error':'')} type="text" value={this.props.current.invoiceNumber} data-state-location="current.invoiceNumber" onChange={this.props.handleChange} required />
 									</label>
 								</div>
 								
