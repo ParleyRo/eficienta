@@ -187,7 +187,7 @@ class App extends Component {
 
     this.userStats.requestStarted = true;
 
-    const url = `${window.location.protocol}//${window.location.hostname}:5001/user/${secret}`;
+    const url = `${window.location.protocol}//${window.location.hostname}:3001/user/${secret}`;
 
     const res = await fetch(url, {
 				method: 'GET',

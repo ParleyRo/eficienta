@@ -134,7 +134,7 @@ class Invoice extends React.Component {
 			}
 		}
 
-		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
+		const url = `${window.location.protocol}//${window.location.hostname}:3001/save`;
 
 		const res = await fetch(url, {
 			method: 'POST',
@@ -185,7 +185,7 @@ class Invoice extends React.Component {
 		const m = parseInt(this.state.current.invoiceDate.split('/')[1]);
 		const d = parseInt(this.state.current.invoiceDate.split('/')[0]);
 
-		const url = `${window.location.protocol}//${window.location.hostname}:5001/cursbnr?d=${d}&m=${m}&y=${y}`;
+		const url = `${window.location.protocol}//${window.location.hostname}:3001/cursbnr?d=${d}&m=${m}&y=${y}`;
 
 		const res = await fetch(url, {
 			method: 'GET',

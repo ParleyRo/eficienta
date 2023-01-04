@@ -38,7 +38,7 @@ class LoginRegister extends Component {
 
 		event.preventDefault();
 		
-		const url = `${window.location.protocol}//${window.location.hostname}:5001/save`;
+		const url = `${window.location.protocol}//${window.location.hostname}:3001/save`;
 		
 		let data = {
 			secret: this.state.secret
