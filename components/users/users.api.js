@@ -10,27 +10,14 @@ const UsersAPI = {
 			}
 
 			return new View(request,reply)
+			.setLayout('layouts/clean.eta')
 			.send('users/login.eta',await Controller.getDefault({
 				auth: request.auth
 			}));
 
 		},
 		url:'/users/login'
-	},
-	getUser:{
-		handler: async (request,reply) => {
-
-			const oUser = await Controller.getUserById(request.params.id);
-
-			delete oUser.password;
-
-			return oUser;
-		},
-		url:'/users/:id'
-		
 	}
 
 }
 module.exports = UsersAPI;
-
-
