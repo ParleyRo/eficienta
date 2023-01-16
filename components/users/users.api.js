@@ -21,5 +21,3 @@ const UsersAPI = {
 
 }
 module.exports = UsersAPI;
-
-
