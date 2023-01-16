@@ -2,34 +2,23 @@ const Controller = require('./users.controller');
 const View = require('../../middlewares/View.js');
 
 const UsersAPI = {
-	getConnect: {
-		handler: async (request,reply) => {
-			// reply.setCookie("foo","doo",{path:"/",httpOnly:true})
-			const code = request.query.code
-			
-			return await Controller.connectOauthAccount(code,request.params.provider);
-		}
-	},
-	get:{
-		handler: async (request,reply) => new View(request,reply)
-				//.addJs('accountsDashboard.js')
-				.send('users/home.eta',await Controller.getDefault({
-					auth: request.auth
-				})),
-		url:'/'
-			
-	},
-	getUser:{
+	getLogin:{
 		handler: async (request,reply) => {
 			
-			const oUser = await Controller.getUserById(request.params.id);
+			if(request.auth != null){
+				return reply.redirect('/',200);
+			}
 
-			delete oUser.password;
+			return new View(request,reply)
+			.setLayout('layouts/clean.eta')
+			.send('users/login.eta',await Controller.getDefault({
+				auth: request.auth
+			}));
 
-			return oUser;
 		},
-		url:'/users/:id'
+		url:'/users/login'
 	}
+
 }
 module.exports = UsersAPI;
 
