@@ -1,3 +1,4 @@
+require('dotenv').config();
 const fastify = require('./app')();
 
 // Run the server!

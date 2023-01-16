@@ -1,4 +1,9 @@
 module.exports = {
+  app:{
+    redirect: {
+      default: '/'
+    }
+  },
   swagger : {
     routePrefix: '/documentation',
     exposeRoute: true,
