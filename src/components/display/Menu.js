@@ -11,7 +11,7 @@ class Menu extends Component {
 				<div className="col">
 					<h3 className={(this.props.menu.email?'active':'')+' title text-center'}><span data-target="email" onClick={this.props.makeActive}>📧<br />Email</span></h3>
 				</div>
-				<div className="col">
+				{/* <div className="col">
 					<h3 className={(this.props.menu.invoice?'active':'')+' title text-center'}><span data-target="invoice" onClick={this.props.makeActive}>📝<br />Invoice</span></h3>
 				</div>
 
@@ -19,7 +19,7 @@ class Menu extends Component {
 					<div className="col">
 						<h3 className={(this.props.menu.invoices?'active':'')+' title text-center'}><span data-target="invoices" onClick={this.props.makeActive}>📂<br />Invoices</span></h3>
 					</div>
-				}
+				} */}
 			</div>
 		)
 	}
