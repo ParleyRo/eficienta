@@ -49,12 +49,12 @@ class Settings extends Component {
 					
 				</div>
 
-				<hr />
+				{/* <hr />
 
 				<InvoiceData
 					data={this.props.data}
 					changedData={this.props.changedData}
-				/>
+				/> */}
 
 			</div>
 		)

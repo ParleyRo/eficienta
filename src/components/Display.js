@@ -106,13 +106,13 @@ class Display extends Component {
 							<Email data={this.props.data} />
 						}
 
-						{this.state.menu.invoice && 
+						{/* {this.state.menu.invoice && 
 							<Invoice data={this.props.data} changedData={this.props.changedData}/>
 						}
 
 						{this.state.menu.invoices && 
 							<Invoices data={this.props.data} changedData={this.props.changedData}/>
-						}
+						} */}
 
 					</>
 				}
