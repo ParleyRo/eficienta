@@ -1,6 +1,14 @@
 import ItemLoading from '../ItemLoading.js';
 
 export default function Efficiency(props) {
+	
+	const stopEverhour = function(){
+
+		props.changedData({
+			stopEverhour: true
+		})
+
+	}
 
 	const setEverhour = function(event){
 		
@@ -14,14 +22,30 @@ export default function Efficiency(props) {
 
 			<div className="row is-flex">
 				<div className="col">
-				<h3 className="title">
-					{props.data.user.name != null 
-						? props.data.user.name
-						: <span className="red">Unknown</span>
-					}
-					{} - {props.data.monthInfo.name} {props.data.monthInfo.day}
-				</h3>
+					<h3 className="title">
+						{props.data.user.name != null 
+							? props.data.user.name
+							: <span className="red">Unknown</span>
+						}
+						{} - {props.data.monthInfo.name} {props.data.monthInfo.day}
+						
+					</h3>
 				</div>
+				<div className="col text-right">
+					{props.data.user.isEverhourOn === true
+						? <button 
+							onClick={async () =>{
+								await new Promise((resolve, reject) => {
+									stopEverhour();
+								});
+							}}
+							className="button is-danger" 
+						>
+						Stop Everhour</button>
+						: ''
+					}
+				</div>
+
 			</div>
 
 			<div className="row is-flex">
