@@ -36,7 +36,8 @@ class App extends Component {
         name: null,
         invoice:{},
         daysoff:{},
-        invoices:{}
+        invoices:{},
+        isEverhourOn: false
       },
       time: {
         everhour: null,
@@ -62,7 +63,8 @@ class App extends Component {
     this.everhourStats = {
       requestStarted: false,
       requestFinish: false,
-      value: 0
+      value: 0,
+      isOn: false
     }
 
     this.userStats = {
@@ -109,6 +111,8 @@ class App extends Component {
     oState.time.workedHours = oState.monthInfo.workedDays*8;
 
     oState.efficiency.total = Math.round(((oState.time.everhour+oState.time.freedays+oState.time.daysoff) * 100 ) / oState.time.workHours);
+
+    oState.user.isEverhourOn = this.everhourStats.isOn;
 
     const freedaysToday = oState.monthInfo.freedays.reduce((index,day) =>{
       
@@ -171,6 +175,7 @@ class App extends Component {
 
     if(currentTime.duration != null){
       this.everhourStats.value += currentTime.duration;
+      this.everhourStats.isOn = true;
     }
 
     this.everhourStats.requestFinish = true;
@@ -261,7 +266,7 @@ class App extends Component {
     
   }
 
-  changedData(data){
+  async changedData(data){
 
     if(data.invoicesAdd != null){
      
@@ -422,6 +427,20 @@ class App extends Component {
       });
       
       delete data.invoice;
+    }
+
+    if(data.stopEverhour != null){
+
+      await Everhour.stopTimer();
+
+      this.setState({
+        user: {
+          ...this.state.user,
+          isEverhourOn: false
+        }
+      });
+
+      delete data.stopEverhour;
     }
     
     if(Object.entries(data).length){
