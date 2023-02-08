@@ -4,6 +4,10 @@ export default function Efficiency(props) {
 	
 	const stopEverhour = function(){
 
+		if(!window.confirm('Are you sure about stopiing Everhour timer?')){
+			return; 
+		}
+
 		props.changedData({
 			stopEverhour: true
 		})
