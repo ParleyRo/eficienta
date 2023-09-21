@@ -1,26 +1,28 @@
-
-<div id="app">
-	<app></app>
-
-		<section class="hero is-primary">
-			<div class="hero-body">
-				<p class="title">
-				Home
-				</p>
-				
-			</div>
-		</section>
+<div id="eficienta">
+	<eficienta
+	
+	>
+	</eficienta>
 </div>
 
 
-<% /* <script type="module">
+<script type="module">
 
 	import { createApp } from 'vue';
 	
-	import App from "/assets/default/js/vue/components/user/User.vue.js";
+	import Eficienta from "/assets/default/js/vue/components/user/Eficienta.vue.js";
 
-	const app = createApp({components: {App}});
+	const eficienta = createApp({
+		data() {
+			return {
+				
+			}
+		},
+		components: {
+			Eficienta
+		}
+	});
+	
+	eficienta.mount('#eficienta');
 
-	app.mount('#app');
-
-</script> */ %>
+</script>
