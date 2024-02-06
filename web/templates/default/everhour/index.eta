@@ -1,6 +1,8 @@
 <div id="eficienta">
+
 	<eficienta
-	
+		:everhour-data="everhourData" 
+		:data="data" 
 	>
 	</eficienta>
 </div>
@@ -15,7 +17,8 @@
 	const eficienta = createApp({
 		data() {
 			return {
-				
+				everhourData: <%~ JSON.stringify(it.everhourData) %>,
+				data: <%~ JSON.stringify(it.data) %>
 			}
 		},
 		components: {

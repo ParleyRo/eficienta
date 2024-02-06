@@ -17,10 +17,12 @@
 			<div class="navbar-start">
 		
 				<a href="/" class="navbar-item">
-				Home
+				Eficienta
 				</a>
 
-				
+				<a href="/email" class="navbar-item">
+				Email
+				</a>
 
 			</div>
 

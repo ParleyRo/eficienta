@@ -1,0 +1,7 @@
+.navigator{
+	font-size: 30px;
+}
+
+.navigator > *{
+	padding: 20px 40px;
+}

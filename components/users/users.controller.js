@@ -13,17 +13,17 @@ module.exports = {
 		return oData
 	},
 
-	async getUserByUsername(username) {
+	async getByUsername(username) {
 		if (!username) throw {"error":"username-required","message":"Username is required"};
 		
 		return await User.getByUsername(username);
 	},
-	async getUserById(id) {
+	async getById(id) {
 		if (!id) throw {"error":"id-required","message":"id is required"};
 		
 		return await User.getById(id);
 	},
-	async getUserByLogin(username,password) {
+	async getByLogin(username,password) {
 		
 		if (!username) return  {
 			"error":"username-required",
@@ -37,7 +37,7 @@ module.exports = {
 		
 		return await User.getByLogin(username,password);
 	},
-	async createUser(objValue = {}) {
+	async create(objValue = {}) {
 		
 		return await User.create(objValue);
 	}
