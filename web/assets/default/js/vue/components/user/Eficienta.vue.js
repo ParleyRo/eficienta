@@ -37,55 +37,65 @@ export default {
 	<div class="columns ">
 
 		<div class="column is-4">
-			<p class="">MonthDays: {{stats.days.total}}</p>
-			<p class="">WeekendDays: {{stats.days.weekend}}</p>
-			<p class="">WorkDays: {{stats.days.working}}</p>
-			<p class="">WorkedDays: {{stats.days.worked}}</p>
+			<div class="pl-3">
+				<p class="">MonthDays: {{stats.days.total}}</p>
+				<p class="">WeekendDays: {{stats.days.weekend}}</p>
+				<p class="">WorkDays: {{stats.days.working}}</p>
+				<p class="">WorkedDays: {{stats.days.worked}}</p>
+			</div>
 		</div>
 
 		<div class="column is-4">
-			<p class="">WorkHoursTotal: {{stats.hours.working}}</p>
-			<p class="">Everhour(hours): {{stats.hours.everhour}}</p>
-			<p class="">FreeDays(hours): {{stats.hours.free}}</p>
-			<p class="">DaysOff(hours): {{stats.hours.off}}</p>
-			<p class="">Missing(hours): {{stats.hours.missing}}</p>
+			<div class="pl-3">
+				<p class="">WorkHoursTotal: {{stats.hours.working}}</p>
+				<p class="">Everhour: {{stats.hours.everhour}}</p>
+				<p class="">FreeDays: {{stats.hours.free}}</p>
+				<p class="">DaysOff: {{stats.hours.off}}</p>
+				<p v-if="stats.hours.missing != 0" :class="stats.hours.missing > 0 ? 'has-text-danger' : 'has-text-success'">{{stats.hours.missing > 0 ? 'Missing' : 'Over'}}: {{stats.hours.missing > 0 ? stats.hours.missing : stats.hours.missing  * (-1) }}</p>
+			</div>
 		</div>
 
 		<div class="column is-4">
-			<p class="">Efficiency: {{stats.efficiency.total}}</p>
-			<p class="">Efficiency till today: {{stats.efficiency.current}}</p>
+			<div class="pl-3">
+				<p class="">Efficiency: {{stats.efficiency.total}}%</p>
+				<p class="">Efficiency till today: {{stats.efficiency.current}}%</p>
+			</div>
 		</div>
 
 	</div>
 
 	<div class="columns">
 		<div class="column is-12">
-			<h3 className="title">Subject</h3>
-			<br />
-			<p className="subject"><span>monthly efficiency for {{data.name}} - {{data.currentMonth.name}}</span></p>
+			<div class="pl-3">
+				<h3 className="title">Subject</h3>
+				<br />
+				<p className="subject"><span>monthly efficiency for {{data.name}} - {{data.currentMonth.name}}</span></p>
+			</div>
 		</div>
 	</div>
 
 	<div class="columns">
 		<div class="column is-12">
-			<h3 className="title">Body</h3>
-			<br />
-			<div className="body">
-				<p>Hi</p>
+			<div class="pl-3">
+				<h3 className="title">Body</h3>
+				<br />
+				<div className="body">
+					<p>Hi</p>
 
-				<p>{{data.currentMonth.name}} month efficiency total = {{stats.efficiency.total}}% of {{stats.hours.working}} hours</p>
+					<p>{{data.currentMonth.name}} month efficiency total = {{stats.efficiency.total}}% of {{stats.hours.working}} hours</p>
 
-				<p>
-					<span>{{stats.hours.everhour}}h&nbsp;(EverHour)</span>
-					<span>&nbsp;+&nbsp;</span>
-					<span>{{stats.hours.free}}h(Free days)</span>
-					<span>&nbsp;+&nbsp;</span>
-					<span>{{stats.hours.off}}h{{((data.daysoffList != null) && data.daysoffList.length) ? ':'+data.daysoffList.join(',') : ''}}(Days off)</span>
-					<span>&nbsp;=&nbsp;</span>
-					<span>{{stats.hours.everhour + stats.hours.free + stats.hours.off}}h({{stats.efficiency.total}}%)</span>
-				</p>
+					<p>
+						<span>{{stats.hours.everhour}}h&nbsp;(EverHour)</span>
+						<span>&nbsp;+&nbsp;</span>
+						<span>{{stats.hours.free}}h(Free days)</span>
+						<span>&nbsp;+&nbsp;</span>
+						<span>{{stats.hours.off}}h{{((data.daysoffList != null) && data.daysoffList.length) ? ':'+data.daysoffList.join(',') : ''}}(Days off)</span>
+						<span>&nbsp;=&nbsp;</span>
+						<span>{{stats.hours.everhour + stats.hours.free + stats.hours.off}}h({{stats.efficiency.total}}%)</span>
+					</p>
 
-				<p>bye</p>
+					<p>bye</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -99,7 +109,7 @@ export default {
 	data() {
 
 		return {
-
+			
 			stats: {
 				everhour: {
 					isActive: this.everhourData.isActive
