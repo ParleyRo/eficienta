@@ -27,9 +27,11 @@ class Everhour {
 		if((new Date).getMonth() === oDate.getMonth()){
 		
 			const oTaskData = await Everhour.getCurrentTaskData(token);
+
 			if(oTaskData?.duration != null){
 				oReturnData.time += oTaskData.duration;
 				oReturnData.isActive = true;
+				oReturnData.taskName = oTaskData.task.name;
 			}
 		}
 
