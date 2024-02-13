@@ -29,6 +29,7 @@ export default {
 		<div class="column is-12">
 			<div class="has-text-right">
 				<button v-if="stats.everhour.isActive" class="button is-danger" v-on:click="stopEverhour">Stop Everhour</button>
+				<p v-if="stats.everhour.taskName">{{stats.everhour.taskName}}</p>
 				<button v-if="!stats.everhour.isActive" class="button is-primary" v-on:click="startEverhour">Start Everhour</button>
 			</div>
 		</div>
@@ -112,7 +113,8 @@ export default {
 			
 			stats: {
 				everhour: {
-					isActive: this.everhourData.isActive
+					isActive: this.everhourData.isActive,
+					taskName: this.everhourData.taskName
 				},
 				days: {
 					total: this.data.monthDays,
@@ -153,6 +155,7 @@ export default {
 			if(results.status && results.status === 'stopped'){
 
 				this.stats.everhour.isActive = false;
+				this.stats.everhour.taskName = '';
 
 			}
 		},
@@ -165,6 +168,8 @@ export default {
 			if(results.status && results.status === 'active'){
 
 				this.stats.everhour.isActive = true;
+
+				this.stats.everhour.taskName = results.task.name;
 
 			}
 		}
