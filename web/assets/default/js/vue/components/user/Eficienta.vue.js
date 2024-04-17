@@ -158,6 +158,11 @@ export default {
 				this.stats.everhour.taskName = '';
 
 			}
+			
+			if(results.redirectUrl){
+				window.location.href = results.redirectUrl;
+			}	
+
 		},
 		startEverhour: async function(){
 		
@@ -172,6 +177,10 @@ export default {
 				this.stats.everhour.taskName = results.task.name;
 
 			}
+
+			if(results.redirectUrl){
+				window.location.href = results.redirectUrl;
+			}	
 		}
 	}
 
