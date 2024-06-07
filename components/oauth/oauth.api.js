@@ -11,7 +11,14 @@ const OauthAPI = {
 			if(oAuth.token){
 				const sJwt = Jwt.signer({user: {id: oAuth.token}});
 
-				reply.setCookie('token', sJwt, {path: '/'});
+				reply.setCookie(
+					'token',
+					sJwt, 
+					{
+						path: '/',
+						expires: new Date(Date.now() + 365*24*60*60*1000)
+					}
+				);
 
 				return reply.redirect('/');
 
