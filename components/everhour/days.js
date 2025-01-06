@@ -14,11 +14,11 @@ class Days {
 	static monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 
 	static freedays = {
-		1: [1,2,24],
-		5: [1,3,5,6],
-		6: [1,23,24],
+		1: [1,2,7,6,24],
+		4: [18,19,20.21],
+		5: [1],
+		6: [9],
 		8: [15],
-		11: [30],
 		12: [1,25,26]
 	}
 
