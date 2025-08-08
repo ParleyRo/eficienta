@@ -22,18 +22,28 @@ export default {
 		</div>
 		
 	</div>
-	
-	<div class="is-divider" data-content="Invoice data"></div>
-	
-	<div class="columns">
-		<div class="column is-12">
-			<div class="has-text-right">
+
+	<p class="py-4"></p>
+
+	<div class="grid" v-if="stats.everhour.isActive !== null">
+
+		<div class="cell">
+			<div class="pl-3 has-text-right">
+				<p v-if="stats.everhour.taskName"><b>Active task:</b><br>{{stats.everhour.taskName}}</p>
+			</div>
+		</div>
+
+		<div class="cell">
+			<div class="pl-3">
 				<button v-if="stats.everhour.isActive" class="button is-danger" v-on:click="stopEverhour">Stop Everhour</button>
-				<p v-if="stats.everhour.taskName">{{stats.everhour.taskName}}</p>
+				
 				<button v-if="!stats.everhour.isActive" class="button is-primary" v-on:click="startEverhour">Start Everhour</button>
 			</div>
 		</div>
+		
 	</div>
+
+	<p class="py-4"></p>
 
 	<div class="columns ">
 
@@ -113,8 +123,8 @@ export default {
 
 			stats: {
 				everhour: {
-					isActive: this.everhourData.isActive,
-					taskName: this.everhourData.taskName
+					isActive: null,
+					taskName: null
 				},
 				days: {
 					total: this.data.monthDays,
@@ -140,6 +150,7 @@ export default {
 		}
 	},
 	async created(){
+		this.refreshEverhourData();
 		this.intervalId = setInterval(this.refreshEverhourData, 30000); 
 	},
 	beforeDestroy() {
