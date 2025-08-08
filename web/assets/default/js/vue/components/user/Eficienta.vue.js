@@ -1,7 +1,12 @@
 export default {
 	template: `
 <div class="container mt-6">
-
+	<section class="hero">
+		<div class="hero-body">
+			<p class="title">Eficienta</p>
+			<p class="subtitle">{{data.name}}</p>
+		</div>
+	</section>
 	<div class="columns is-justify-content-center has-text-centered">
 		
 		<div class="column is-12">
@@ -45,9 +50,9 @@ export default {
 
 	<p class="py-4"></p>
 
-	<div class="columns ">
+	<div class="grid ">
 
-		<div class="column is-4">
+		<div class="cell">
 			<div class="pl-3">
 				<p class="">MonthDays: {{stats.days.total}}</p>
 				<p class="">WeekendDays: {{stats.days.weekend}}</p>
@@ -56,7 +61,7 @@ export default {
 			</div>
 		</div>
 
-		<div class="column is-4">
+		<div class="cell">
 			<div class="pl-3">
 				<p class="">WorkHoursTotal: {{stats.hours.working}}</p>
 				<p class="">Everhour: {{stats.hours.everhour}}</p>
@@ -66,7 +71,7 @@ export default {
 			</div>
 		</div>
 
-		<div class="column is-4">
+		<div class="cell">
 			<div class="pl-3">
 				<p class="">Efficiency: {{stats.efficiency.total}}%</p>
 				<p class="">Efficiency till today: {{stats.efficiency.current}}%</p>
@@ -74,19 +79,21 @@ export default {
 		</div>
 
 	</div>
-
+	
+	<p class="py-4"></p>
+	<hr>
+	<p class="py-4"></p>
+	
 	<div class="columns">
-		<div class="column is-12">
+		<div class="column">
 			<div class="pl-3">
 				<h3 className="title">Subject</h3>
 				<br />
 				<p className="subject"><span>monthly efficiency for {{data.name}} - {{data.currentMonth.name}}</span></p>
 			</div>
 		</div>
-	</div>
-
-	<div class="columns">
-		<div class="column is-12">
+	
+		<div class="column">
 			<div class="pl-3">
 				<h3 className="title">Body</h3>
 				<br />
