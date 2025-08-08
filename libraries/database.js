@@ -10,6 +10,7 @@ class Database {
 	}
 
 	async connect() {
+
 		this.connection = await mysql.createPool({
 			host: config.db.host,
 			user: config.db.username,
@@ -34,7 +35,8 @@ class Database {
 
 	async getRow(sql,params) {
 		try {
-			const [oResult] = await this.connection.query([sql,'limit 1'].join(' '),params)
+			const [oResult] = await this.connection.query([sql,'limit 1'].join(' '),params);
+
 			if (!oResult.length) return false;
 
 			return oResult[0];
