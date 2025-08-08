@@ -143,7 +143,6 @@ export default {
 		this.intervalId = setInterval(this.refreshEverhourData, 30000); 
 	},
 	beforeDestroy() {
-		// curăță intervalul când componenta e distrusă
 		clearInterval(this.intervalId);
 	},
 	components: {
@@ -175,7 +174,7 @@ export default {
 		},
 
 		async refreshEverhourData() {
-			// Exemplu: apelezi un endpoint care returnează stare + taskName + time
+
 			const response = await fetch(`/everhour/status/`);
 			const results = await response.json();
 
