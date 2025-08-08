@@ -19,6 +19,7 @@ class Days {
 		5: [1],
 		6: [9],
 		8: [15],
+		11: [30],
 		12: [1,25,26]
 	}
 
@@ -84,14 +85,14 @@ class Days {
 				year: this.date.getFullYear()
 			},
 			prevMonth:{
-				index: (this.date.getMonth() + 12 - 1) % 12,
+				index: ((this.date.getMonth() + 12 - 1) % 12) + 1,
 				name: Days.monthNames[(this.date.getMonth() + 12 - 1) % 12],
 				year: ( (this.date.getMonth() + 12 - 1) % 12 > this.date.getMonth() ) ? this.date.getFullYear() - 1 : this.date.getFullYear()
 			},
 			nextMonth:{
-				index: (this.date.getMonth() + 12 + 1) % 12,
+				index: ((this.date.getMonth() + 12 + 1) % 12) + 1,
 				name: Days.monthNames[(this.date.getMonth() + 12 + 1) % 12],
-				year: ( (this.date.getMonth() + 12 - 1) % 12 < this.date.getMonth() ) ? this.date.getFullYear() + 1 : this.date.getFullYear()
+				year: ( (this.date.getMonth() + 12 + 1) % 12 < this.date.getMonth() ) ? this.date.getFullYear() + 1 : this.date.getFullYear()
 			},
 			freedays: 0,
 			freedaysList: [],

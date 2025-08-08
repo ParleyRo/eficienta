@@ -62,7 +62,7 @@ module.exports = {
 			return result
 			
 		} catch (error) {
-			console.log(error)
+
 			return {
 				error
 			}
@@ -103,6 +103,29 @@ module.exports = {
 				return await resTime.json();
 
 			}
+		} catch (error) {
+			return error
+		}
+	},
+
+	async getStatus(params){
+		
+		try {
+
+			const token = await Everhour.getTokenByIdUser(params.auth.user.id);
+
+			const res = await fetch(`https://api.everhour.com/timers/current`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Api-Key': token
+				}
+			});
+
+			const results = await res.json();
+
+			return results;
+		
 		} catch (error) {
 			return error
 		}

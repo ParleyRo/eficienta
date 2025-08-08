@@ -8,15 +8,15 @@ export default {
 
 			<div class="navigator">
 				
-				<span class="icon icon-left">
+				<a :href="getPreviousMonthUrl()" class="icon icon-left">
 					<i class="far fa-arrow-alt-circle-left" ></i>
-				</span>
+				</a>
 				
-				<span class="month">{{data.currentMonth.name}}</span>
+				<span class="month">{{data.currentMonth.name}} {{data.currentMonth.year}}</span>
 
-				<span class="icon icon-right">
+				<a :href="getNextMonthUrl()" class="icon icon-right">
 					<i class="far fa-arrow-alt-circle-right" ></i>
-				</span>
+				</a>
 
 			</div>
 		</div>
@@ -110,7 +110,7 @@ export default {
 	data() {
 
 		return {
-			
+
 			stats: {
 				everhour: {
 					isActive: this.everhourData.isActive,
@@ -140,12 +140,56 @@ export default {
 		}
 	},
 	async created(){
-		
+		this.intervalId = setInterval(this.refreshEverhourData, 30000); 
+	},
+	beforeDestroy() {
+		clearInterval(this.intervalId);
 	},
 	components: {
 	
 	},
 	methods: {
+		getPreviousMonthUrl() {
+
+			const currentIndex = new Date().getMonth() + 1;
+			if(this.data.prevMonth.index === currentIndex){
+				return '/';
+			}
+
+			const month = String(this.data.prevMonth.index).padStart(2, '0');
+			const year = String(this.data.prevMonth.year);
+			return `/time/${month}/${year}`;
+		},
+
+		getNextMonthUrl() {
+
+			const currentIndex = new Date().getMonth() + 1;
+			if(this.data.nextMonth.index === currentIndex){
+				return '/';
+			}
+			const month = String(this.data.nextMonth.index).padStart(2, '0');
+			const year = String(this.data.nextMonth.year);
+			
+			return `/time/${month}/${year}`;
+		},
+
+		async refreshEverhourData() {
+
+			const response = await fetch(`/everhour/status/`);
+			const results = await response.json();
+
+			if(results && results.status && (results.status === 'stopped')){
+
+				this.stats.everhour.isActive = false;
+				this.stats.everhour.taskName = '';
+			}
+			
+			if (results && results.status && (results.status === 'active')) {
+				
+				this.stats.everhour.isActive = results.status === 'active';
+				this.stats.everhour.taskName = results.task?.name || '';
+			}
+		},
 		stopEverhour: async function(){
 		
 			const response = await fetch(`/everhour/stop/`);
@@ -182,6 +226,8 @@ export default {
 				window.location.href = results.redirectUrl;
 			}	
 		}
+
+		
 	}
 
 }

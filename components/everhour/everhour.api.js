@@ -63,6 +63,19 @@ const EverhourAPI = {
 
 		},
 		url:'/everhour/start/'
+	},
+	getStatus:{
+		handler: async (request,reply) => {
+			
+			if(request.auth == null){
+				return reply.code(302).send({ redirectUrl: '/users/login'});
+			}
+
+			return await Controller.getStatus({
+				auth: request.auth
+			});
+		},
+		url:'/everhour/status/'
 	}
 
 }
