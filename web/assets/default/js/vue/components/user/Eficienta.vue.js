@@ -11,7 +11,7 @@ export default {
 		
 		<div class="column is-12">
 
-			<div class="navigator">
+			<div class="navigator is-flex is-align-items-center is-justify-content-center">
 				
 				<a :href="getPreviousMonthUrl()" class="icon icon-left">
 					<i class="far fa-arrow-alt-circle-left" ></i>
